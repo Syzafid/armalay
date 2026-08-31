@@ -23,12 +23,12 @@
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-  max-width: 60%;
+  max-width: 50%;
 }
 
 .artifact-title-badge .title {
   color: var(--color-gold);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.5px;
 }
@@ -196,37 +196,41 @@
   margin-top: auto;
 }
 
-/* Modal Pop-up */
+/* Right-Side Pop-up Modal Panel (Side-by-Side Split View) */
 .modal-overlay {
   position: fixed;
-  inset: 0;
+  top: 70px;
+  right: 18px;
+  bottom: 18px;
+  width: 440px;
+  max-width: 45%;
   z-index: 3000;
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  opacity: 0;
+  background: transparent;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transform: translateX(120%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  opacity: 0;
 }
 
 .modal-overlay.active {
   opacity: 1;
+  transform: translateX(0);
   pointer-events: auto;
 }
 
 .modal-box {
-  background: var(--color-ebony);
-  border: 2px solid var(--color-gold);
-  border-radius: 16px;
+  background: rgba(13, 13, 17, 0.90);
+  border: 1.5px solid var(--color-gold);
+  border-radius: 18px;
   width: 100%;
-  max-width: 520px;
-  max-height: 80vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+  box-shadow: -8px 8px 30px rgba(0,0,0,0.85);
+  backdrop-filter: blur(16px);
   overflow: hidden;
 }
 
@@ -241,8 +245,9 @@
 
 .modal-header h3 {
   color: var(--color-gold);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
+  letter-spacing: 0.5px;
 }
 
 .modal-body {
@@ -251,6 +256,7 @@
   font-size: 13px;
   line-height: 1.6;
   color: var(--color-text-main);
+  flex: 1;
 }
 
 .quiz-option-btn {
@@ -275,4 +281,21 @@
 .quiz-option-btn.wrong {
   background: var(--color-maroon);
   border-color: #F44336;
+}
+
+/* Mobile Responsive adjustment for Right-Side Modal */
+@media (max-width: 600px) {
+  .modal-overlay {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    max-width: none;
+    max-height: 55vh;
+    transform: translateY(120%);
+  }
+  .modal-overlay.active {
+    transform: translateY(0);
+  }
 }

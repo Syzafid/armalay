@@ -5,9 +5,9 @@
     "subtitle": "Artefak Simbolik Kebijaksanaan Kuno Melayu (Testing AR Card Marker)",
     "category": "Ornamen & Ukiran",
     "modelPath": "assets/models/owl.glb",
-    "scale": "0.7 0.7 0.7",
-    "position": "-0.85 0 -1.8",
-    "rotation": "0 45 0",
+    "scale": "0.65 0.65 0.65",
+    "position": "-1.05 -0.15 -1.8",
+    "rotation": "0 40 0",
     "historyText": "Burung Hantu Ukiran Melayu merupakan motif hias kuno yang melambangkan keheningan malam, pengawasan tajam, dan kebijaksanaan para tetua adat dalam meramu hukum serta adat istiadat Melayu. Dalam ukiran kayu tradisional, motif burung hantu melambangkan penjaga nilai-nilai luhur kedamaian.",
     "quizData": [
       {
@@ -38,10 +38,10 @@
     "subtitle": "Testing Prototype via Hiro Preset Marker",
     "category": "Ornamen & Ukiran",
     "modelPath": "assets/models/owl.glb",
-    "scale": "0.7 0.7 0.7",
-    "position": "-0.85 0 -1.8",
-    "rotation": "0 45 0",
-    "historyText": "Pengujian berhasil! Model 3D Burung Hantu Melayu berhasil di-load menggunakan Hiro Marker.",
+    "scale": "0.65 0.65 0.65",
+    "position": "-1.05 -0.15 -1.8",
+    "rotation": "0 40 0",
+    "historyText": "Pengujian berhasil! Model 3D Burung Hantu Melayu berhasil di-load menggunakan Hiro Marker dan ditampilkan secara bersih di sisi kiri layar.",
     "quizData": [
       {
         "question": "Apakah pengujian Hiro Marker berhasil?",

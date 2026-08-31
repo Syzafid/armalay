@@ -46,12 +46,12 @@ const ARController = {
     UIManager.setHeaderInfo(artifactData.title, artifactData.subtitle);
     UIManager.setStatusBadge(`🔒 Terkunci: ${artifactData.title}`, true);
 
-    // Load & Render 3D Model on Camera Anchor (Left Viewport)
+    // Load & Render 3D Model on Left Side Camera Anchor Viewport
     if (this.activeModelEl) {
       this.activeModelEl.setAttribute('gltf-model', artifactData.modelPath);
-      this.activeModelEl.setAttribute('scale', artifactData.scale || '0.7 0.7 0.7');
-      this.activeModelEl.setAttribute('position', artifactData.position || '-0.9 0.1 -1.8');
-      this.activeModelEl.setAttribute('rotation', artifactData.rotation || '0 45 0');
+      this.activeModelEl.setAttribute('scale', artifactData.scale || '0.65 0.65 0.65');
+      this.activeModelEl.setAttribute('position', artifactData.position || '-1.05 -0.15 -1.8');
+      this.activeModelEl.setAttribute('rotation', artifactData.rotation || '0 40 0');
       this.activeModelEl.setAttribute('visible', 'true');
     }
   },

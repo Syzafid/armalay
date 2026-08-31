@@ -129,17 +129,24 @@ Pada fase pertama pengembangan, objek 3D yang didigitalisasi dikelompokkan ke da
 +──────────────────────────────────────┴────────────────────────────────────+
 ```
 
-#### 3. Tampilan Pop-up Modal Informasi (Saat Tombol "Informasi & Sejarah" Ditekan):
+#### 3. Tampilan Pop-up Panel Informasi (Meluncur Ringkas di Sisi Kanan Layar):
 ```
 +───────────────────────────────────────────────────────────────────────────+
-|  SISI KIRI: MODEL 3D  | +───────────────────────────────────────────────+ |
-|                       | | 📜 SEJARAH KERIS TAMING SARI       [ ✖ CLOSE ]| |
-|         ▲             | +───────────────────────────────────────────────+ |
-|        / \            | | Keris Taming Sari adalah senjata pusaka       | |
-|       /   \           | | Laksamana Hang Tuah yang memiliki kesaktian   | |
-|      /_____\          | | dan menjadi simbol kedaulatan Melayu...       | |
-|                       | +───────────────────────────────────────────────+ |
-+───────────────────────┴───────────────────────────────────────────────────+
+| 🗡️ KERIS TAMING SARI                     [Status: 🔒 Locked]   [ ⛶ ] [ ☰ ] |
++──────────────────────────────────────┬────────────────────────────────────+
+|                                      |      PANEL INFORMASI SISI KANAN    |
+|      SISI KIRI: MODEL 3D             |  (Side Panel Slide-in dari Kanan)  |
+| (100% Terlihat & Bebas Di-inspeksi)  |                                    |
+|                                      | +────────────────────────────────+ |
+|               ▲                      | | 📜 SEJARAH KERIS    [ ✖ CLOSE ]| |
+|              / \   [3D Model GLB]    | +────────────────────────────────+ |
+|             /   \  Keris Melayu      | | Keris Taming Sari adalah       | |
+|            /_____\                   | | senjata pusaka Laksamana       | |
+|                                      | | Hang Tuah yang memiliki...     | |
+|                                      | +────────────────────────────────+ |
+|                                      | | 🎮 JAWAB KUIS UNTUK DENGAR SFX | |
+|                                      | +────────────────────────────────+ |
++──────────────────────────────────────┴────────────────────────────────────+
 ```
 
 ### B. Skema Warna Brand (Melayu Royal Game Palette)
