@@ -1,0 +1,250 @@
+/* AR Melayu - Game UI & Hamburger Drawer Styles */
+
+/* Top HUD Bar (Minimalist Header) */
+#hud-header {
+  position: fixed;
+  top: 14px;
+  left: 18px;
+  right: 18px;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+
+.artifact-title-badge {
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  backdrop-filter: blur(12px);
+  padding: 8px 18px;
+  border-radius: 20px;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  max-width: 60%;
+}
+
+.artifact-title-badge .title {
+  color: var(--color-gold);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.artifact-title-badge .subtitle {
+  color: var(--color-text-muted);
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* Status Indicator Badge */
+#marker-status-badge {
+  position: fixed;
+  bottom: 14px;
+  left: 18px;
+  z-index: 1000;
+  background: rgba(0,0,0,0.65);
+  border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  pointer-events: none;
+}
+
+#marker-status-badge.locked {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+/* Hamburger Button */
+.btn-hamburger {
+  background: linear-gradient(135deg, var(--color-emerald) 0%, #002b14 100%);
+  border: 1.5px solid var(--color-gold);
+  color: var(--color-gold);
+  padding: 10px 18px;
+  border-radius: 24px;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.btn-hamburger:active {
+  transform: scale(0.92);
+}
+
+/* Hamburger Menu Drawer */
+#drawer-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 320px;
+  z-index: 2000;
+  background: rgba(13, 13, 17, 0.92);
+  border-left: 2px solid var(--color-gold);
+  backdrop-filter: blur(16px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+}
+
+#drawer-menu.open {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-glass-border);
+}
+
+.drawer-title {
+  color: var(--color-gold);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+.btn-close-drawer {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.drawer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  flex: 1;
+}
+
+.drawer-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-glass-border);
+  color: var(--color-text-main);
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.2s, border-color 0.2s, transform 0.1s;
+}
+
+.drawer-btn:hover, .drawer-btn:active {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: var(--color-gold);
+}
+
+.drawer-btn.btn-reset-ar {
+  background: linear-gradient(135deg, var(--color-maroon) 0%, #4a0000 100%);
+  border-color: #ff4d4d;
+  color: #FFF;
+  margin-top: auto;
+}
+
+/* Modal Pop-up */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-box {
+  background: var(--color-ebony);
+  border: 2px solid var(--color-gold);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+  overflow: hidden;
+}
+
+.modal-header {
+  background: linear-gradient(135deg, var(--color-emerald) 0%, #002b14 100%);
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-gold);
+}
+
+.modal-header h3 {
+  color: var(--color-gold);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-text-main);
+}
+
+.quiz-option-btn {
+  width: 100%;
+  padding: 12px 16px;
+  margin-top: 8px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--color-glass-border);
+  color: #FFF;
+  border-radius: 8px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+
+.quiz-option-btn.correct {
+  background: var(--color-emerald);
+  border-color: #4CAF50;
+}
+
+.quiz-option-btn.wrong {
+  background: var(--color-maroon);
+  border-color: #F44336;
+}

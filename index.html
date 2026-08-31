@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>AR Melayu — Digitalisasi Artefak Kebudayaan Melayu</title>
+  <meta name="description" content="Aplikasi WebAR Interaktif & Gamifikasi Artefak Kebudayaan Melayu" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- A-Frame & AR.js Libraries -->
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.0/dist/aframe-extras.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/game-ui.css" />
+</head>
+
+<body>
+
+  <!-- Landscape Orientation Notice Prompt -->
+  <div id="landscape-prompt">
+    <div class="rotate-icon">📱🔄</div>
+    <h2 style="color:var(--color-gold); font-size:18px;">Miringkan Layar HP Anda</h2>
+    <p style="font-size:13px; color:var(--color-text-muted); max-width:320px;">
+      Untuk pengalaman WebAR Melayu terbaik, putar smartphone Anda ke posisi <strong>Landscape (Mendatar)</strong>.
+    </p>
+  </div>
+
+  <!-- Splash Screen -->
+  <div id="splash">
+    <div class="splash-badge">DIGITALISASI KEBUDAYAAN MELAYU</div>
+    <div class="splash-title">AR MELAYU INTERAKTIF</div>
+    <div class="splash-subtitle">
+      Jelajahi keagungan artefak Melayu (Senjata, Tanjak, & Ukiran) melalui WebAR interaktif berbasis gamifikasi.
+    </div>
+    <button class="btn-start" id="btn-start-ar">MULAI EKSPLORASI AR</button>
+  </div>
+
+  <!-- Minimalist HUD Header (Name Badge & Hamburger Button) -->
+  <div id="hud-header">
+    <div class="artifact-title-badge" id="artifact-header-badge" style="display: none;">
+      <span class="title" id="artifact-title">🗡️ KERIS TAMING SARI</span>
+      <span class="subtitle" id="artifact-subtitle">Senjata Pusaka Kesultanan Melayu</span>
+    </div>
+
+    <button class="btn-hamburger" id="btn-hamburger">
+      <span>☰</span> MENU GAME
+    </button>
+  </div>
+
+  <!-- Status Indicator Badge -->
+  <div id="marker-status-badge">🔍 Mencari Marker Melayu...</div>
+
+  <!-- Hamburger Menu Drawer (Slide-in from Right) -->
+  <div id="drawer-menu">
+    <div class="drawer-header">
+      <span class="drawer-title">MENU GAME AR MELAYU</span>
+      <button class="btn-close-drawer" id="btn-close-drawer">✖</button>
+    </div>
+    <div class="drawer-content">
+      <button class="drawer-btn" id="btn-history">
+        <span>📜</span> Sejarah & Detail Artefak
+      </button>
+      <button class="drawer-btn" id="btn-quiz">
+        <span>🎮</span> Kuis & Tantangan XP
+      </button>
+      <button class="drawer-btn" id="btn-reset-ar">
+        <span>❌</span> Tutup & Scan Marker Lain
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal Pop-up Overlay -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modal-title">📜 Sejarah Artefak</h3>
+        <button class="btn-close-drawer" id="btn-close-modal">✖</button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- Content injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- WebAR Scene Multi-Marker Setup -->
+  <a-scene id="ar-scene" embedded arjs="sourceType: webcam;
+          debugUIEnabled: false;
+          detectionMode: mono;
+          patternRatio: 0.90;" renderer="logarithmicDepthBuffer: false; antialias: true; alpha: true;"
+    vr-mode-ui="enabled: false" style="display:none">
+
+    <!-- Assets Preloader -->
+    <a-assets timeout="8000">
+      <a-asset-item id="owl-model-test" src="../assets/owl.glb"></a-asset-item>
+    </a-assets>
+
+    <!-- Marker 1: Standard Hiro Marker (Prototype Test) -->
+    <a-marker id="marker-prototype" preset="hiro" emitevents="true">
+    </a-marker>
+
+    <!-- Marker 2: Standard Kanzi Marker (Keris Test) -->
+    <a-marker id="marker-keris" preset="kanzi" emitevents="true">
+    </a-marker>
+
+    <!-- Marker 3: Custom Pattern Marker (Tanjak Test using ar-card pattern) -->
+    <a-marker id="marker-tanjak" type="pattern" url="../marker.patt" emitevents="true">
+    </a-marker>
+
+    <!-- Fixed Camera Anchor Viewport (Left Side 3D Model Sticky Anchor) -->
+    <a-entity cameraLookAtCamera>
+      <a-entity cameraLookControls>
+        <a-entity camera>
+          <a-gltf-model id="fixed-3d-model" visible="false" animation-mixer="clip: Animation; loop: repeat;">
+          </a-gltf-model>
+        </a-entity>
+      </a-entity>
+    </a-entity>
+
+  </a-scene>
+
+  <!-- Application Modules -->
+  <script src="js/artifact-loader.js"></script>
+  <script src="js/ui-manager.js"></script>
+  <script src="js/gamification.js"></script>
+  <script src="js/ar-controller.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+
+</html>
