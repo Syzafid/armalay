@@ -16,14 +16,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Splash Screen Button Event
   const splash = document.getElementById('splash');
   const startBtn = document.getElementById('btn-start-ar');
-  const arScene = document.getElementById('ar-scene');
 
   if (startBtn && splash) {
     startBtn.addEventListener('click', () => {
       splash.classList.add('hide');
       setTimeout(() => {
         splash.style.display = 'none';
-        if (arScene) arScene.style.display = '';
         UIManager.setStatusBadge('🔍 Mencari Marker Melayu...', false);
       }, 500);
     });
