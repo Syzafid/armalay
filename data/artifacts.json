@@ -1,12 +1,12 @@
 {
-  "marker-prototype": {
-    "id": "marker-prototype",
+  "main-marker": {
+    "id": "main-marker",
     "title": "🦉 BURUNG HANTU UKIRAN MELAYU",
-    "subtitle": "Artefak Simbolik Kebijaksanaan Kuno Melayu (Prototype Test)",
+    "subtitle": "Artefak Simbolik Kebijaksanaan Kuno Melayu (Testing AR Card Marker)",
     "category": "Ornamen & Ukiran",
     "modelPath": "../assets/owl.glb",
     "scale": "0.7 0.7 0.7",
-    "position": "-0.9 0.1 -1.8",
+    "position": "-0.85 0 -1.8",
     "rotation": "0 45 0",
     "historyText": "Burung Hantu Ukiran Melayu merupakan motif hias kuno yang melambangkan keheningan malam, pengawasan tajam, dan kebijaksanaan para tetua adat dalam meramu hukum serta adat istiadat Melayu. Dalam ukiran kayu tradisional, motif burung hantu melambangkan penjaga nilai-nilai luhur kedamaian.",
     "quizData": [
@@ -32,49 +32,21 @@
       }
     ]
   },
-  "marker-keris": {
-    "id": "marker-keris",
-    "title": "🗡️ KERIS TAMING SARI MELAYU",
-    "subtitle": "Senjata Pusaka Kedaulatan Laksamana Melayu",
-    "category": "Senjata Tradisional",
+  "hiro-marker": {
+    "id": "hiro-marker",
+    "title": "🦉 BURUNG HANTU UKIRAN MELAYU (HIRO TEST)",
+    "subtitle": "Testing Prototype via Hiro Preset Marker",
+    "category": "Ornamen & Ukiran",
     "modelPath": "../assets/owl.glb",
     "scale": "0.7 0.7 0.7",
-    "position": "-0.9 0.1 -1.8",
+    "position": "-0.85 0 -1.8",
     "rotation": "0 45 0",
-    "historyText": "Keris Taming Sari adalah senjata pusaka paling terkenal dalam sejarah Melayu yang dimiliki Laksamana Hang Tuah. Dibuat oleh empu istimewa dengan luk 7 dan besi pilihan, keris ini melambangkan kedaulatan, martabat, dan keberanian melintasi zaman.",
+    "historyText": "Pengujian berhasil! Model 3D Burung Hantu Melayu berhasil di-load menggunakan Hiro Marker.",
     "quizData": [
       {
-        "question": "Siapakah Laksamana Melayu terkenal pemilik Keris Taming Sari?",
-        "options": [
-          "Hang Jebat",
-          "Hang Tuah",
-          "Hang Kasturi",
-          "Hang Lekir"
-        ],
-        "correctIndex": 1
-      }
-    ]
-  },
-  "marker-tanjak": {
-    "id": "marker-tanjak",
-    "title": "👑 TANJAK DENDAM TAK SUDAH",
-    "subtitle": "Mahkota Adat Lelaki Melayu Riau & Kepulauan",
-    "category": "Pakaian & Mahkota Adat",
-    "modelPath": "../assets/owl.glb",
-    "scale": "0.7 0.7 0.7",
-    "position": "-0.9 0.1 -1.8",
-    "rotation": "0 45 0",
-    "historyText": "Tanjak Dendam Tak Sudah merupakan salah satu ikatan tengkolok adat Melayu terkemuka. Tanjak melambangkan kehormatan, kecekatan, serta amanah kepemimpinan seorang lelaki Melayu.",
-    "quizData": [
-      {
-        "question": "Apa nama ikatan Tanjak tradisional yang melambangkan kehormatan pimpinan Melayu?",
-        "options": [
-          "Solemo Bunga",
-          "Dendam Tak Sudah",
-          "Elang Menyambar",
-          "Awan Larat"
-        ],
-        "correctIndex": 1
+        "question": "Apakah pengujian Hiro Marker berhasil?",
+        "options": ["Ya, Sangat Baik", "Tidak", "Ragu-ragu", "Error"],
+        "correctIndex": 0
       }
     ]
   }

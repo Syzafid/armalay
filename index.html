@@ -36,7 +36,7 @@
     <div class="splash-badge">DIGITALISASI KEBUDAYAAN MELAYU</div>
     <div class="splash-title">AR MELAYU INTERAKTIF</div>
     <div class="splash-subtitle">
-      Jelajahi keagungan artefak Melayu (Senjata, Tanjak, & Ukiran) melalui WebAR interaktif berbasis gamifikasi.
+      Arahkan kamera ke <strong>Marker Kartu Nama (ar-card)</strong> atau <strong>Hiro Marker</strong> untuk menampilkan 3D Burung Hantu Melayu (Testing Phase).
     </div>
     <button class="btn-start" id="btn-start-ar">MULAI EKSPLORASI AR</button>
   </div>
@@ -44,8 +44,8 @@
   <!-- Minimalist HUD Header (Name Badge & Hamburger Button) -->
   <div id="hud-header">
     <div class="artifact-title-badge" id="artifact-header-badge" style="display: none;">
-      <span class="title" id="artifact-title">🗡️ KERIS TAMING SARI</span>
-      <span class="subtitle" id="artifact-subtitle">Senjata Pusaka Kesultanan Melayu</span>
+      <span class="title" id="artifact-title">🦉 BURUNG HANTU UKIRAN MELAYU</span>
+      <span class="subtitle" id="artifact-subtitle">Artefak Simbolik Kebijaksanaan Kuno Melayu</span>
     </div>
 
     <button class="btn-hamburger" id="btn-hamburger">
@@ -54,7 +54,7 @@
   </div>
 
   <!-- Status Indicator Badge -->
-  <div id="marker-status-badge">🔍 Mencari Marker Melayu...</div>
+  <div id="marker-status-badge">🔍 Mencari Marker Kartu Nama...</div>
 
   <!-- Hamburger Menu Drawer (Slide-in from Right) -->
   <div id="drawer-menu">
@@ -69,7 +69,7 @@
       <button class="drawer-btn" id="btn-quiz">
         <span>🎮</span> Kuis & Tantangan XP
       </button>
-      <button class="drawer-btn" id="btn-reset-ar">
+      <button class="drawer-btn btn-reset-ar" id="btn-reset-ar">
         <span>❌</span> Tutup & Scan Marker Lain
       </button>
     </div>
@@ -90,6 +90,10 @@
 
   <!-- WebAR Scene Multi-Marker Setup -->
   <a-scene id="ar-scene" embedded arjs="sourceType: webcam;
+          sourceWidth: 640;
+          sourceHeight: 480;
+          displayWidth: 640;
+          displayHeight: 480;
           debugUIEnabled: false;
           detectionMode: mono;
           patternRatio: 0.90;" renderer="logarithmicDepthBuffer: false; antialias: true; alpha: true;"
@@ -100,26 +104,19 @@
       <a-asset-item id="owl-model-test" src="../assets/owl.glb"></a-asset-item>
     </a-assets>
 
-    <!-- Marker 1: Standard Hiro Marker (Prototype Test) -->
-    <a-marker id="marker-prototype" preset="hiro" emitevents="true">
+    <!-- Marker 1: AR Card Custom Pattern Marker (marker.patt) -->
+    <a-marker id="main-marker" type="pattern" url="../marker.patt" emitevents="true" smooth="true" smoothCount="5"
+      smoothTolerance="0.01" smoothThreshold="2">
     </a-marker>
 
-    <!-- Marker 2: Standard Kanzi Marker (Keris Test) -->
-    <a-marker id="marker-keris" preset="kanzi" emitevents="true">
+    <!-- Marker 2: Standard Hiro Marker (Preset Fallback) -->
+    <a-marker id="hiro-marker" preset="hiro" emitevents="true">
     </a-marker>
 
-    <!-- Marker 3: Custom Pattern Marker (Tanjak Test using ar-card pattern) -->
-    <a-marker id="marker-tanjak" type="pattern" url="../marker.patt" emitevents="true">
-    </a-marker>
-
-    <!-- Fixed Camera Anchor Viewport (Left Side 3D Model Sticky Anchor) -->
-    <a-entity cameraLookAtCamera>
-      <a-entity cameraLookControls>
-        <a-entity camera>
-          <a-gltf-model id="fixed-3d-model" visible="false" animation-mixer="clip: Animation; loop: repeat;">
-          </a-gltf-model>
-        </a-entity>
-      </a-entity>
+    <!-- Camera and Sticky Viewport Entity (Positioned on Left Side of Viewport Screen) -->
+    <a-entity camera look-controls>
+      <a-gltf-model id="fixed-3d-model" visible="false" animation-mixer="clip: Animation; loop: repeat; crossFadeDuration: 0.3;">
+      </a-gltf-model>
     </a-entity>
 
   </a-scene>
