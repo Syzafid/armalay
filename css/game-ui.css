@@ -112,6 +112,103 @@
   transform: scale(0.92);
 }
 
+/* Console-style D-Pad & Zoom Controller (Bottom-Right Screen) */
+#model-controller-pad {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(13, 13, 17, 0.78);
+  border: 1.5px solid var(--color-gold);
+  backdrop-filter: blur(12px);
+  padding: 12px 16px;
+  border-radius: 24px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.75);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: auto;
+}
+
+#model-controller-pad.hide-pad {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(20px);
+}
+
+.dpad-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dpad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 38px);
+  grid-template-rows: repeat(3, 38px);
+  gap: 4px;
+}
+
+.btn-dpad {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+  box-shadow: inset 0 0 8px rgba(212, 175, 55, 0.1);
+}
+
+.btn-dpad:active {
+  background: var(--color-gold);
+  color: var(--color-ebony);
+  transform: scale(0.92);
+  box-shadow: 0 0 12px var(--color-gold-glow);
+}
+
+.dpad-up { grid-column: 2; grid-row: 1; }
+.dpad-left { grid-column: 1; grid-row: 2; }
+.dpad-center { grid-column: 2; grid-row: 2; border-radius: 50%; font-size: 16px; background: rgba(0, 75, 35, 0.5); }
+.dpad-right { grid-column: 3; grid-row: 2; }
+.dpad-down { grid-column: 2; grid-row: 3; }
+
+.zoom-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-left: 1px solid var(--color-glass-border);
+  padding-left: 14px;
+}
+
+.btn-zoom {
+  background: linear-gradient(135deg, var(--color-emerald) 0%, #002b14 100%);
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btn-zoom:active {
+  transform: scale(0.92);
+  background: var(--color-gold);
+  color: var(--color-ebony);
+}
+
 /* Hamburger Menu Drawer */
 #drawer-menu {
   position: fixed;
@@ -283,8 +380,19 @@
   border-color: #F44336;
 }
 
-/* Mobile Responsive adjustment for Right-Side Modal */
+/* Mobile Responsive adjustment for Right-Side Modal & D-Pad */
 @media (max-width: 600px) {
+  #model-controller-pad {
+    bottom: 12px;
+    right: 12px;
+    padding: 8px 12px;
+    gap: 10px;
+  }
+  .dpad-grid {
+    grid-template-columns: repeat(3, 32px);
+    grid-template-rows: repeat(3, 32px);
+  }
+
   .modal-overlay {
     top: auto;
     left: 12px;

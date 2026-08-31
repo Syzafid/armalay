@@ -86,23 +86,23 @@ Pada fase pertama pengembangan, objek 3D yang didigitalisasi dikelompokkan ke da
 
 ### A. Wireframe Layout Smartphone Landscape (Clean & Minimalist View)
 
-#### 1. Tampilan Default Saat Marker Ter-scan (Bersih & Minimalis):
+#### 1. Tampilan Default Saat Marker Ter-scan (Bersih & Console D-Pad Active):
 ```
 +───────────────────────────────────────────────────────────────────────────+
-| 🗡️ KERIS TAMING SARI                     [Status: 🔒 Locked]   [ ☰ MENU ] |
-| (Senjata Pusaka Kesultanan Melayu)                              <-- Drawer|
+| 🗡️ KERIS TAMING SARI                     [Status: 🔒 Locked]   [ ⛶ ] [ ☰ ] |
+| (Senjata Pusaka Kesultanan Melayu)                              <-- Header|
 +───────────────────────────────────────────────────────────────────────────+
 |                                                                           |
 |                  SISI KIRI: MODEL 3D ARTEFAK MELAYU                       |
-|                   (Lengket/Fixed & Rotasi 360°)                           |
+|           (Posisi Pas -0.55 -0.05 -1.8 & Rotasi Interactive)              |
 |                                                                           |
 |                                ▲                                          |
-|                               / \   [3D Model GLB]                        |
-|                              /   \  Keris Melayu                          |
-|                             /_____\                                       |
-|                                                                           |
-|                 (Layar Bersih Tanpa Teks Panjang / Pop-up)                |
-|                                                                           |
+|                               / \   [3D Model GLB]   +──────────────────+ |
+|                              /   \  Keris Melayu     |    [▲]           | |
+|                             /_____\                  | [◄][↺][►] [🔍+][🔍-]| |
+|                                                      |    [▼]           | |
+|                                                      +──────────────────+ |
+|                                                      D-Pad Console (Kanan)|
 +───────────────────────────────────────────────────────────────────────────+
 ```
 

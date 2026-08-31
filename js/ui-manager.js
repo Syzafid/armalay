@@ -120,19 +120,35 @@ const UIManager = {
 
   openDrawer() {
     if (this.elements.drawerMenu) this.elements.drawerMenu.classList.add('open');
+    ARController.hideControllerPad();
   },
 
   closeDrawer() {
     if (this.elements.drawerMenu) this.elements.drawerMenu.classList.remove('open');
+    if (!this.isModalActive() && ARController.isScannedLocked) {
+      ARController.showControllerPad();
+    }
   },
 
   openModal(title, htmlBody) {
     if (this.elements.modalTitle) this.elements.modalTitle.innerHTML = title;
     if (this.elements.modalBody) this.elements.modalBody.innerHTML = htmlBody;
     if (this.elements.modalOverlay) this.elements.modalOverlay.classList.add('active');
+    ARController.hideControllerPad();
   },
 
   closeModal() {
     if (this.elements.modalOverlay) this.elements.modalOverlay.classList.remove('active');
+    if (!this.isDrawerOpen() && ARController.isScannedLocked) {
+      ARController.showControllerPad();
+    }
+  },
+
+  isDrawerOpen() {
+    return this.elements.drawerMenu && this.elements.drawerMenu.classList.contains('open');
+  },
+
+  isModalActive() {
+    return this.elements.modalOverlay && this.elements.modalOverlay.classList.contains('active');
   }
 };
