@@ -19,6 +19,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (startBtn && splash) {
     startBtn.addEventListener('click', () => {
+      // Auto Request Fullscreen Mode to hide browser navigation bar
+      UIManager.toggleFullscreen();
+
       splash.classList.add('hide');
       setTimeout(() => {
         splash.style.display = 'none';

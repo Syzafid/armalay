@@ -1,4 +1,4 @@
-/* AR Melayu - UI Manager Module (Drawer, Header, Modals) */
+/* AR Melayu - UI Manager Module (Drawer, Header, Modals, Fullscreen) */
 
 const UIManager = {
   elements: {},
@@ -10,6 +10,8 @@ const UIManager = {
       subtitleEl: document.getElementById('artifact-subtitle'),
       statusBadge: document.getElementById('marker-status-badge'),
       btnHamburger: document.getElementById('btn-hamburger'),
+      btnFullscreenToggle: document.getElementById('btn-fullscreen-toggle'),
+      btnDrawerFullscreen: document.getElementById('btn-drawer-fullscreen'),
       drawerMenu: document.getElementById('drawer-menu'),
       btnCloseDrawer: document.getElementById('btn-close-drawer'),
       btnHistory: document.getElementById('btn-history'),
@@ -31,6 +33,17 @@ const UIManager = {
     }
     if (this.elements.btnCloseDrawer) {
       this.elements.btnCloseDrawer.addEventListener('click', () => this.closeDrawer());
+    }
+
+    // Fullscreen Toggles
+    if (this.elements.btnFullscreenToggle) {
+      this.elements.btnFullscreenToggle.addEventListener('click', () => this.toggleFullscreen());
+    }
+    if (this.elements.btnDrawerFullscreen) {
+      this.elements.btnDrawerFullscreen.addEventListener('click', () => {
+        this.closeDrawer();
+        this.toggleFullscreen();
+      });
     }
 
     // Modal Close
@@ -57,6 +70,31 @@ const UIManager = {
         this.closeDrawer();
         ARController.resetScanState();
       });
+    }
+  },
+
+  toggleFullscreen() {
+    if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
+      const docEl = document.documentElement;
+      if (docEl.requestFullscreen) {
+        docEl.requestFullscreen().catch(err => console.log('Fullscreen blocked:', err));
+      } else if (docEl.webkitRequestFullscreen) {
+        docEl.webkitRequestFullscreen();
+      } else if (docEl.mozRequestFullScreen) {
+        docEl.mozRequestFullScreen();
+      } else if (docEl.msRequestFullscreen) {
+        docEl.msRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
     }
   },
 

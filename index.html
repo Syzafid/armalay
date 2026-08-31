@@ -25,10 +25,7 @@
   <!-- Landscape Orientation Notice Prompt -->
   <div id="landscape-prompt">
     <div class="rotate-icon">📱🔄</div>
-    <h2 style="color:var(--color-gold); font-size:18px;">Miringkan Layar HP Anda</h2>
-    <p style="font-size:13px; color:var(--color-text-muted); max-width:320px;">
-      Untuk pengalaman WebAR Melayu terbaik, putar smartphone Anda ke posisi <strong>Landscape (Mendatar)</strong>.
-    </p>
+    <span style="color:var(--color-gold); font-size:12px; font-weight:700;">Gunakan Posisi HP Landscape (Mendatar)</span>
   </div>
 
   <!-- Splash Screen -->
@@ -36,21 +33,26 @@
     <div class="splash-badge">DIGITALISASI KEBUDAYAAN MELAYU</div>
     <div class="splash-title">AR MELAYU INTERAKTIF</div>
     <div class="splash-subtitle">
-      Arahkan kamera ke <strong>Marker Kartu Nama (ar-card)</strong> atau <strong>Hiro Marker</strong> untuk menampilkan 3D Burung Hantu Melayu (Testing Phase).
+      Arahkan kamera ke <strong>Marker Kartu Nama (ar-card)</strong> atau <strong>Hiro Marker</strong> untuk menampilkan 3D Burung Hantu Melayu.
     </div>
-    <button class="btn-start" id="btn-start-ar">MULAI EKSPLORASI AR</button>
+    <button class="btn-start" id="btn-start-ar">MULAI EKSPLORASI AR ⛶</button>
   </div>
 
-  <!-- Minimalist HUD Header (Name Badge & Hamburger Button) -->
+  <!-- Minimalist HUD Header (Name Badge & Controls) -->
   <div id="hud-header">
     <div class="artifact-title-badge" id="artifact-header-badge" style="display: none;">
       <span class="title" id="artifact-title">🦉 BURUNG HANTU UKIRAN MELAYU</span>
       <span class="subtitle" id="artifact-subtitle">Artefak Simbolik Kebijaksanaan Kuno Melayu</span>
     </div>
 
-    <button class="btn-hamburger" id="btn-hamburger">
-      <span>☰</span> MENU GAME
-    </button>
+    <div class="hud-controls">
+      <button class="btn-icon" id="btn-fullscreen-toggle" title="Toggle Fullscreen Mode">
+        ⛶
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger">
+        <span>☰</span> MENU GAME
+      </button>
+    </div>
   </div>
 
   <!-- Status Indicator Badge -->
@@ -68,6 +70,9 @@
       </button>
       <button class="drawer-btn" id="btn-quiz">
         <span>🎮</span> Kuis & Tantangan XP
+      </button>
+      <button class="drawer-btn" id="btn-drawer-fullscreen">
+        <span>⛶</span> Toggle Layar Penuh (Fullscreen)
       </button>
       <button class="drawer-btn btn-reset-ar" id="btn-reset-ar">
         <span>❌</span> Tutup & Scan Marker Lain
@@ -101,11 +106,11 @@
 
     <!-- Assets Preloader -->
     <a-assets timeout="8000">
-      <a-asset-item id="owl-model-test" src="../assets/owl.glb"></a-asset-item>
+      <a-asset-item id="owl-model-test" src="assets/models/owl.glb"></a-asset-item>
     </a-assets>
 
     <!-- Marker 1: AR Card Custom Pattern Marker (marker.patt) -->
-    <a-marker id="main-marker" type="pattern" url="../marker.patt" emitevents="true" smooth="true" smoothCount="5"
+    <a-marker id="main-marker" type="pattern" url="assets/markers/marker.patt" emitevents="true" smooth="true" smoothCount="5"
       smoothTolerance="0.01" smoothThreshold="2">
     </a-marker>
 
