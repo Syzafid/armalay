@@ -9,6 +9,16 @@ const ARController = {
   scaleFactor: 0.6,
   lightIntensity: 0.9,
 
+  touchState: {
+    isDragging: false,
+    startX: 0,
+    startY: 0,
+    startRotX: 0,
+    startRotY: 0,
+    startScale: 0.6,
+    initialPinchDistance: 0
+  },
+
   init() {
     this.activeModelEl = document.getElementById('fixed-3d-model');
     this.controllerPadEl = document.getElementById('model-controller-pad');
@@ -19,6 +29,7 @@ const ARController = {
     }
     this.attachMarkerListeners();
     this.attachDPadListeners();
+    this.attachTouchListeners();
   },
 
   enhanceModelMaterials(model) {
@@ -86,6 +97,116 @@ const ARController = {
     if (btnZoomOut) btnZoomOut.addEventListener('click', () => this.zoomModel(-0.1));
     if (btnLightUp) btnLightUp.addEventListener('click', () => this.adjustLighting(0.3));
     if (btnLightDown) btnLightDown.addEventListener('click', () => this.adjustLighting(-0.3));
+  },
+
+  attachTouchListeners() {
+    const sceneEl = document.getElementById('ar-scene');
+    if (!sceneEl) return;
+
+    sceneEl.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: false });
+    sceneEl.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: false });
+    sceneEl.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: false });
+
+    sceneEl.addEventListener('mousedown', (e) => this.handleMouseDown(e));
+    window.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+    window.addEventListener('mouseup', (e) => this.handleMouseUp(e));
+    sceneEl.addEventListener('wheel', (e) => this.handleWheel(e), { passive: false });
+  },
+
+  isUiEvent(e) {
+    if (!e.target) return false;
+    return !!e.target.closest('#hud-header, #drawer-menu, .modal-overlay, #model-controller-pad, #landscape-prompt, #splash');
+  },
+
+  handleTouchStart(e) {
+    if (!this.isScannedLocked || this.isUiEvent(e)) return;
+
+    if (e.touches.length === 1) {
+      this.touchState.isDragging = true;
+      this.touchState.startX = e.touches[0].clientX;
+      this.touchState.startY = e.touches[0].clientY;
+      this.touchState.startRotX = this.rotX;
+      this.touchState.startRotY = this.rotY;
+    } else if (e.touches.length === 2) {
+      this.touchState.isDragging = false;
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      this.touchState.initialPinchDistance = Math.hypot(dx, dy);
+      this.touchState.startScale = this.scaleFactor;
+    }
+  },
+
+  handleTouchMove(e) {
+    if (!this.isScannedLocked || this.isUiEvent(e)) return;
+
+    if (e.touches.length === 1 && this.touchState.isDragging) {
+      if (e.cancelable) e.preventDefault();
+      const deltaX = e.touches[0].clientX - this.touchState.startX;
+      const deltaY = e.touches[0].clientY - this.touchState.startY;
+
+      this.rotY = (this.touchState.startRotY + deltaX * 0.5) % 360;
+      this.rotX = (this.touchState.startRotX + deltaY * 0.5) % 360;
+
+      if (this.activeModelEl) {
+        this.activeModelEl.setAttribute('rotation', `${this.rotX} ${this.rotY} 0`);
+      }
+    } else if (e.touches.length === 2 && this.touchState.initialPinchDistance > 0) {
+      if (e.cancelable) e.preventDefault();
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const currentDistance = Math.hypot(dx, dy);
+
+      const ratio = currentDistance / this.touchState.initialPinchDistance;
+      const newScale = Math.min(Math.max(0.2, this.touchState.startScale * ratio), 1.8);
+
+      this.scaleFactor = newScale;
+      const s = this.scaleFactor.toFixed(2);
+      if (this.activeModelEl) {
+        this.activeModelEl.setAttribute('scale', `${s} ${s} ${s}`);
+      }
+    }
+  },
+
+  handleTouchEnd(e) {
+    if (e.touches.length < 2) {
+      this.touchState.initialPinchDistance = 0;
+    }
+    if (e.touches.length === 0) {
+      this.touchState.isDragging = false;
+    }
+  },
+
+  handleMouseDown(e) {
+    if (!this.isScannedLocked || this.isUiEvent(e)) return;
+    this.touchState.isDragging = true;
+    this.touchState.startX = e.clientX;
+    this.touchState.startY = e.clientY;
+    this.touchState.startRotX = this.rotX;
+    this.touchState.startRotY = this.rotY;
+  },
+
+  handleMouseMove(e) {
+    if (!this.isScannedLocked || !this.touchState.isDragging) return;
+    const deltaX = e.clientX - this.touchState.startX;
+    const deltaY = e.clientY - this.touchState.startY;
+
+    this.rotY = (this.touchState.startRotY + deltaX * 0.5) % 360;
+    this.rotX = (this.touchState.startRotX + deltaY * 0.5) % 360;
+
+    if (this.activeModelEl) {
+      this.activeModelEl.setAttribute('rotation', `${this.rotX} ${this.rotY} 0`);
+    }
+  },
+
+  handleMouseUp(e) {
+    this.touchState.isDragging = false;
+  },
+
+  handleWheel(e) {
+    if (!this.isScannedLocked || this.isUiEvent(e)) return;
+    if (e.cancelable) e.preventDefault();
+    const zoomDelta = e.deltaY < 0 ? 0.08 : -0.08;
+    this.zoomModel(zoomDelta);
   },
 
   lockArtifact(artifactData) {
@@ -189,6 +310,8 @@ const ARController = {
     this.rotY = 30;
     this.scaleFactor = 0.6;
     this.lightIntensity = 0.9;
+    this.touchState.isDragging = false;
+    this.touchState.initialPinchDistance = 0;
     this.adjustLighting(0);
 
     if (this.activeModelEl) {
