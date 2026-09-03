@@ -65,9 +65,14 @@ const ARController = {
 
     console.log('Locking Artifact:', artifactData.title);
 
+    let defaultScale = 0.6;
+    if (artifactData.scale) {
+      defaultScale = parseFloat(artifactData.scale.split(' ')[0]) || 0.6;
+    }
+
     this.rotX = 0;
     this.rotY = 30;
-    this.scaleFactor = 0.6;
+    this.scaleFactor = defaultScale;
 
     UIManager.setHeaderInfo(artifactData.title, artifactData.subtitle);
     UIManager.setStatusBadge(`Terkunci: ${artifactData.title}`, true);
