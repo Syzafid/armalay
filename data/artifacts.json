@@ -1,38 +1,4 @@
 {
-  "main-marker": {
-    "id": "main-marker",
-    "title": "BURUNG HANTU UKIRAN MELAYU",
-    "subtitle": "Artefak Simbolik Kebijaksanaan Kuno Melayu",
-    "category": "Ornamen & Ukiran Woodcraft",
-    "modelPath": "#owl-model",
-    "markerImg": "assets/markers/marker_owl.png",
-    "scale": "0.6 0.6 0.6",
-    "position": "-0.55 -0.05 -1.8",
-    "rotation": "0 30 0",
-    "historyText": "Burung Hantu Ukiran Melayu merupakan motif hias kuno yang melambangkan keheningan malam, pengawasan tajam, dan kebijaksanaan para tetua adat dalam meramu hukum serta adat istiadat Melayu. Dalam ukiran kayu tradisional, motif burung hantu melambangkan penjaga nilai-nilai luhur kedamaian.",
-    "quizData": [
-      {
-        "question": "Apa makna filosofis utama ukiran Burung Hantu Melayu?",
-        "options": [
-          "Kecepatan & Keberanian",
-          "Kebijaksanaan & Keheningan Malam",
-          "Kekayaan & Kejayaan",
-          "Kekuatan Fisik"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "question": "Di mana motif ukiran simbolik burung hantu banyak ditemukan?",
-        "options": [
-          "Layar Perahu Pasang",
-          "Rumah Adat & Tiang Kebijaksanaan Adat",
-          "Kain Tenun Malam",
-          "Mata Keris"
-        ],
-        "correctIndex": 1
-      }
-    ]
-  },
   "owl-marker": {
     "id": "owl-marker",
     "title": "BURUNG HANTU UKIRAN MELAYU",
@@ -40,7 +6,7 @@
     "category": "Ornamen & Ukiran Woodcraft",
     "modelPath": "#owl-model",
     "markerImg": "assets/markers/marker_owl.png",
-    "scale": "0.6 0.6 0.6",
+    "scale": "0.55 0.55 0.55",
     "position": "-0.55 -0.05 -1.8",
     "rotation": "0 30 0",
     "historyText": "Burung Hantu Ukiran Melayu merupakan motif hias kuno yang melambangkan keheningan malam, pengawasan tajam, dan kebijaksanaan para tetua adat dalam meramu hukum serta adat istiadat Melayu. Dalam ukiran kayu tradisional, motif burung hantu melambangkan penjaga nilai-nilai luhur kedamaian.",
@@ -64,8 +30,8 @@
     "category": "Arsitektur & Hunian Adat",
     "modelPath": "#rumah-adat-model",
     "markerImg": "assets/markers/marker_rumah_adat.png",
-    "scale": "0.15 0.15 0.15",
-    "position": "-0.55 -0.25 -1.8",
+    "scale": "0.38 0.38 0.38",
+    "position": "-0.55 -0.20 -1.8",
     "rotation": "0 35 0",
     "historyText": "Rumah Adat Melayu (seperti Rumah Laksamana atau Balai Salaso Jatuh) dirancang panggung dengan hiasan atap Selembayung yang menjulang ke atas. Struktur kayu tanpa paku besi ini melambangkan keterbukaan, kehormatan menyambut tamu, dan penyatuan nilai estetika dengan kosmologi alam sekitar Melayu.",
     "quizData": [
@@ -98,8 +64,8 @@
     "category": "Wadah Tradisional & Perunggu",
     "modelPath": "#cerana-model",
     "markerImg": "assets/markers/marker_cerana.png",
-    "scale": "0.35 0.35 0.35",
-    "position": "-0.55 -0.15 -1.8",
+    "scale": "0.40 0.40 0.40",
+    "position": "-0.55 -0.12 -1.8",
     "rotation": "0 25 0",
     "historyText": "Cerana atau Tepak Sirih adalah bejana berukir perak/kuningan yang berisi kompartemen untuk sirih, pinang, kapur, gambir, dan cengkeh. Dalam adat Melayu, menyuguhkan Cerana merupakan simbol tertinggi penghormatan, perdamaian, serta pembuka kata dalam musyawarah dan peminangan.",
     "quizData": [
@@ -132,8 +98,8 @@
     "category": "Peralatan Ritual & Perunggu",
     "modelPath": "#perasapan-model",
     "markerImg": "assets/markers/marker_perasapan.png",
-    "scale": "0.35 0.35 0.35",
-    "position": "-0.55 -0.12 -1.8",
+    "scale": "0.40 0.40 0.40",
+    "position": "-0.55 -0.10 -1.8",
     "rotation": "0 30 0",
     "historyText": "Perasapan atau Tempat Pembakaran Setanggi/Dupa (Mabkhara Melayu) digunakan dalam upacara adat istana, jamuan wewangian, serta pembersihan spiritual majlis. Dibuat dari logam perunggu berukir ventilasi agar asap wewangian kayu gaharu dan kemukus membumbung harum.",
     "quizData": [
@@ -166,7 +132,7 @@
     "category": "Ornamen & Ukiran",
     "modelPath": "#owl-model",
     "markerImg": "assets/markers/marker.png",
-    "scale": "0.6 0.6 0.6",
+    "scale": "0.55 0.55 0.55",
     "position": "-0.55 -0.05 -1.8",
     "rotation": "0 30 0",
     "historyText": "Pengujian berhasil! Model 3D Burung Hantu Melayu berhasil di-load menggunakan Hiro Marker dan ditampilkan secara utuh dan jelas di sisi kiri layar.",

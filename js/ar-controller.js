@@ -7,7 +7,7 @@ const ARController = {
   rotX: 0,
   rotY: 30,
   scaleFactor: 0.6,
-  lightIntensity: 1.2,
+  lightIntensity: 0.9,
 
   init() {
     this.activeModelEl = document.getElementById('fixed-3d-model');
@@ -30,10 +30,10 @@ const ARController = {
           node.material.map.needsUpdate = true;
         }
         if (node.material.metalness > 0.4) {
-          node.material.metalness = 0.35;
+          node.material.metalness = 0.30;
         }
         if (node.material.roughness < 0.3) {
-          node.material.roughness = 0.45;
+          node.material.roughness = 0.50;
         }
         node.material.needsUpdate = true;
       }
@@ -102,6 +102,8 @@ const ARController = {
     this.rotX = 0;
     this.rotY = 30;
     this.scaleFactor = defaultScale;
+    this.lightIntensity = 0.9;
+    this.adjustLighting(0);
 
     UIManager.setHeaderInfo(artifactData.title, artifactData.subtitle);
     UIManager.setStatusBadge(`Terkunci: ${artifactData.title}`, true);
@@ -129,7 +131,7 @@ const ARController = {
   zoomModel(deltaScale) {
     if (!this.activeModelEl || !this.isScannedLocked) return;
 
-    this.scaleFactor = Math.min(Math.max(0.2, this.scaleFactor + deltaScale), 1.5);
+    this.scaleFactor = Math.min(Math.max(0.2, this.scaleFactor + deltaScale), 1.8);
     const s = this.scaleFactor.toFixed(2);
     this.activeModelEl.setAttribute('scale', `${s} ${s} ${s}`);
   },
@@ -142,18 +144,25 @@ const ARController = {
     const directional = document.getElementById('ar-directional-light');
 
     if (ambient) ambient.setAttribute('light', `type: ambient; color: #ffffff; intensity: ${val}`);
-    if (directional) directional.setAttribute('light', `type: directional; color: #ffffff; intensity: ${parseFloat(val) * 1.25}; castShadow: false`);
+    if (directional) directional.setAttribute('light', `type: directional; color: #ffffff; intensity: ${parseFloat(val) * 1.1}; castShadow: false`);
 
-    UIManager.setStatusBadge(`Cahaya: ${val}x | ${this.activeArtifact ? this.activeArtifact.title : ''}`, true);
+    if (this.isScannedLocked && this.activeArtifact) {
+      UIManager.setStatusBadge(`Cahaya: ${val}x | ${this.activeArtifact.title}`, true);
+    }
   },
 
   resetTransform() {
     if (!this.activeModelEl || !this.isScannedLocked) return;
 
+    let defaultScale = 0.6;
+    if (this.activeArtifact && this.activeArtifact.scale) {
+      defaultScale = parseFloat(this.activeArtifact.scale.split(' ')[0]) || 0.6;
+    }
+
     this.rotX = 0;
     this.rotY = 30;
-    this.scaleFactor = 0.6;
-    this.lightIntensity = 1.2;
+    this.scaleFactor = defaultScale;
+    this.lightIntensity = 0.9;
     this.adjustLighting(0);
     this.activeModelEl.setAttribute('rotation', `${this.rotX} ${this.rotY} 0`);
     this.activeModelEl.setAttribute('scale', `${this.scaleFactor} ${this.scaleFactor} ${this.scaleFactor}`);
@@ -176,6 +185,11 @@ const ARController = {
     console.log('Resetting AR Scan State...');
     this.isScannedLocked = false;
     this.activeArtifact = null;
+    this.rotX = 0;
+    this.rotY = 30;
+    this.scaleFactor = 0.6;
+    this.lightIntensity = 0.9;
+    this.adjustLighting(0);
 
     if (this.activeModelEl) {
       this.activeModelEl.setAttribute('visible', 'false');
