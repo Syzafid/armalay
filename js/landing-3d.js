@@ -26,7 +26,7 @@ const Landing3D = {
       category: "Arsitektur & Hunian Adat",
       era: "Abad Ke-16 Masehi",
       desc: "Mahakarya arsitektur tradisional panggung dengan hiasan atap Selembayung yang menjulang tinggi, melambangkan kehormatan menyuguhkan tamu.",
-      path: "assets/models/3D Rumah Adat.glb",
+      path: "assets/models/rumah_adat.glb",
       scale: 0.55,
       posY: -1.2
     },
@@ -35,7 +35,7 @@ const Landing3D = {
       category: "Wadah Tradisional & Perunggu",
       era: "Kerajaan Melayu Kuno",
       desc: "Bejana berukir perak dan kuningan sebagai simbol tertinggi penghormatan, pembuka kata musyawarah, dan penyambutan tamu kehormatan.",
-      path: "assets/models/Artefak Cerana.glb",
+      path: "assets/models/cerana.glb",
       scale: 1.3,
       posY: -0.9
     },
@@ -44,7 +44,7 @@ const Landing3D = {
       category: "Peralatan Ritual & Perunggu",
       era: "Kesultanan Melayu",
       desc: "Tempat pembakaran kemukus dan kayu gaharu berukir ventilasi harum untuk upacara adat istana dan pembersihan spiritual majlis.",
-      path: "assets/models/Artefak Perasapan.glb",
+      path: "assets/models/perasapan.glb",
       scale: 1.3,
       posY: -0.8
     }
@@ -65,6 +65,7 @@ const Landing3D = {
     this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     this.renderer.setSize(width, height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.outputEncoding = THREE.sRGBEncoding;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.2;
 
@@ -73,10 +74,10 @@ const Landing3D = {
     this.modelGroup = new THREE.Group();
     this.scene.add(this.modelGroup);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
     this.scene.add(ambientLight);
 
-    const dirLight1 = new THREE.DirectionalLight(0xd4af37, 2.5);
+    const dirLight1 = new THREE.DirectionalLight(0xe5a93c, 2.5);
     dirLight1.position.set(5, 8, 5);
     this.scene.add(dirLight1);
 
@@ -84,7 +85,7 @@ const Landing3D = {
     dirLight2.position.set(-5, -2, -5);
     this.scene.add(dirLight2);
 
-    const pointLight = new THREE.PointLight(0xd4af37, 2, 10);
+    const pointLight = new THREE.PointLight(0xe5a93c, 2, 10);
     pointLight.position.set(0, 2, 2);
     this.scene.add(pointLight);
 
@@ -96,6 +97,25 @@ const Landing3D = {
     window.addEventListener('mousemove', (e) => this.onMouseMove(e));
 
     this.animate();
+  },
+
+  enhanceModelMaterials(model) {
+    if (!model) return;
+    model.traverse((node) => {
+      if (node.isMesh && node.material) {
+        if (node.material.map) {
+          node.material.map.encoding = THREE.sRGBEncoding;
+          node.material.map.needsUpdate = true;
+        }
+        if (node.material.metalness > 0.4) {
+          node.material.metalness = 0.35;
+        }
+        if (node.material.roughness < 0.3) {
+          node.material.roughness = 0.45;
+        }
+        node.material.needsUpdate = true;
+      }
+    });
   },
 
   loadArtifact(index) {
@@ -127,6 +147,7 @@ const Landing3D = {
       item.path,
       (gltf) => {
         const model = gltf.scene;
+        this.enhanceModelMaterials(model);
         model.scale.set(item.scale, item.scale, item.scale);
         model.position.set(0, item.posY, 0);
 

@@ -106,8 +106,14 @@
       </div>
     </div>
     <div class="zoom-controls">
+      <span class="control-label">ZOOM</span>
       <button class="btn-zoom" id="btn-zoom-in" title="Perbesar (Zoom In)">+</button>
       <button class="btn-zoom" id="btn-zoom-out" title="Perkecil (Zoom Out)">-</button>
+    </div>
+    <div class="light-controls">
+      <span class="control-label">CAHAYA</span>
+      <button class="btn-light" id="btn-light-up" title="Tambah Cahaya Model">L+</button>
+      <button class="btn-light" id="btn-light-down" title="Kurangi Cahaya Model">L-</button>
     </div>
   </div>
 
@@ -158,10 +164,13 @@
 
     <a-assets timeout="10000">
       <a-asset-item id="owl-model" src="assets/models/owl.glb"></a-asset-item>
-      <a-asset-item id="rumah-adat-model" src="assets/models/3D Rumah Adat.glb"></a-asset-item>
-      <a-asset-item id="cerana-model" src="assets/models/Artefak Cerana.glb"></a-asset-item>
-      <a-asset-item id="perasapan-model" src="assets/models/Artefak Perasapan.glb"></a-asset-item>
+      <a-asset-item id="rumah-adat-model" src="assets/models/rumah_adat.glb"></a-asset-item>
+      <a-asset-item id="cerana-model" src="assets/models/cerana.glb"></a-asset-item>
+      <a-asset-item id="perasapan-model" src="assets/models/perasapan.glb"></a-asset-item>
     </a-assets>
+
+    <a-entity id="ar-ambient-light" light="type: ambient; color: #ffffff; intensity: 1.2"></a-entity>
+    <a-entity id="ar-directional-light" light="type: directional; color: #ffffff; intensity: 1.5; castShadow: false" position="1 4 2"></a-entity>
 
     <a-marker id="main-marker" type="pattern" url="assets/markers/marker.patt" emitevents="true" smooth="true" smoothCount="5"
       smoothTolerance="0.01" smoothThreshold="2">

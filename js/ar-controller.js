@@ -7,12 +7,37 @@ const ARController = {
   rotX: 0,
   rotY: 30,
   scaleFactor: 0.6,
+  lightIntensity: 1.2,
 
   init() {
     this.activeModelEl = document.getElementById('fixed-3d-model');
     this.controllerPadEl = document.getElementById('model-controller-pad');
+    if (this.activeModelEl) {
+      this.activeModelEl.addEventListener('model-loaded', (e) => {
+        this.enhanceModelMaterials(e.detail.model);
+      });
+    }
     this.attachMarkerListeners();
     this.attachDPadListeners();
+  },
+
+  enhanceModelMaterials(model) {
+    if (!model) return;
+    model.traverse((node) => {
+      if (node.isMesh && node.material) {
+        if (node.material.map) {
+          node.material.map.encoding = THREE.sRGBEncoding;
+          node.material.map.needsUpdate = true;
+        }
+        if (node.material.metalness > 0.4) {
+          node.material.metalness = 0.35;
+        }
+        if (node.material.roughness < 0.3) {
+          node.material.roughness = 0.45;
+        }
+        node.material.needsUpdate = true;
+      }
+    });
   },
 
   attachMarkerListeners() {
@@ -49,6 +74,8 @@ const ARController = {
     const btnReset = document.getElementById('btn-rot-reset');
     const btnZoomIn = document.getElementById('btn-zoom-in');
     const btnZoomOut = document.getElementById('btn-zoom-out');
+    const btnLightUp = document.getElementById('btn-light-up');
+    const btnLightDown = document.getElementById('btn-light-down');
 
     if (btnUp) btnUp.addEventListener('click', () => this.rotateModel(-15, 0));
     if (btnDown) btnDown.addEventListener('click', () => this.rotateModel(15, 0));
@@ -57,6 +84,8 @@ const ARController = {
     if (btnReset) btnReset.addEventListener('click', () => this.resetTransform());
     if (btnZoomIn) btnZoomIn.addEventListener('click', () => this.zoomModel(0.1));
     if (btnZoomOut) btnZoomOut.addEventListener('click', () => this.zoomModel(-0.1));
+    if (btnLightUp) btnLightUp.addEventListener('click', () => this.adjustLighting(0.3));
+    if (btnLightDown) btnLightDown.addEventListener('click', () => this.adjustLighting(-0.3));
   },
 
   lockArtifact(artifactData) {
@@ -105,12 +134,27 @@ const ARController = {
     this.activeModelEl.setAttribute('scale', `${s} ${s} ${s}`);
   },
 
+  adjustLighting(delta) {
+    this.lightIntensity = Math.min(Math.max(0.3, this.lightIntensity + delta), 3.5);
+    const val = this.lightIntensity.toFixed(1);
+
+    const ambient = document.getElementById('ar-ambient-light');
+    const directional = document.getElementById('ar-directional-light');
+
+    if (ambient) ambient.setAttribute('light', `type: ambient; color: #ffffff; intensity: ${val}`);
+    if (directional) directional.setAttribute('light', `type: directional; color: #ffffff; intensity: ${parseFloat(val) * 1.25}; castShadow: false`);
+
+    UIManager.setStatusBadge(`Cahaya: ${val}x | ${this.activeArtifact ? this.activeArtifact.title : ''}`, true);
+  },
+
   resetTransform() {
     if (!this.activeModelEl || !this.isScannedLocked) return;
 
     this.rotX = 0;
     this.rotY = 30;
     this.scaleFactor = 0.6;
+    this.lightIntensity = 1.2;
+    this.adjustLighting(0);
     this.activeModelEl.setAttribute('rotation', `${this.rotX} ${this.rotY} 0`);
     this.activeModelEl.setAttribute('scale', `${this.scaleFactor} ${this.scaleFactor} ${this.scaleFactor}`);
   },
