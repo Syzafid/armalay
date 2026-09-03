@@ -10,107 +10,98 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
 
-  <!-- A-Frame & AR.js Libraries -->
   <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.0/dist/aframe-extras.min.js"></script>
 
-  <!-- Custom CSS -->
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/game-ui.css" />
 </head>
 
 <body>
 
-  <!-- Landscape Orientation Notice Prompt -->
   <div id="landscape-prompt">
-    <div class="rotate-icon">📱🔄</div>
     <span style="color:var(--color-gold); font-size:12px; font-weight:700;">Gunakan Posisi HP Landscape (Mendatar)</span>
   </div>
 
-  <!-- Splash Screen -->
   <div id="splash">
     <div class="splash-badge">DIGITALISASI KEBUDAYAAN MELAYU</div>
     <div class="splash-title">AR MELAYU INTERAKTIF</div>
     <div class="splash-subtitle">
       Arahkan kamera ke <strong>Marker Kartu Nama (ar-card)</strong> atau <strong>Hiro Marker</strong> untuk menampilkan 3D Burung Hantu Melayu.
     </div>
-    <button class="btn-start" id="btn-start-ar">MULAI EKSPLORASI AR ⛶</button>
+    <button class="btn-start" id="btn-start-ar">MULAI EKSPLORASI AR</button>
   </div>
 
-  <!-- Minimalist HUD Header (Name Badge & Controls) -->
   <div id="hud-header">
     <div class="artifact-title-badge" id="artifact-header-badge" style="display: none;">
-      <span class="title" id="artifact-title">🦉 BURUNG HANTU UKIRAN MELAYU</span>
+      <span class="title" id="artifact-title">BURUNG HANTU UKIRAN MELAYU</span>
       <span class="subtitle" id="artifact-subtitle">Artefak Simbolik Kebijaksanaan Kuno Melayu</span>
     </div>
 
     <div class="hud-controls">
       <button class="btn-icon" id="btn-fullscreen-toggle" title="Toggle Fullscreen Mode">
-        ⛶
+        [ ]
       </button>
       <button class="btn-hamburger" id="btn-hamburger">
-        <span>☰</span> MENU GAME
+        MENU GAME
       </button>
     </div>
   </div>
 
-  <!-- Status Indicator Badge -->
-  <div id="marker-status-badge">🔍 Mencari Marker Kartu Nama...</div>
+  <div id="marker-status-badge">Mencari Marker Kartu Nama...</div>
 
-  <!-- Console-style D-Pad & Zoom 3D Model Controller (Bottom-Right Screen) -->
   <div id="model-controller-pad" style="display: none;">
     <div class="dpad-container">
       <div class="dpad-grid">
         <button class="btn-dpad dpad-up" id="btn-rot-up" title="Putar Ke Atas">▲</button>
         <button class="btn-dpad dpad-left" id="btn-rot-left" title="Putar Ke Kiri">◄</button>
-        <button class="btn-dpad dpad-center" id="btn-rot-reset" title="Reset Rotasi">↺</button>
+        <button class="btn-dpad dpad-center" id="btn-rot-reset" title="Reset Rotasi">R</button>
         <button class="btn-dpad dpad-right" id="btn-rot-right" title="Putar Ke Kanan">►</button>
         <button class="btn-dpad dpad-down" id="btn-rot-down" title="Putar Ke Bawah">▼</button>
       </div>
     </div>
     <div class="zoom-controls">
-      <button class="btn-zoom" id="btn-zoom-in" title="Perbesar (Zoom In)">🔍+</button>
-      <button class="btn-zoom" id="btn-zoom-out" title="Perkecil (Zoom Out)">🔍-</button>
+      <button class="btn-zoom" id="btn-zoom-in" title="Perbesar (Zoom In)">+</button>
+      <button class="btn-zoom" id="btn-zoom-out" title="Perkecil (Zoom Out)">-</button>
     </div>
   </div>
 
-  <!-- Hamburger Menu Drawer (Slide-in from Right) -->
   <div id="drawer-menu">
     <div class="drawer-header">
       <span class="drawer-title">MENU GAME AR MELAYU</span>
-      <button class="btn-close-drawer" id="btn-close-drawer">✖</button>
+      <button class="btn-close-drawer" id="btn-close-drawer">X</button>
     </div>
     <div class="drawer-content">
       <button class="drawer-btn" id="btn-history">
-        <span>📜</span> Sejarah & Detail Artefak
+        Sejarah & Detail Artefak
       </button>
       <button class="drawer-btn" id="btn-quiz">
-        <span>🎮</span> Kuis & Tantangan XP
+        Kuis & Tantangan XP
+      </button>
+      <button class="drawer-btn" id="btn-marker-gallery">
+        Galeri Marker & Unduh PNG
       </button>
       <button class="drawer-btn" id="btn-drawer-fullscreen">
-        <span>⛶</span> Toggle Layar Penuh (Fullscreen)
+        Toggle Layar Penuh (Fullscreen)
       </button>
       <button class="drawer-btn btn-reset-ar" id="btn-reset-ar">
-        <span>❌</span> Tutup & Scan Marker Lain
+        Tutup & Scan Marker Lain
       </button>
     </div>
   </div>
 
-  <!-- Modal Pop-up Overlay -->
   <div class="modal-overlay" id="modal-overlay">
     <div class="modal-box">
       <div class="modal-header">
-        <h3 id="modal-title">📜 Sejarah Artefak</h3>
-        <button class="btn-close-drawer" id="btn-close-modal">✖</button>
+        <h3 id="modal-title">Sejarah Artefak</h3>
+        <button class="btn-close-drawer" id="btn-close-modal">X</button>
       </div>
       <div class="modal-body" id="modal-body">
-        <!-- Content injected dynamically -->
       </div>
     </div>
   </div>
 
-  <!-- WebAR Scene Multi-Marker Setup -->
   <a-scene id="ar-scene" embedded arjs="sourceType: webcam;
           sourceWidth: 640;
           sourceHeight: 480;
@@ -121,21 +112,32 @@
           patternRatio: 0.90;" renderer="logarithmicDepthBuffer: false; antialias: true; alpha: true;"
     vr-mode-ui="enabled: false">
 
-    <!-- Assets Preloader -->
-    <a-assets timeout="8000">
-      <a-asset-item id="owl-model-test" src="assets/models/owl.glb"></a-asset-item>
+    <a-assets timeout="10000">
+      <a-asset-item id="owl-model" src="assets/models/owl.glb"></a-asset-item>
+      <a-asset-item id="rumah-adat-model" src="assets/models/3D Rumah Adat.glb"></a-asset-item>
+      <a-asset-item id="cerana-model" src="assets/models/Artefak Cerana.glb"></a-asset-item>
+      <a-asset-item id="perasapan-model" src="assets/models/Artefak Perasapan.glb"></a-asset-item>
     </a-assets>
 
-    <!-- Marker 1: AR Card Custom Pattern Marker (marker.patt) -->
     <a-marker id="main-marker" type="pattern" url="assets/markers/marker.patt" emitevents="true" smooth="true" smoothCount="5"
       smoothTolerance="0.01" smoothThreshold="2">
     </a-marker>
 
-    <!-- Marker 2: Standard Hiro Marker (Preset Fallback) -->
+    <a-marker id="owl-marker" type="pattern" url="assets/markers/marker_owl.patt" emitevents="true" smooth="true" smoothCount="5">
+    </a-marker>
+
+    <a-marker id="rumah-adat-marker" type="pattern" url="assets/markers/marker_rumah_adat.patt" emitevents="true" smooth="true" smoothCount="5">
+    </a-marker>
+
+    <a-marker id="cerana-marker" type="pattern" url="assets/markers/marker_cerana.patt" emitevents="true" smooth="true" smoothCount="5">
+    </a-marker>
+
+    <a-marker id="perasapan-marker" type="pattern" url="assets/markers/marker_perasapan.patt" emitevents="true" smooth="true" smoothCount="5">
+    </a-marker>
+
     <a-marker id="hiro-marker" preset="hiro" emitevents="true">
     </a-marker>
 
-    <!-- Camera and Sticky Viewport Entity (Positioned on Left Side of Viewport Screen) -->
     <a-entity camera look-controls>
       <a-gltf-model id="fixed-3d-model" visible="false" animation-mixer="clip: Animation; loop: repeat; crossFadeDuration: 0.3;">
       </a-gltf-model>
@@ -143,7 +145,6 @@
 
   </a-scene>
 
-  <!-- Application Modules -->
   <script src="js/artifact-loader.js"></script>
   <script src="js/ui-manager.js"></script>
   <script src="js/gamification.js"></script>

@@ -1,5 +1,3 @@
-/* AR Melayu - UI Manager Module (Drawer, Header, Modals, Fullscreen) */
-
 const UIManager = {
   elements: {},
 
@@ -16,6 +14,7 @@ const UIManager = {
       btnCloseDrawer: document.getElementById('btn-close-drawer'),
       btnHistory: document.getElementById('btn-history'),
       btnQuiz: document.getElementById('btn-quiz'),
+      btnMarkerGallery: document.getElementById('btn-marker-gallery'),
       btnResetAR: document.getElementById('btn-reset-ar'),
       modalOverlay: document.getElementById('modal-overlay'),
       modalTitle: document.getElementById('modal-title'),
@@ -27,7 +26,6 @@ const UIManager = {
   },
 
   attachEvents() {
-    // Drawer Toggles
     if (this.elements.btnHamburger) {
       this.elements.btnHamburger.addEventListener('click', () => this.openDrawer());
     }
@@ -35,7 +33,6 @@ const UIManager = {
       this.elements.btnCloseDrawer.addEventListener('click', () => this.closeDrawer());
     }
 
-    // Fullscreen Toggles
     if (this.elements.btnFullscreenToggle) {
       this.elements.btnFullscreenToggle.addEventListener('click', () => this.toggleFullscreen());
     }
@@ -46,31 +43,75 @@ const UIManager = {
       });
     }
 
-    // Modal Close
     if (this.elements.btnCloseModal) {
       this.elements.btnCloseModal.addEventListener('click', () => this.closeModal());
     }
 
-    // History Modal Button
     if (this.elements.btnHistory) {
       this.elements.btnHistory.addEventListener('click', () => {
         this.closeDrawer();
         const activeData = ARController.activeArtifact;
         if (activeData) {
-          this.openModal(`📜 Sejarah ${activeData.title}`, `<p>${activeData.historyText}</p>`);
+          this.openModal(`Sejarah ${activeData.title}`, `<p>${activeData.historyText}</p>`);
         } else {
-          this.openModal('📜 Sejarah Artefak', '<p>Belum ada artefak yang ter-scan. Silakan pindai marker terlebih dahulu.</p>');
+          this.openModal('Sejarah Artefak', '<p>Belum ada artefak yang ter-scan. Silakan pindai marker terlebih dahulu.</p>');
         }
       });
     }
 
-    // Reset AR Button
+    if (this.elements.btnMarkerGallery) {
+      this.elements.btnMarkerGallery.addEventListener('click', () => {
+        this.openMarkerGallery();
+      });
+    }
+
     if (this.elements.btnResetAR) {
       this.elements.btnResetAR.addEventListener('click', () => {
         this.closeDrawer();
         ARController.resetScanState();
       });
     }
+  },
+
+  openMarkerGallery() {
+    this.closeDrawer();
+    const artifacts = ArtifactLoader.data;
+    if (!artifacts || Object.keys(artifacts).length === 0) {
+      this.openModal('Galeri Marker AR Melayu', '<p>Data marker belum siap.</p>');
+      return;
+    }
+
+    let cardsHtml = '';
+    const keys = ['owl-marker', 'rumah-adat-marker', 'cerana-marker', 'perasapan-marker'];
+
+    keys.forEach(key => {
+      const item = artifacts[key];
+      if (item) {
+        cardsHtml += `
+          <div class="marker-card">
+            <div class="marker-card-img-wrapper">
+              <img src="${item.markerImg}" alt="${item.title}" />
+            </div>
+            <div class="marker-card-title">${item.title}</div>
+            <div class="marker-card-sub">${item.category}</div>
+            <a href="${item.markerImg}" download="${key}.png" class="btn-download-marker">
+              Unduh Marker PNG
+            </a>
+          </div>
+        `;
+      }
+    });
+
+    const bodyHtml = `
+      <p style="margin-bottom: 12px; font-size: 11px; color: var(--color-text-muted); line-height: 1.4;">
+        Arahkan kamera ke salah satu gambar marker PNG di bawah ini. Anda dapat mengunduh PNG marker untuk dicetak/discan langsung dari layar lain. Untuk mengubah PNG menjadi file <code>.patt</code> custom, unggah gambar ke <a href="https://ar-js-org.github.io/AR.js/three.js/examples/marker-training/examples/generator.html" target="_blank" style="color:var(--color-gold); font-weight:bold;">AR.js Marker Training Generator</a>.
+      </p>
+      <div class="marker-grid">
+        ${cardsHtml}
+      </div>
+    `;
+
+    this.openModal('Galeri Marker AR Melayu', bodyHtml);
   },
 
   toggleFullscreen() {

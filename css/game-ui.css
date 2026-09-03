@@ -1,6 +1,3 @@
-/* AR Melayu - Game UI & Hamburger Drawer Styles */
-
-/* Top HUD Bar (Minimalist Header) */
 #hud-header {
   position: fixed;
   top: 14px;
@@ -68,7 +65,6 @@
   transform: scale(0.90);
 }
 
-/* Status Indicator Badge */
 #marker-status-badge {
   position: fixed;
   bottom: 14px;
@@ -90,7 +86,6 @@
   color: var(--color-gold);
 }
 
-/* Hamburger Button */
 .btn-hamburger {
   background: linear-gradient(135deg, var(--color-emerald) 0%, #002b14 100%);
   border: 1.5px solid var(--color-gold);
@@ -112,7 +107,6 @@
   transform: scale(0.92);
 }
 
-/* Console-style D-Pad & Zoom Controller (Bottom-Right Screen) */
 #model-controller-pad {
   position: fixed;
   bottom: 20px;
@@ -209,7 +203,6 @@
   color: var(--color-ebony);
 }
 
-/* Hamburger Menu Drawer */
 #drawer-menu {
   position: fixed;
   top: 0;
@@ -293,7 +286,6 @@
   margin-top: auto;
 }
 
-/* Right-Side Pop-up Modal Panel (Side-by-Side Split View) */
 .modal-overlay {
   position: fixed;
   top: 70px;
@@ -380,7 +372,6 @@
   border-color: #F44336;
 }
 
-/* Mobile Responsive adjustment for Right-Side Modal & D-Pad */
 @media (max-width: 600px) {
   #model-controller-pad {
     bottom: 12px;
@@ -406,4 +397,80 @@
   .modal-overlay.active {
     transform: translateY(0);
   }
+}
+
+.marker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.marker-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.marker-card:hover {
+  border-color: var(--color-gold);
+  transform: translateY(-2px);
+}
+
+.marker-card-img-wrapper {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.marker-card-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.marker-card-title {
+  color: var(--color-gold);
+  font-weight: 800;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.marker-card-sub {
+  color: var(--color-text-muted);
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.btn-download-marker {
+  background: linear-gradient(135deg, var(--color-emerald) 0%, #002b14 100%);
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  width: 100%;
+  display: inline-block;
+  margin-top: 4px;
+  transition: transform 0.15s;
+}
+
+.btn-download-marker:active {
+  transform: scale(0.95);
 }

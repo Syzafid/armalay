@@ -1,12 +1,9 @@
-/* AR Melayu - AR Controller Module (Multi-Marker, Persistent Lock, D-Pad Controls) */
-
 const ARController = {
   isScannedLocked: false,
   activeArtifact: null,
   activeModelEl: null,
   controllerPadEl: null,
 
-  // Transform States
   rotX: 0,
   rotY: 30,
   scaleFactor: 0.6,
@@ -23,7 +20,7 @@ const ARController = {
     markers.forEach(marker => {
       marker.addEventListener('markerFound', () => {
         if (this.isScannedLocked) {
-          console.log('🔒 System locked. Ignoring re-scan of marker:', marker.id);
+          console.log('System locked. Ignoring re-scan of marker:', marker.id);
           return;
         }
 
@@ -37,7 +34,7 @@ const ARController = {
 
       marker.addEventListener('markerLost', () => {
         if (this.isScannedLocked) {
-          console.log('🔒 Marker lost, but 3D model remains locked on screen.');
+          console.log('Marker lost, but 3D model remains locked on screen.');
           return;
         }
       });
@@ -66,18 +63,15 @@ const ARController = {
     this.isScannedLocked = true;
     this.activeArtifact = artifactData;
 
-    console.log('📌 Locking Artifact:', artifactData.title);
+    console.log('Locking Artifact:', artifactData.title);
 
-    // Reset initial transform states
     this.rotX = 0;
     this.rotY = 30;
     this.scaleFactor = 0.6;
 
-    // Update Header Text Minimalis
     UIManager.setHeaderInfo(artifactData.title, artifactData.subtitle);
-    UIManager.setStatusBadge(`🔒 Terkunci: ${artifactData.title}`, true);
+    UIManager.setStatusBadge(`Terkunci: ${artifactData.title}`, true);
 
-    // Load & Render 3D Model on Left Side Camera Anchor Viewport (-0.55 -0.05 -1.8)
     if (this.activeModelEl) {
       this.activeModelEl.setAttribute('gltf-model', artifactData.modelPath);
       this.activeModelEl.setAttribute('scale', `${this.scaleFactor} ${this.scaleFactor} ${this.scaleFactor}`);
@@ -86,7 +80,6 @@ const ARController = {
       this.activeModelEl.setAttribute('visible', 'true');
     }
 
-    // Show D-Pad Controller
     this.showControllerPad();
   },
 
@@ -131,7 +124,7 @@ const ARController = {
   },
 
   resetScanState() {
-    console.log('🔄 Resetting AR Scan State...');
+    console.log('Resetting AR Scan State...');
     this.isScannedLocked = false;
     this.activeArtifact = null;
 
@@ -146,6 +139,6 @@ const ARController = {
     }
 
     UIManager.hideHeaderInfo();
-    UIManager.setStatusBadge('🔍 Mencari Marker Melayu...', false);
+    UIManager.setStatusBadge('Mencari Marker Melayu...', false);
   }
 };
