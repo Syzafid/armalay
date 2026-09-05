@@ -4,18 +4,12 @@ const Landing3D = {
   renderer: null,
   currentModel: null,
   modelGroup: null,
-  particlesGroup: null,
   targetRotationX: 0,
   targetRotationY: 0,
-  dragRotationX: 0,
-  dragRotationY: 0,
-  isDragging: false,
-  previousMousePosition: { x: 0, y: 0 },
   mouseX: 0,
   mouseY: 0,
   currentIndex: 0,
   loader: null,
-  clock: null,
 
   artifacts: [
     {
@@ -63,7 +57,6 @@ const Landing3D = {
     const width = container.clientWidth;
     const height = container.clientHeight;
 
-    this.clock = new THREE.Clock();
     this.scene = new THREE.Scene();
 
     this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
@@ -80,8 +73,6 @@ const Landing3D = {
 
     this.modelGroup = new THREE.Group();
     this.scene.add(this.modelGroup);
-
-    this.createGoldenParticles();
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
     this.scene.add(ambientLight);
@@ -105,80 +96,7 @@ const Landing3D = {
     window.addEventListener('resize', () => this.onWindowResize());
     window.addEventListener('mousemove', (e) => this.onMouseMove(e));
 
-    this.attachDragListeners(container);
-
     this.animate();
-  },
-
-  createGoldenParticles() {
-    const particleCount = 75;
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    const scales = new Float32Array(particleCount);
-
-    for (let i = 0; i < particleCount; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 8;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 8;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 5;
-      scales[i] = Math.random() * 0.05 + 0.02;
-    }
-
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-    const material = new THREE.PointsMaterial({
-      color: 0xe5a93c,
-      size: 0.06,
-      transparent: true,
-      opacity: 0.65,
-      blending: THREE.AdditiveBlending
-    });
-
-    this.particlesGroup = new THREE.Points(geometry, material);
-    this.scene.add(this.particlesGroup);
-  },
-
-  attachDragListeners(container) {
-    container.addEventListener('mousedown', (e) => {
-      this.isDragging = true;
-      this.previousMousePosition = { x: e.clientX, y: e.clientY };
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      if (!this.isDragging) return;
-      const deltaX = e.clientX - this.previousMousePosition.x;
-      const deltaY = e.clientY - this.previousMousePosition.y;
-
-      this.dragRotationY += deltaX * 0.008;
-      this.dragRotationX += deltaY * 0.008;
-
-      this.previousMousePosition = { x: e.clientX, y: e.clientY };
-    });
-
-    window.addEventListener('mouseup', () => {
-      this.isDragging = false;
-    });
-
-    container.addEventListener('touchstart', (e) => {
-      if (e.touches.length === 1) {
-        this.isDragging = true;
-        this.previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-      }
-    }, { passive: true });
-
-    window.addEventListener('touchmove', (e) => {
-      if (!this.isDragging || e.touches.length !== 1) return;
-      const deltaX = e.touches[0].clientX - this.previousMousePosition.x;
-      const deltaY = e.touches[0].clientY - this.previousMousePosition.y;
-
-      this.dragRotationY += deltaX * 0.008;
-      this.dragRotationX += deltaY * 0.008;
-
-      this.previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    }, { passive: true });
-
-    window.addEventListener('touchend', () => {
-      this.isDragging = false;
-    });
   },
 
   enhanceModelMaterials(model) {
@@ -226,8 +144,8 @@ const Landing3D = {
         }
         heroBox.classList.remove('text-fade-out');
         heroBox.classList.add('text-fade-in');
-        setTimeout(() => heroBox.classList.remove('text-fade-in'), 400);
-      }, 200);
+        setTimeout(() => heroBox.classList.remove('text-fade-in'), 350);
+      }, 180);
     } else {
       if (titleEl) titleEl.textContent = item.name;
       if (catEl) catEl.textContent = item.category;
@@ -239,8 +157,6 @@ const Landing3D = {
       }
     }
 
-    this.updateActiveThumbnail(index);
-
     while (this.modelGroup.children.length > 0) {
       this.modelGroup.remove(this.modelGroup.children[0]);
     }
@@ -250,17 +166,17 @@ const Landing3D = {
       (gltf) => {
         const model = gltf.scene;
         this.enhanceModelMaterials(model);
-        model.scale.set(item.scale * 0.7, item.scale * 0.7, item.scale * 0.7);
+        model.scale.set(item.scale * 0.75, item.scale * 0.75, item.scale * 0.75);
         model.position.set(0, item.posY, 0);
 
         this.modelGroup.add(model);
         this.currentModel = model;
 
-        let scaleProgress = 0.7;
+        let currentProgress = 0.75;
         const animateScale = () => {
-          if (scaleProgress < 1.0) {
-            scaleProgress += 0.03;
-            const currentScale = item.scale * scaleProgress;
+          if (currentProgress < 1.0) {
+            currentProgress += 0.025;
+            const currentScale = item.scale * currentProgress;
             model.scale.set(currentScale, currentScale, currentScale);
             requestAnimationFrame(animateScale);
           }
@@ -272,17 +188,6 @@ const Landing3D = {
         console.error('Error loading 3D model for landing:', error);
       }
     );
-  },
-
-  updateActiveThumbnail(index) {
-    const thumbs = document.querySelectorAll('.landing-thumb-card');
-    thumbs.forEach((thumb, idx) => {
-      if (idx === index) {
-        thumb.classList.add('active');
-      } else {
-        thumb.classList.remove('active');
-      }
-    });
   },
 
   nextArtifact() {
@@ -299,8 +204,8 @@ const Landing3D = {
     this.mouseX = (event.clientX / window.innerWidth) * 2 - 1;
     this.mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
 
-    this.targetRotationY = this.mouseX * 0.5;
-    this.targetRotationX = this.mouseY * 0.3;
+    this.targetRotationY = this.mouseX * 0.6;
+    this.targetRotationX = this.mouseY * 0.4;
   },
 
   onWindowResize() {
@@ -318,20 +223,11 @@ const Landing3D = {
   animate() {
     requestAnimationFrame(() => this.animate());
 
-    const elapsedTime = this.clock ? this.clock.getElapsedTime() : 0;
-
     if (this.modelGroup) {
-      this.modelGroup.rotation.y += 0.005;
+      this.modelGroup.rotation.y += 0.006;
 
-      this.modelGroup.rotation.y += (this.targetRotationY + this.dragRotationY - this.modelGroup.rotation.y) * 0.06;
-      this.modelGroup.rotation.x += (this.targetRotationX + this.dragRotationX - this.modelGroup.rotation.x) * 0.06;
-
-      this.modelGroup.position.y = Math.sin(elapsedTime * 1.5) * 0.12;
-    }
-
-    if (this.particlesGroup) {
-      this.particlesGroup.rotation.y = elapsedTime * 0.03;
-      this.particlesGroup.rotation.x = Math.sin(elapsedTime * 0.02) * 0.1;
+      this.modelGroup.rotation.y += (this.targetRotationY - this.modelGroup.rotation.y) * 0.05;
+      this.modelGroup.rotation.x += (this.targetRotationX - this.modelGroup.rotation.x) * 0.05;
     }
 
     if (this.renderer && this.scene && this.camera) {

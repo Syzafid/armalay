@@ -200,6 +200,8 @@ canvas.a-canvas {
 }
 
 .btn-start-museum {
+  position: relative;
+  overflow: hidden;
   padding: 16px 36px;
   background: var(--color-gold);
   color: #111111;
@@ -211,17 +213,37 @@ canvas.a-canvas {
   border-radius: 2px;
   cursor: pointer;
   box-shadow: 0 4px 15px var(--color-gold-glow);
-  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  transition: background 0.2s, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-20deg);
+  animation: shimmer-sweep 3.5s infinite ease-in-out;
+}
+
+@keyframes shimmer-sweep {
+  0% {
+    left: -100%;
+  }
+  30%, 100% {
+    left: 200%;
+  }
 }
 
 .btn-start-museum:hover {
   background: #EEB345;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(229, 169, 60, 0.45);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(229, 169, 60, 0.55);
 }
 
 .btn-start-museum:active {
-  transform: translateY(0);
+  transform: translateY(-1px) scale(1.00);
 }
 
 .landing-carousel-nav {
@@ -281,128 +303,18 @@ canvas.a-canvas {
   white-space: nowrap;
 }
 
-.landing-status-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  background: rgba(18, 18, 18, 0.05);
-  border: 1px solid rgba(229, 169, 60, 0.4);
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: var(--color-ebony);
-}
-
-.pulse-dot {
-  width: 8px;
-  height: 8px;
-  background: #10B981;
-  border-radius: 50%;
-  box-shadow: 0 0 8px #10B981;
-  animation: pulse-glow 1.8s infinite ease-in-out;
-}
-
-@keyframes pulse-glow {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.35);
-    opacity: 0.6;
-  }
-}
-
-.landing-3d-hint {
+.landing-pagination {
   position: absolute;
-  top: 24px;
-  right: 32px;
-  z-index: 5;
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--color-text-muted);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
-
-.hint-icon {
-  font-size: 13px;
-  color: var(--color-gold-dark);
-}
-
-.landing-thumbnails {
-  position: absolute;
-  bottom: 28px;
-  right: 32px;
-  z-index: 5;
-  display: flex;
-  gap: 10px;
-}
-
-.landing-thumb-card {
-  padding: 10px 16px;
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-}
-
-.landing-thumb-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--color-gold);
-  background: #ffffff;
-  box-shadow: 0 8px 25px rgba(229, 169, 60, 0.25);
-}
-
-.landing-thumb-card.active {
-  background: var(--color-ebony);
-  border-color: var(--color-gold);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-}
-
-.landing-thumb-card .thumb-num {
-  font-size: 9px;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  font-family: var(--font-serif);
+  font-size: 18px;
   font-weight: 800;
-  letter-spacing: 1px;
-  color: var(--color-gold);
-}
-
-.landing-thumb-card .thumb-name {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--color-text-dark);
-}
-
-.landing-thumb-card.active .thumb-name {
-  color: #ffffff;
-}
-
-.text-fade-out {
-  opacity: 0;
-  transform: translateY(-8px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.text-fade-in {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  letter-spacing: 3px;
+  color: var(--color-ebony);
+  z-index: 5;
+  white-space: nowrap;
 }
 
 .landing-bg-lines {
@@ -418,6 +330,89 @@ canvas.a-canvas {
   width: 1px;
   height: 100%;
   background: var(--color-grid-line);
+}
+
+.landing-pedestal-glow {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 60px;
+  background: radial-gradient(ellipse at center, rgba(229, 169, 60, 0.35) 0%, rgba(229, 169, 60, 0.1) 45%, transparent 75%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(12px);
+  animation: pedestal-pulse 3s infinite ease-in-out;
+}
+
+@keyframes pedestal-pulse {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(-50%) scale(1.15);
+    opacity: 1;
+  }
+}
+
+.line-pulse {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(180deg, transparent, rgba(229, 169, 60, 0.5), transparent);
+  animation: line-sweep 6s infinite linear;
+}
+
+.line-pulse.delay-1 {
+  animation-delay: 2s;
+}
+
+.line-pulse.delay-2 {
+  animation-delay: 4s;
+}
+
+@keyframes line-sweep {
+  0% {
+    top: -20%;
+  }
+  100% {
+    top: 120%;
+  }
+}
+
+.animate-stagger-1 { animation: entrance-slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both; }
+.animate-stagger-2 { animation: entrance-slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
+.animate-stagger-3 { animation: entrance-slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both; }
+.animate-stagger-4 { animation: entrance-slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both; }
+.animate-stagger-5 { animation: entrance-slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both; }
+.animate-stagger-6 { animation: entrance-slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both; }
+
+@keyframes entrance-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.text-fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.text-fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (max-width: 900px) {
@@ -441,13 +436,5 @@ canvas.a-canvas {
     left: 20px;
     top: 20px;
     transform: none;
-  }
-  .landing-thumbnails {
-    bottom: 12px;
-    right: 12px;
-    gap: 6px;
-  }
-  .landing-thumb-card {
-    padding: 6px 10px;
   }
 }

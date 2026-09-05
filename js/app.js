@@ -25,16 +25,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  const thumbCards = document.querySelectorAll('.landing-thumb-card');
-  thumbCards.forEach(card => {
-    card.addEventListener('click', () => {
-      const idx = parseInt(card.getAttribute('data-index'), 10);
-      if (!isNaN(idx)) {
-        Landing3D.loadArtifact(idx);
-      }
-    });
-  });
-
   window.sendToFlutter = function(msg) {
     if (window.FlutterApp && typeof window.FlutterApp.postMessage === 'function') {
       window.FlutterApp.postMessage(msg);

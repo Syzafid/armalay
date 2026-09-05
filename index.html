@@ -29,28 +29,28 @@
 
   <div id="splash">
     <div class="landing-bg-lines">
-      <div class="landing-bg-line"></div>
-      <div class="landing-bg-line"></div>
-      <div class="landing-bg-line"></div>
+      <div class="landing-bg-line"><div class="line-pulse"></div></div>
+      <div class="landing-bg-line"><div class="line-pulse delay-1"></div></div>
+      <div class="landing-bg-line"><div class="line-pulse delay-2"></div></div>
     </div>
 
     <div class="landing-left">
-      <div class="landing-nav">
+      <div class="landing-nav animate-stagger-1">
         <a href="#" class="landing-brand">MUS<span>.melayu</span></a>
         <div class="landing-menu-links">
-          <span class="landing-status-pill"><span class="pulse-dot"></span> WebAR 3D Active</span>
+          <span class="landing-menu-link active">BERANDA</span>
           <span class="landing-menu-link" id="nav-marker-link">GALERI MARKER</span>
         </div>
       </div>
 
       <div class="landing-hero-content">
-        <span class="landing-tag">PAMERAN DIGITAL : WARISAN KUNO MELAYU</span>
-        <h1 class="landing-title" id="landing-artifact-title">Burung Hantu Ukiran Melayu</h1>
-        <p class="landing-desc" id="landing-artifact-desc">
+        <span class="landing-tag animate-stagger-2">PAMERAN DIGITAL : WARISAN KUNO MELAYU</span>
+        <h1 class="landing-title animate-stagger-3" id="landing-artifact-title">Burung Hantu Ukiran Melayu</h1>
+        <p class="landing-desc animate-stagger-4" id="landing-artifact-desc">
           Motif hias kuno melambangkan keheningan malam, pengawasan tajam, dan kebijaksanaan para tetua adat dalam meramu hukum serta adat istiadat Melayu.
         </p>
 
-        <div class="landing-meta-grid">
+        <div class="landing-meta-grid animate-stagger-5">
           <div class="landing-meta-item">
             <span class="landing-meta-label">KATEGORI</span>
             <span class="landing-meta-val" id="landing-artifact-category">Ornamen & Ukiran Woodcraft</span>
@@ -61,8 +61,11 @@
           </div>
         </div>
 
-        <div class="landing-actions">
-          <button class="btn-start-museum" id="btn-start-ar">MULAI EKSPLORASI WebAR</button>
+        <div class="landing-actions animate-stagger-6">
+          <button class="btn-start-museum" id="btn-start-ar">
+            <span class="btn-shimmer"></span>
+            MULAI EKSPLORASI WebAR
+          </button>
           <div class="landing-carousel-nav">
             <button class="btn-carousel-arrow" id="btn-landing-prev" title="Artefak Sebelumnya">&lt;</button>
             <button class="btn-carousel-arrow" id="btn-landing-next" title="Artefak Selanjutnya">&gt;</button>
@@ -73,29 +76,8 @@
 
     <div class="landing-right">
       <div class="landing-pagination" id="landing-pagination-num">I / IV</div>
+      <div class="landing-pedestal-glow"></div>
       <div id="landing-3d-container"></div>
-      <div class="landing-3d-hint">
-        <span class="hint-icon">↺</span> Geser / Drag untuk Putar 3D
-      </div>
-
-      <div class="landing-thumbnails">
-        <div class="landing-thumb-card active" data-index="0">
-          <span class="thumb-num">01</span>
-          <span class="thumb-name">Burung Hantu</span>
-        </div>
-        <div class="landing-thumb-card" data-index="1">
-          <span class="thumb-num">02</span>
-          <span class="thumb-name">Rumah Adat</span>
-        </div>
-        <div class="landing-thumb-card" data-index="2">
-          <span class="thumb-num">03</span>
-          <span class="thumb-name">Cerana</span>
-        </div>
-        <div class="landing-thumb-card" data-index="3">
-          <span class="thumb-num">04</span>
-          <span class="thumb-name">Perasapan</span>
-        </div>
-      </div>
     </div>
   </div>
 
