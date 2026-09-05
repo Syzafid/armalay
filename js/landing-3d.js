@@ -47,6 +47,33 @@ const Landing3D = {
       path: "assets/models/perasapan.glb",
       scale: 1.3,
       posY: -0.8
+    },
+    {
+      name: "Artefak Kampil Sirih Melayu",
+      category: "Wadah Tradisional & Tekstil",
+      era: "Kesultanan Melayu",
+      desc: "Wadah tradisional kain anyaman songket berukir halus untuk menyimpan sirih dan barang berharga adat majlis Melayu.",
+      path: "assets/models/kampil.glb",
+      scale: 1.2,
+      posY: -0.8
+    },
+    {
+      name: "Artefak Perhapuran Melayu",
+      category: "Wadah Tradisional & Logam",
+      era: "Kerajaan Melayu Kuno",
+      desc: "Bejana kuningan kecil penyimpan kapur sirih berhias motif ukiran Awan Larat sebagai lambang kerapian adat.",
+      path: "assets/models/perhapuran.glb",
+      scale: 1.2,
+      posY: -0.8
+    },
+    {
+      name: "Artefak Ketur Adat Melayu",
+      category: "Peralatan Upacara & Perunggu",
+      era: "Kesultanan Melayu Kuno",
+      desc: "Bejana logam tempat pembuangan ampas sirih dengan leher dan kaki cawan kokoh dalam upacara istana Melayu.",
+      path: "assets/models/ketur.glb",
+      scale: 1.2,
+      posY: -0.8
     }
   ],
 
@@ -139,8 +166,8 @@ const Landing3D = {
         if (eraEl) eraEl.textContent = item.era;
         if (descEl) descEl.textContent = item.desc;
         if (pageEl) {
-          const romanNumbers = ["I", "II", "III", "IV"];
-          pageEl.textContent = `${romanNumbers[index]} / IV`;
+          const romanNumbers = ["I", "II", "III", "IV", "V", "VI", "VII"];
+          pageEl.textContent = `${romanNumbers[index]} / VII`;
         }
         heroBox.classList.remove('text-fade-out');
         heroBox.classList.add('text-fade-in');

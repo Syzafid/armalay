@@ -85,7 +85,7 @@ const UIManager = {
     }
 
     let cardsHtml = '';
-    const keys = ['owl-marker', 'rumah-adat-marker', 'cerana-marker', 'perasapan-marker'];
+    const keys = ['owl-marker', 'rumah-adat-marker', 'cerana-marker', 'perasapan-marker', 'kampil-marker', 'perhapuran-marker', 'ketur-marker'];
 
     keys.forEach(key => {
       const item = artifacts[key];
