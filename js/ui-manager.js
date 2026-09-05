@@ -69,6 +69,9 @@ const UIManager = {
       this.elements.btnResetAR.addEventListener('click', () => {
         this.closeDrawer();
         ARController.resetScanState();
+        if (window.sendToFlutter) {
+          window.sendToFlutter('SET_LANDSCAPE');
+        }
       });
     }
   },

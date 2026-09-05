@@ -25,20 +25,31 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  function sendToFlutter(msg) {
+  const thumbCards = document.querySelectorAll('.landing-thumb-card');
+  thumbCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const idx = parseInt(card.getAttribute('data-index'), 10);
+      if (!isNaN(idx)) {
+        Landing3D.loadArtifact(idx);
+      }
+    });
+  });
+
+  window.sendToFlutter = function(msg) {
     if (window.FlutterApp && typeof window.FlutterApp.postMessage === 'function') {
       window.FlutterApp.postMessage(msg);
     }
-  }
+  };
 
-  sendToFlutter('SET_PORTRAIT');
+  window.sendToFlutter('SET_PORTRAIT');
 
   const splash = document.getElementById('splash');
   const startBtn = document.getElementById('btn-start-ar');
+  const returnLandingBtn = document.getElementById('btn-return-landing');
 
   if (startBtn && splash) {
     startBtn.addEventListener('click', () => {
-      sendToFlutter('SET_LANDSCAPE');
+      window.sendToFlutter('SET_LANDSCAPE');
 
       if (screen.orientation && screen.orientation.lock) {
         screen.orientation.lock('landscape').catch(() => {});
@@ -58,6 +69,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         splash.style.display = 'none';
         UIManager.setStatusBadge('Mencari Marker Melayu...', false);
       }, 600);
+    });
+  }
+
+  if (returnLandingBtn && splash) {
+    returnLandingBtn.addEventListener('click', () => {
+      window.sendToFlutter('SET_PORTRAIT');
+      if (screen.orientation && screen.orientation.unlock) {
+        screen.orientation.unlock();
+      }
+      ARController.resetScanState();
+      UIManager.closeDrawer();
+      UIManager.closeModal();
+      splash.style.display = 'flex';
+      splash.classList.remove('hide');
     });
   }
 });
