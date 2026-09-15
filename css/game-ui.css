@@ -317,7 +317,7 @@
   bottom: 18px;
   width: 440px;
   max-width: 45%;
-  z-index: 3000;
+  z-index: 100000;
   background: transparent;
   pointer-events: none;
   display: flex;
@@ -500,4 +500,20 @@
 
 .btn-download-marker:active {
   transform: scale(0.95);
+}
+
+@media (max-width: 900px), (orientation: portrait) {
+  .modal-overlay {
+    top: 24px;
+    right: 14px;
+    left: 14px;
+    bottom: 24px;
+    width: auto;
+    max-width: 100%;
+    transform: translateY(120%);
+  }
+
+  .modal-overlay.active {
+    transform: translateY(0);
+  }
 }

@@ -49,6 +49,14 @@ const UIManager = {
       this.elements.btnCloseModal.addEventListener('click', () => this.closeModal());
     }
 
+    if (this.elements.modalOverlay) {
+      this.elements.modalOverlay.addEventListener('click', (e) => {
+        if (e.target === this.elements.modalOverlay) {
+          this.closeModal();
+        }
+      });
+    }
+
     if (this.elements.btnHistory) {
       this.elements.btnHistory.addEventListener('click', () => {
         this.closeDrawer();
@@ -69,13 +77,6 @@ const UIManager = {
 
     if (this.elements.btnDocs) {
       this.elements.btnDocs.addEventListener('click', () => {
-        this.openDocsModal();
-      });
-    }
-
-    if (this.elements.navDocsLink) {
-      this.elements.navDocsLink.addEventListener('click', (e) => {
-        e.preventDefault();
         this.openDocsModal();
       });
     }
