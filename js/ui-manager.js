@@ -15,6 +15,8 @@ const UIManager = {
       btnHistory: document.getElementById('btn-history'),
       btnQuiz: document.getElementById('btn-quiz'),
       btnMarkerGallery: document.getElementById('btn-marker-gallery'),
+      btnDocs: document.getElementById('btn-docs'),
+      navDocsLink: document.getElementById('nav-docs-link'),
       btnResetAR: document.getElementById('btn-reset-ar'),
       modalOverlay: document.getElementById('modal-overlay'),
       modalTitle: document.getElementById('modal-title'),
@@ -62,6 +64,19 @@ const UIManager = {
     if (this.elements.btnMarkerGallery) {
       this.elements.btnMarkerGallery.addEventListener('click', () => {
         this.openMarkerGallery();
+      });
+    }
+
+    if (this.elements.btnDocs) {
+      this.elements.btnDocs.addEventListener('click', () => {
+        this.openDocsModal();
+      });
+    }
+
+    if (this.elements.navDocsLink) {
+      this.elements.navDocsLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.openDocsModal();
       });
     }
 
@@ -115,6 +130,26 @@ const UIManager = {
     `;
 
     this.openModal('Galeri Marker AR Melayu', bodyHtml);
+  },
+
+  openDocsModal() {
+    this.closeDrawer();
+    const bodyHtml = `
+      <div style="font-size:13px; line-height:1.6; color:var(--color-pearl);">
+        <p style="margin-bottom:12px;">
+          Pelajari seluk-beluk arsitektur sistem, teknologi <strong>One-Time Scan & Persistent Lock</strong>, integrasi <strong>Android Hybrid Container Shell</strong>, serta katalog lengkap 7 artefak budaya Melayu dan pengujian sistem.
+        </p>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:16px;">
+          <a href="https://armalay-docs.vercel.app" target="_blank" rel="noopener noreferrer" class="btn-download-marker" style="display:block; text-align:center; text-decoration:none; padding:10px; font-weight:700;">
+            Buka Portal Dokumentasi (Docusaurus)
+          </a>
+          <a href="https://github.com/Syzafid/armalay" target="_blank" rel="noopener noreferrer" style="display:block; text-align:center; text-decoration:none; color:var(--color-gold); font-size:12px; font-weight:600; padding:6px;">
+            Lihat Repositori Source Code GitHub
+          </a>
+        </div>
+      </div>
+    `;
+    this.openModal('Dokumentasi & Arsitektur Sistem', bodyHtml);
   },
 
   toggleFullscreen() {
