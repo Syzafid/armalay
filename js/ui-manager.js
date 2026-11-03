@@ -90,6 +90,16 @@ const UIManager = {
         }
       });
     }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (this.isModalActive()) {
+          this.closeModal();
+        } else if (this.isDrawerOpen()) {
+          this.closeDrawer();
+        }
+      }
+    });
   },
 
   openMarkerGallery() {

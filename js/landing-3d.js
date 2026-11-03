@@ -145,6 +145,62 @@ const Landing3D = {
     });
   },
 
+  showLoader(name) {
+    this.hideError();
+    let loader = document.getElementById('landing-3d-loader');
+    if (!loader) {
+      const container = document.getElementById('landing-3d-container');
+      if (!container) return;
+      loader = document.createElement('div');
+      loader.id = 'landing-3d-loader';
+      loader.className = 'landing-3d-loader';
+      loader.innerHTML = '<div class="landing-3d-spinner" aria-hidden="true"></div><span class="landing-3d-progress" id="landing-3d-progress-text">Memuat 3D...</span>';
+      container.appendChild(loader);
+    }
+    const textEl = document.getElementById('landing-3d-progress-text');
+    if (textEl) textEl.textContent = 'Memuat ' + name + '...';
+    loader.style.display = 'flex';
+  },
+
+  updateLoaderProgress(percent) {
+    const textEl = document.getElementById('landing-3d-progress-text');
+    if (textEl) textEl.textContent = 'Memuat 3D (' + percent + '%)...';
+  },
+
+  hideLoader() {
+    const loader = document.getElementById('landing-3d-loader');
+    if (loader) loader.style.display = 'none';
+  },
+
+  showError(name, retryFn) {
+    this.hideLoader();
+    let errorBox = document.getElementById('landing-3d-error');
+    if (!errorBox) {
+      const container = document.getElementById('landing-3d-container');
+      if (!container) return;
+      errorBox = document.createElement('div');
+      errorBox.id = 'landing-3d-error';
+      errorBox.className = 'landing-3d-error';
+      errorBox.innerHTML = '<p id="landing-3d-error-msg">Gagal memuat model 3D.</p><button type="button" class="btn-retry-3d" id="btn-retry-3d-model">Coba Muat Ulang</button>';
+      container.appendChild(errorBox);
+    }
+    const msg = document.getElementById('landing-3d-error-msg');
+    if (msg) msg.textContent = 'Koneksi terhambat saat memuat ' + name + '.';
+    const btn = document.getElementById('btn-retry-3d-model');
+    if (btn) {
+      btn.onclick = () => {
+        this.hideError();
+        if (typeof retryFn === 'function') retryFn();
+      };
+    }
+    errorBox.style.display = 'block';
+  },
+
+  hideError() {
+    const errorBox = document.getElementById('landing-3d-error');
+    if (errorBox) errorBox.style.display = 'none';
+  },
+
   loadArtifact(index) {
     if (index < 0 || index >= this.artifacts.length) return;
     this.currentIndex = index;
@@ -188,9 +244,13 @@ const Landing3D = {
       this.modelGroup.remove(this.modelGroup.children[0]);
     }
 
+    this.showLoader(item.name);
+
     this.loader.load(
       item.path,
       (gltf) => {
+        this.hideLoader();
+        this.hideError();
         const model = gltf.scene;
         this.enhanceModelMaterials(model);
         model.scale.set(item.scale * 0.75, item.scale * 0.75, item.scale * 0.75);
@@ -210,9 +270,15 @@ const Landing3D = {
         };
         animateScale();
       },
-      undefined,
+      (xhr) => {
+        if (xhr.lengthComputable && xhr.total > 0) {
+          const percent = Math.round((xhr.loaded / xhr.total) * 100);
+          this.updateLoaderProgress(percent);
+        }
+      },
       (error) => {
         console.error('Error loading 3D model for landing:', error);
+        this.showError(item.name, () => this.loadArtifact(index));
       }
     );
   },

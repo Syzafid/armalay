@@ -3,9 +3,9 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <title>AR Melayu — Digitalisasi Artefak Kebudayaan Melayu</title>
-  <meta name="description" content="Aplikasi WebAR Interaktif & Gamifikasi Artefak Kebudayaan Melayu" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AR Melayu: Digitalisasi Artefak Kebudayaan Melayu</title>
+  <meta name="description" content="Aplikasi WebAR Interaktif dan Gamifikasi Artefak Kebudayaan Melayu" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -23,29 +23,23 @@
 
 <body>
 
-  <div id="landscape-prompt">
+  <div id="landscape-prompt" role="alert">
     <span style="color:var(--color-gold); font-size:12px; font-weight:700;">Gunakan Posisi HP Landscape (Mendatar)</span>
   </div>
 
   <div id="splash">
-    <div class="landing-bg-lines">
-      <div class="landing-bg-line"></div>
-      <div class="landing-bg-line"></div>
-      <div class="landing-bg-line"></div>
-    </div>
-
     <div class="landing-left">
-      <div class="landing-nav animate-stagger-1">
-        <a href="#" class="landing-brand">MUS<span>.melayu</span></a>
-        <div class="landing-menu-links">
-          <span class="landing-menu-link active">BERANDA</span>
-          <span class="landing-menu-link" id="nav-marker-link">GALERI MARKER</span>
-          <a href="https://armalay-docs.vercel.app" target="_blank" rel="noopener noreferrer" class="landing-menu-link" id="nav-docs-link">DOKUMENTASI</a>
-        </div>
-      </div>
+      <header class="landing-nav animate-stagger-1">
+        <a href="index.html" class="landing-brand" aria-label="Beranda Museum AR Melayu">MUS<span>.melayu</span></a>
+        <nav class="landing-menu-links" aria-label="Navigasi Utama">
+          <a href="index.html" class="landing-menu-link active" aria-current="page">Beranda</a>
+          <button type="button" class="landing-menu-link" id="nav-marker-link">Galeri Marker</button>
+          <a href="https://armalay-docs.vercel.app" target="_blank" rel="noopener noreferrer" class="landing-menu-link" id="nav-docs-link">Dokumentasi</a>
+        </nav>
+      </header>
 
-      <div class="landing-hero-content">
-        <span class="landing-tag animate-stagger-2">PAMERAN DIGITAL : WARISAN KUNO MELAYU</span>
+      <main class="landing-hero-content animate-stagger-2" id="main-content">
+        <span class="landing-tag">Koleksi Pameran Warisan Melayu</span>
         <h1 class="landing-title animate-stagger-3" id="landing-artifact-title">Burung Hantu Ukiran Melayu</h1>
         <p class="landing-desc animate-stagger-4" id="landing-artifact-desc">
           Motif hias kuno melambangkan keheningan malam, pengawasan tajam, dan kebijaksanaan para tetua adat dalam meramu hukum serta adat istiadat Melayu.
@@ -53,110 +47,110 @@
 
         <div class="landing-meta-grid animate-stagger-5">
           <div class="landing-meta-item">
-            <span class="landing-meta-label">KATEGORI</span>
-            <span class="landing-meta-val" id="landing-artifact-category">Ornamen & Ukiran Woodcraft</span>
+            <span class="landing-meta-label">Kategori</span>
+            <span class="landing-meta-val" id="landing-artifact-category">Ornamen &amp; Ukiran Woodcraft</span>
           </div>
           <div class="landing-meta-item">
-            <span class="landing-meta-label">ERA</span>
+            <span class="landing-meta-label">Era</span>
             <span class="landing-meta-val" id="landing-artifact-era">Abad Ke-15 Masehi</span>
           </div>
         </div>
 
         <div class="landing-actions animate-stagger-6">
-          <button class="btn-start-museum" id="btn-start-ar">
-            <span class="btn-shimmer"></span>
-            MULAI EKSPLORASI WebAR
+          <button type="button" class="btn-start-museum" id="btn-start-ar" aria-label="Mulai eksplorasi dengan kamera WebAR">
+            <span class="btn-shimmer" aria-hidden="true"></span>
+            Mulai Eksplorasi WebAR
           </button>
-          <div class="landing-carousel-nav">
-            <button class="btn-carousel-arrow" id="btn-landing-prev" title="Artefak Sebelumnya">&lt;</button>
-            <button class="btn-carousel-arrow" id="btn-landing-next" title="Artefak Selanjutnya">&gt;</button>
+          <div class="landing-carousel-nav" role="group" aria-label="Navigasi Artefak">
+            <button type="button" class="btn-carousel-arrow" id="btn-landing-prev" aria-label="Artefak Sebelumnya" title="Artefak Sebelumnya">&lt;</button>
+            <button type="button" class="btn-carousel-arrow" id="btn-landing-next" aria-label="Artefak Selanjutnya" title="Artefak Selanjutnya">&gt;</button>
           </div>
         </div>
-      </div>
+      </main>
     </div>
 
     <div class="landing-right">
-      <div class="landing-pagination" id="landing-pagination-num">I / VII</div>
-      <div class="landing-pedestal-glow"></div>
-      <div id="landing-3d-container"></div>
+      <div class="landing-pagination" id="landing-pagination-num" aria-live="polite">I / VII</div>
+      <div class="landing-pedestal-glow" aria-hidden="true"></div>
+      <div id="landing-3d-container" role="region" aria-label="Pratinjau Model 3D"></div>
     </div>
   </div>
 
-  <div id="hud-header">
+  <header id="hud-header" aria-label="Panel Status Artefak">
     <div class="artifact-title-badge" id="artifact-header-badge" style="display: none;">
       <span class="title" id="artifact-title">BURUNG HANTU UKIRAN MELAYU</span>
       <span class="subtitle" id="artifact-subtitle">Artefak Simbolik Kebijaksanaan Kuno Melayu</span>
     </div>
 
     <div class="hud-controls">
-      <button class="btn-icon" id="btn-fullscreen-toggle" title="Toggle Fullscreen Mode">
-        [ ]
+      <button type="button" class="btn-icon" id="btn-fullscreen-toggle" aria-label="Beralih Mode Layar Penuh" title="Beralih Mode Layar Penuh">
+        <span aria-hidden="true">[ ]</span>
       </button>
-      <button class="btn-hamburger" id="btn-hamburger">
-        MENU GAME
+      <button type="button" class="btn-hamburger" id="btn-hamburger" aria-label="Buka Menu Game AR">
+        Menu Game
       </button>
     </div>
-  </div>
+  </header>
 
-  <div id="marker-status-badge">Mencari Marker Kartu Nama...</div>
+  <div id="marker-status-badge" role="status" aria-live="polite">Mencari Marker Melayu...</div>
 
-  <div id="model-controller-pad" style="display: none;">
-    <div class="dpad-container">
+  <div id="model-controller-pad" role="region" aria-label="Kontrol Model 3D" style="display: none;">
+    <div class="dpad-container" role="group" aria-label="Rotasi Model">
       <div class="dpad-grid">
-        <button class="btn-dpad dpad-up" id="btn-rot-up" title="Putar Ke Atas">▲</button>
-        <button class="btn-dpad dpad-left" id="btn-rot-left" title="Putar Ke Kiri">◄</button>
-        <button class="btn-dpad dpad-center" id="btn-rot-reset" title="Reset Rotasi">R</button>
-        <button class="btn-dpad dpad-right" id="btn-rot-right" title="Putar Ke Kanan">►</button>
-        <button class="btn-dpad dpad-down" id="btn-rot-down" title="Putar Ke Bawah">▼</button>
+        <button type="button" class="btn-dpad dpad-up" id="btn-rot-up" aria-label="Putar Ke Atas" title="Putar Ke Atas">▲</button>
+        <button type="button" class="btn-dpad dpad-left" id="btn-rot-left" aria-label="Putar Ke Kiri" title="Putar Ke Kiri">◄</button>
+        <button type="button" class="btn-dpad dpad-center" id="btn-rot-reset" aria-label="Reset Rotasi" title="Reset Rotasi">R</button>
+        <button type="button" class="btn-dpad dpad-right" id="btn-rot-right" aria-label="Putar Ke Kanan" title="Putar Ke Kanan">►</button>
+        <button type="button" class="btn-dpad dpad-down" id="btn-rot-down" aria-label="Putar Ke Bawah" title="Putar Ke Bawah">▼</button>
       </div>
     </div>
-    <div class="zoom-controls">
+    <div class="zoom-controls" role="group" aria-label="Pengaturan Zoom">
       <span class="control-label">ZOOM</span>
-      <button class="btn-zoom" id="btn-zoom-in" title="Perbesar (Zoom In)">+</button>
-      <button class="btn-zoom" id="btn-zoom-out" title="Perkecil (Zoom Out)">-</button>
+      <button type="button" class="btn-zoom" id="btn-zoom-in" aria-label="Perbesar Zoom" title="Perbesar (Zoom In)">+</button>
+      <button type="button" class="btn-zoom" id="btn-zoom-out" aria-label="Perkecil Zoom" title="Perkecil (Zoom Out)">-</button>
     </div>
-    <div class="light-controls">
+    <div class="light-controls" role="group" aria-label="Pengaturan Cahaya">
       <span class="control-label">CAHAYA</span>
-      <button class="btn-light" id="btn-light-up" title="Tambah Cahaya Model">L+</button>
-      <button class="btn-light" id="btn-light-down" title="Kurangi Cahaya Model">L-</button>
+      <button type="button" class="btn-light" id="btn-light-up" aria-label="Tambah Cahaya Model" title="Tambah Cahaya Model">L+</button>
+      <button type="button" class="btn-light" id="btn-light-down" aria-label="Kurangi Cahaya Model" title="Kurangi Cahaya Model">L-</button>
     </div>
   </div>
 
-  <div id="drawer-menu">
+  <aside id="drawer-menu" role="dialog" aria-modal="true" aria-label="Menu Game AR Melayu">
     <div class="drawer-header">
       <span class="drawer-title">MENU GAME AR MELAYU</span>
-      <button class="btn-close-drawer" id="btn-close-drawer">X</button>
+      <button type="button" class="btn-close-drawer" id="btn-close-drawer" aria-label="Tutup Menu">X</button>
     </div>
     <div class="drawer-content">
-      <button class="drawer-btn" id="btn-history">
-        Sejarah & Detail Artefak
+      <button type="button" class="drawer-btn" id="btn-history">
+        Sejarah &amp; Detail Artefak
       </button>
-      <button class="drawer-btn" id="btn-quiz">
-        Kuis & Tantangan XP
+      <button type="button" class="drawer-btn" id="btn-quiz">
+        Kuis &amp; Tantangan XP
       </button>
-      <button class="drawer-btn" id="btn-marker-gallery">
-        Galeri Marker & Unduh PNG
+      <button type="button" class="drawer-btn" id="btn-marker-gallery">
+        Galeri Marker &amp; Unduh PNG
       </button>
-      <button class="drawer-btn" id="btn-docs">
-        Dokumentasi & Arsitektur Sistem
+      <button type="button" class="drawer-btn" id="btn-docs">
+        Dokumentasi &amp; Arsitektur Sistem
       </button>
-      <button class="drawer-btn" id="btn-drawer-fullscreen">
+      <button type="button" class="drawer-btn" id="btn-drawer-fullscreen">
         Toggle Layar Penuh (Fullscreen)
       </button>
-      <button class="drawer-btn btn-reset-ar" id="btn-reset-ar">
-        Tutup & Scan Marker Lain
+      <button type="button" class="drawer-btn btn-reset-ar" id="btn-reset-ar">
+        Tutup &amp; Scan Marker Lain
       </button>
-      <button class="drawer-btn" id="btn-return-landing" style="border-color: rgba(212, 175, 55, 0.4);">
+      <button type="button" class="drawer-btn" id="btn-return-landing" style="border-color: rgba(212, 175, 55, 0.4);">
         Kembali ke Beranda
       </button>
     </div>
-  </div>
+  </aside>
 
-  <div class="modal-overlay" id="modal-overlay">
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-box">
       <div class="modal-header">
         <h3 id="modal-title">Sejarah Artefak</h3>
-        <button class="btn-close-drawer" id="btn-close-modal">X</button>
+        <button type="button" class="btn-close-drawer" id="btn-close-modal" aria-label="Tutup Jendela Dialog">X</button>
       </div>
       <div class="modal-body" id="modal-body">
       </div>
