@@ -10,6 +10,14 @@ const Landing3D = {
   mouseY: 0,
   currentIndex: 0,
   loader: null,
+  isUserInteracting: false,
+  dragStartX: 0,
+  dragStartY: 0,
+  dragDeltaX: 0,
+  dragDeltaY: 0,
+  orbitRotX: 0,
+  orbitRotY: 0,
+  autoSpinSpeed: 0.005,
 
   artifacts: [
     {
@@ -120,6 +128,7 @@ const Landing3D = {
 
     this.loadArtifact(0);
 
+    this.attachDragListeners();
     window.addEventListener('resize', () => this.onWindowResize());
     window.addEventListener('mousemove', (e) => this.onMouseMove(e));
 
@@ -235,8 +244,8 @@ const Landing3D = {
       if (eraEl) eraEl.textContent = item.era;
       if (descEl) descEl.textContent = item.desc;
       if (pageEl) {
-        const romanNumbers = ["I", "II", "III", "IV"];
-        pageEl.textContent = `${romanNumbers[index]} / IV`;
+        const romanNumbers = ["I", "II", "III", "IV", "V", "VI", "VII"];
+        pageEl.textContent = `${romanNumbers[index]} / VII`;
       }
     }
 
@@ -313,14 +322,73 @@ const Landing3D = {
     this.renderer.setSize(width, height);
   },
 
+  attachDragListeners() {
+    const dom = this.renderer.domElement;
+    dom.style.cursor = 'grab';
+
+    dom.addEventListener('mousedown', (e) => {
+      this.isUserInteracting = true;
+      this.dragStartX = e.clientX;
+      this.dragStartY = e.clientY;
+      dom.style.cursor = 'grabbing';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!this.isUserInteracting) return;
+      const deltaX = e.clientX - this.dragStartX;
+      const deltaY = e.clientY - this.dragStartY;
+      this.dragStartX = e.clientX;
+      this.dragStartY = e.clientY;
+      this.orbitRotY += deltaX * 0.009;
+      this.orbitRotX = Math.max(-0.6, Math.min(0.6, this.orbitRotX + deltaY * 0.009));
+      this.dragDeltaX = deltaX * 0.004;
+      this.dragDeltaY = deltaY * 0.004;
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (this.isUserInteracting) {
+        this.isUserInteracting = false;
+        dom.style.cursor = 'grab';
+      }
+    });
+
+    dom.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        this.isUserInteracting = true;
+        this.dragStartX = e.touches[0].clientX;
+        this.dragStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    dom.addEventListener('touchmove', (e) => {
+      if (!this.isUserInteracting || e.touches.length !== 1) return;
+      const deltaX = e.touches[0].clientX - this.dragStartX;
+      const deltaY = e.touches[0].clientY - this.dragStartY;
+      this.dragStartX = e.touches[0].clientX;
+      this.dragStartY = e.touches[0].clientY;
+      this.orbitRotY += deltaX * 0.009;
+      this.orbitRotX = Math.max(-0.6, Math.min(0.6, this.orbitRotX + deltaY * 0.009));
+      this.dragDeltaX = deltaX * 0.004;
+      this.dragDeltaY = deltaY * 0.004;
+    }, { passive: true });
+
+    dom.addEventListener('touchend', () => {
+      this.isUserInteracting = false;
+    }, { passive: true });
+  },
+
   animate() {
     requestAnimationFrame(() => this.animate());
 
     if (this.modelGroup) {
-      this.modelGroup.rotation.y += 0.006;
-
-      this.modelGroup.rotation.y += (this.targetRotationY - this.modelGroup.rotation.y) * 0.05;
-      this.modelGroup.rotation.x += (this.targetRotationX - this.modelGroup.rotation.x) * 0.05;
+      if (!this.isUserInteracting) {
+        this.dragDeltaX *= 0.92;
+        this.dragDeltaY *= 0.92;
+        this.orbitRotY += this.dragDeltaX + this.autoSpinSpeed;
+        this.orbitRotX += this.dragDeltaY;
+      }
+      this.modelGroup.rotation.y = this.orbitRotY;
+      this.modelGroup.rotation.x = this.orbitRotX;
     }
 
     if (this.renderer && this.scene && this.camera) {

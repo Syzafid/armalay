@@ -152,6 +152,44 @@ canvas.a-canvas {
   color: var(--color-ebony);
 }
 
+.btn-sound-toggle {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--color-gold-dark);
+  background: rgba(229, 169, 60, 0.12);
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-sound-toggle:hover {
+  background: var(--color-gold);
+  color: #111111;
+}
+
+.landing-3d-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  pointer-events: none;
+  z-index: 5;
+  border: 1px solid var(--color-grid-line);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
 .landing-hero-content {
   margin: auto 0;
   max-width: 500px;
@@ -282,22 +320,38 @@ canvas.a-canvas {
   border-radius: var(--radius-sm);
   background: transparent;
   color: var(--color-ebony);
-  font-size: 16px;
-  font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.btn-carousel-arrow svg {
+  stroke: var(--color-ebony);
+  transition: stroke 0.2s, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-carousel-arrow:hover {
   border-color: var(--color-gold);
   background: rgba(229, 169, 60, 0.12);
+  box-shadow: 0 4px 14px rgba(229, 169, 60, 0.18);
+}
+
+.btn-carousel-arrow:hover svg {
+  stroke: var(--color-gold);
+}
+
+#btn-landing-prev:hover svg {
+  transform: translateX(-2px);
+}
+
+#btn-landing-next:hover svg {
+  transform: translateX(2px);
 }
 
 .btn-carousel-arrow:active {
-  transform: scale(0.94);
+  transform: scale(0.92);
 }
 
 .landing-right {

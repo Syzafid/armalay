@@ -30,6 +30,11 @@ const ARController = {
     this.attachMarkerListeners();
     this.attachDPadListeners();
     this.attachTouchListeners();
+
+    const btnCapture = document.getElementById('btn-capture-ar');
+    if (btnCapture) {
+      btnCapture.addEventListener('click', () => this.takeSnapshot());
+    }
   },
 
   enhanceModelMaterials(model) {
@@ -229,6 +234,19 @@ const ARController = {
     UIManager.setHeaderInfo(artifactData.title, artifactData.subtitle);
     UIManager.setStatusBadge(`Terkunci: ${artifactData.title}`, true);
 
+    const reticle = document.getElementById('ar-reticle');
+    if (reticle) reticle.classList.add('locked');
+
+    this.showGestureHint();
+
+    if (window.sendToFlutter) {
+      window.sendToFlutter('HAPTIC_FEEDBACK');
+    }
+
+    if (window.Gamification && typeof window.Gamification.unlockArtifact === 'function') {
+      window.Gamification.unlockArtifact(artifactData.id);
+    }
+
     if (this.activeModelEl) {
       this.activeModelEl.setAttribute('gltf-model', artifactData.modelPath);
       this.activeModelEl.setAttribute('scale', `${this.scaleFactor} ${this.scaleFactor} ${this.scaleFactor}`);
@@ -314,6 +332,11 @@ const ARController = {
     this.touchState.initialPinchDistance = 0;
     this.adjustLighting(0);
 
+    this.hideGestureHint();
+
+    const reticle = document.getElementById('ar-reticle');
+    if (reticle) reticle.classList.remove('locked');
+
     if (this.activeModelEl) {
       this.activeModelEl.setAttribute('visible', 'false');
       this.activeModelEl.removeAttribute('gltf-model');
@@ -326,5 +349,67 @@ const ARController = {
 
     UIManager.hideHeaderInfo();
     UIManager.setStatusBadge('Mencari Marker Melayu...', false);
+  },
+
+  showGestureHint() {
+    const tooltip = document.getElementById('gesture-hint-tooltip');
+    if (!tooltip) return;
+    tooltip.style.display = 'block';
+    clearTimeout(this._gestureTimeout);
+    this._gestureTimeout = setTimeout(() => {
+      this.hideGestureHint();
+    }, 3800);
+  },
+
+  hideGestureHint() {
+    const tooltip = document.getElementById('gesture-hint-tooltip');
+    if (tooltip) tooltip.style.display = 'none';
+  },
+
+  takeSnapshot() {
+    const video = document.getElementById('arjs-video') || document.querySelector('video');
+    const scene = document.getElementById('ar-scene');
+    if (!scene) return;
+
+    const aCanvas = scene.querySelector('canvas.a-canvas');
+    const canvas = document.createElement('canvas');
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+
+    if (video && video.videoWidth) {
+      ctx.drawImage(video, 0, 0, w, h);
+    }
+    if (aCanvas) {
+      ctx.drawImage(aCanvas, 0, 0, w, h);
+    }
+
+    ctx.fillStyle = 'rgba(15, 15, 20, 0.88)';
+    ctx.fillRect(w - 240, h - 52, 222, 38);
+    ctx.strokeStyle = '#E5A93C';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(w - 240, h - 52, 222, 38);
+
+    ctx.fillStyle = '#E5A93C';
+    ctx.font = 'bold 12px sans-serif';
+    ctx.fillText('AR MELAYU : WARISAN ADAT', w - 225, h - 28);
+
+    const dataUrl = canvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    const filename = (this.activeArtifact ? this.activeArtifact.id : 'ar-melayu-snapshot') + '.png';
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    UIManager.setStatusBadge('Foto AR Berhasil Disimpan', true);
+    setTimeout(() => {
+      if (this.activeArtifact) {
+        UIManager.setStatusBadge(`Terkunci: ${this.activeArtifact.title}`, true);
+      }
+    }, 2000);
   }
 };

@@ -11,11 +11,30 @@ document.addEventListener('DOMContentLoaded', async () => {
   const prevBtn = document.getElementById('btn-landing-prev');
   const nextBtn = document.getElementById('btn-landing-next');
   if (prevBtn) {
-    prevBtn.addEventListener('click', () => Landing3D.prevArtifact());
+    prevBtn.addEventListener('click', () => {
+      Landing3D.prevArtifact();
+      window.sendToFlutter('HAPTIC_FEEDBACK');
+    });
   }
   if (nextBtn) {
-    nextBtn.addEventListener('click', () => Landing3D.nextArtifact());
+    nextBtn.addEventListener('click', () => {
+      Landing3D.nextArtifact();
+      window.sendToFlutter('HAPTIC_FEEDBACK');
+    });
   }
+
+  window.addEventListener('keydown', (e) => {
+    const splash = document.getElementById('splash');
+    if (splash && splash.style.display !== 'none' && !splash.classList.contains('hide')) {
+      if (e.key === 'ArrowLeft') {
+        Landing3D.prevArtifact();
+        window.sendToFlutter('HAPTIC_FEEDBACK');
+      } else if (e.key === 'ArrowRight') {
+        Landing3D.nextArtifact();
+        window.sendToFlutter('HAPTIC_FEEDBACK');
+      }
+    }
+  });
 
   const navMarkerLink = document.getElementById('nav-marker-link');
   if (navMarkerLink) {

@@ -35,6 +35,7 @@
           <a href="index.html" class="landing-menu-link active" aria-current="page">Beranda</a>
           <button type="button" class="landing-menu-link" id="nav-marker-link">Galeri Marker</button>
           <a href="https://armalay-docs.vercel.app" target="_blank" rel="noopener noreferrer" class="landing-menu-link" id="nav-docs-link">Dokumentasi</a>
+          <button type="button" class="btn-sound-toggle" id="btn-sound-toggle" aria-label="Nyalakan Musik Adat Melayu" title="Musik Tradisional Melayu">Audio: Tutup</button>
         </nav>
       </header>
 
@@ -62,8 +63,16 @@
             Mulai Eksplorasi WebAR
           </button>
           <div class="landing-carousel-nav" role="group" aria-label="Navigasi Artefak">
-            <button type="button" class="btn-carousel-arrow" id="btn-landing-prev" aria-label="Artefak Sebelumnya" title="Artefak Sebelumnya">&lt;</button>
-            <button type="button" class="btn-carousel-arrow" id="btn-landing-next" aria-label="Artefak Selanjutnya" title="Artefak Selanjutnya">&gt;</button>
+            <button type="button" class="btn-carousel-arrow" id="btn-landing-prev" aria-label="Artefak Sebelumnya" title="Artefak Sebelumnya">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button type="button" class="btn-carousel-arrow" id="btn-landing-next" aria-label="Artefak Selanjutnya" title="Artefak Selanjutnya">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
           </div>
         </div>
       </main>
@@ -72,7 +81,8 @@
     <div class="landing-right">
       <div class="landing-pagination" id="landing-pagination-num" aria-live="polite">I / VII</div>
       <div class="landing-pedestal-glow" aria-hidden="true"></div>
-      <div id="landing-3d-container" role="region" aria-label="Pratinjau Model 3D"></div>
+      <div id="landing-3d-container" role="region" aria-label="Pratinjau Model 3D Interaktif" title="Geser untuk memutar artefak 360 derajat"></div>
+      <div class="landing-3d-hint" aria-hidden="true">Sentuh &amp; geser untuk memutar 360°</div>
     </div>
   </div>
 
@@ -83,6 +93,9 @@
     </div>
 
     <div class="hud-controls">
+      <button type="button" class="btn-icon" id="btn-capture-ar" aria-label="Ambil Foto AR Bersih" title="Ambil Foto AR">
+        <span aria-hidden="true">[o]</span>
+      </button>
       <button type="button" class="btn-icon" id="btn-fullscreen-toggle" aria-label="Beralih Mode Layar Penuh" title="Beralih Mode Layar Penuh">
         <span aria-hidden="true">[ ]</span>
       </button>
@@ -91,6 +104,19 @@
       </button>
     </div>
   </header>
+
+  <div id="ar-reticle" aria-hidden="true">
+    <div class="reticle-corner reticle-tl"></div>
+    <div class="reticle-corner reticle-tr"></div>
+    <div class="reticle-corner reticle-bl"></div>
+    <div class="reticle-corner reticle-br"></div>
+    <div class="reticle-scan-line"></div>
+    <div class="reticle-label">Arahkan Kamera ke Kartu Marker</div>
+  </div>
+
+  <div id="gesture-hint-tooltip" role="status" aria-live="polite" style="display: none;">
+    Sentuh &amp; geser 1 jari untuk memutar, cubit 2 jari untuk zoom
+  </div>
 
   <div id="marker-status-badge" role="status" aria-live="polite">Mencari Marker Melayu...</div>
 
@@ -122,6 +148,9 @@
       <button type="button" class="btn-close-drawer" id="btn-close-drawer" aria-label="Tutup Menu">X</button>
     </div>
     <div class="drawer-content">
+      <button type="button" class="drawer-btn" id="btn-collection-book">
+        Buku Koleksi Artefak (<span id="collection-count">0/7</span>)
+      </button>
       <button type="button" class="drawer-btn" id="btn-history">
         Sejarah &amp; Detail Artefak
       </button>
@@ -153,6 +182,21 @@
         <button type="button" class="btn-close-drawer" id="btn-close-modal" aria-label="Tutup Jendela Dialog">X</button>
       </div>
       <div class="modal-body" id="modal-body">
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="marker-presentation-modal" role="dialog" aria-modal="true" aria-labelledby="marker-presentation-title">
+    <div class="modal-box marker-presentation-box">
+      <div class="modal-header">
+        <h3 id="marker-presentation-title">Marker Layar Penuh</h3>
+        <button type="button" class="btn-close-drawer" id="btn-close-marker-presentation" aria-label="Tutup Tampilan Marker">X</button>
+      </div>
+      <div class="modal-body marker-presentation-body">
+        <div class="marker-presentation-img-wrap">
+          <img id="marker-presentation-img" src="" alt="Marker AR Melayu Layar Penuh" />
+        </div>
+        <p class="marker-presentation-note">Arahkan kamera HP lain ke marker di atas untuk melakukan pemindaian langsung.</p>
       </div>
     </div>
   </div>

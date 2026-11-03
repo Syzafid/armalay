@@ -21,7 +21,11 @@ const UIManager = {
       modalOverlay: document.getElementById('modal-overlay'),
       modalTitle: document.getElementById('modal-title'),
       modalBody: document.getElementById('modal-body'),
-      btnCloseModal: document.getElementById('btn-close-modal')
+      btnCloseModal: document.getElementById('btn-close-modal'),
+      markerPresentationModal: document.getElementById('marker-presentation-modal'),
+      markerPresentationImg: document.getElementById('marker-presentation-img'),
+      markerPresentationTitle: document.getElementById('marker-presentation-title'),
+      btnCloseMarkerPresentation: document.getElementById('btn-close-marker-presentation')
     };
 
     this.attachEvents();
@@ -53,6 +57,18 @@ const UIManager = {
       this.elements.modalOverlay.addEventListener('click', (e) => {
         if (e.target === this.elements.modalOverlay) {
           this.closeModal();
+        }
+      });
+    }
+
+    if (this.elements.btnCloseMarkerPresentation) {
+      this.elements.btnCloseMarkerPresentation.addEventListener('click', () => this.closeMarkerPresentation());
+    }
+
+    if (this.elements.markerPresentationModal) {
+      this.elements.markerPresentationModal.addEventListener('click', (e) => {
+        if (e.target === this.elements.markerPresentationModal) {
+          this.closeMarkerPresentation();
         }
       });
     }
@@ -93,7 +109,9 @@ const UIManager = {
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        if (this.isModalActive()) {
+        if (this.isMarkerPresentationActive()) {
+          this.closeMarkerPresentation();
+        } else if (this.isModalActive()) {
           this.closeModal();
         } else if (this.isDrawerOpen()) {
           this.closeDrawer();
@@ -123,6 +141,9 @@ const UIManager = {
             </div>
             <div class="marker-card-title">${item.title}</div>
             <div class="marker-card-sub">${item.category}</div>
+            <button type="button" class="btn-inspect-marker" onclick="UIManager.presentMarkerFullscreen('${item.markerImg}', '${item.title}')">
+              Tampilkan di Layar
+            </button>
             <a href="${item.markerImg}" download="${key}.png" class="btn-download-marker">
               Unduh Marker PNG
             </a>
@@ -132,8 +153,8 @@ const UIManager = {
     });
 
     const bodyHtml = `
-      <p style="margin-bottom: 12px; font-size: 11px; color: var(--color-text-muted); line-height: 1.4;">
-        Arahkan kamera ke salah satu gambar marker PNG di bawah ini. Anda dapat mengunduh PNG marker untuk dicetak/discan langsung dari layar lain. Untuk mengubah PNG menjadi file <code>.patt</code> custom, unggah gambar ke <a href="https://ar-js-org.github.io/AR.js/three.js/examples/marker-training/examples/generator.html" target="_blank" style="color:var(--color-gold); font-weight:bold;">AR.js Marker Training Generator</a>.
+      <p style="margin-bottom: 14px; font-size: 12px; color: #E2DDD2; line-height: 1.5;">
+        Arahkan kamera ke salah satu gambar marker di bawah ini. Anda dapat mengklik tombol <strong>Tampilkan di Layar</strong> untuk menampilkan gambar besar di monitor laptop/PC lalu memindainya langsung dari HP Anda.
       </p>
       <div class="marker-grid">
         ${cardsHtml}
@@ -143,12 +164,34 @@ const UIManager = {
     this.openModal('Galeri Marker AR Melayu', bodyHtml);
   },
 
+  presentMarkerFullscreen(imgSrc, title) {
+    if (this.elements.markerPresentationImg) {
+      this.elements.markerPresentationImg.src = imgSrc;
+    }
+    if (this.elements.markerPresentationTitle) {
+      this.elements.markerPresentationTitle.textContent = title;
+    }
+    if (this.elements.markerPresentationModal) {
+      this.elements.markerPresentationModal.classList.add('active');
+    }
+  },
+
+  closeMarkerPresentation() {
+    if (this.elements.markerPresentationModal) {
+      this.elements.markerPresentationModal.classList.remove('active');
+    }
+  },
+
+  isMarkerPresentationActive() {
+    return this.elements.markerPresentationModal && this.elements.markerPresentationModal.classList.contains('active');
+  },
+
   openDocsModal() {
     this.closeDrawer();
     const bodyHtml = `
-      <div style="font-size:13px; line-height:1.6; color:var(--color-pearl);">
+      <div style="font-size:13px; line-height:1.6; color:#F0ECE1;">
         <p style="margin-bottom:12px;">
-          Pelajari seluk-beluk arsitektur sistem, teknologi <strong>One-Time Scan & Persistent Lock</strong>, integrasi <strong>Android Hybrid Container Shell</strong>, serta katalog lengkap 7 artefak budaya Melayu dan pengujian sistem.
+          Pelajari seluk-beluk arsitektur sistem, teknologi <strong>One-Time Scan &amp; Persistent Lock</strong>, integrasi <strong>Android Hybrid Container Shell</strong>, serta katalog lengkap 7 artefak budaya Melayu dan pengujian sistem.
         </p>
         <div style="display:flex; flex-direction:column; gap:10px; margin-top:16px;">
           <a href="https://armalay-docs.vercel.app" target="_blank" rel="noopener noreferrer" class="btn-download-marker" style="display:block; text-align:center; text-decoration:none; padding:10px; font-weight:700;">
@@ -160,7 +203,7 @@ const UIManager = {
         </div>
       </div>
     `;
-    this.openModal('Dokumentasi & Arsitektur Sistem', bodyHtml);
+    this.openModal('Dokumentasi &amp; Arsitektur Sistem', bodyHtml);
   },
 
   toggleFullscreen() {
@@ -215,7 +258,7 @@ const UIManager = {
 
   closeDrawer() {
     if (this.elements.drawerMenu) this.elements.drawerMenu.classList.remove('open');
-    if (!this.isModalActive() && ARController.isScannedLocked) {
+    if (!this.isModalActive() && !this.isMarkerPresentationActive() && ARController.isScannedLocked) {
       ARController.showControllerPad();
     }
   },
@@ -229,7 +272,7 @@ const UIManager = {
 
   closeModal() {
     if (this.elements.modalOverlay) this.elements.modalOverlay.classList.remove('active');
-    if (!this.isDrawerOpen() && ARController.isScannedLocked) {
+    if (!this.isDrawerOpen() && !this.isMarkerPresentationActive() && ARController.isScannedLocked) {
       ARController.showControllerPad();
     }
   },
