@@ -102,7 +102,7 @@ const UIManager = {
         this.closeDrawer();
         ARController.resetScanState();
         if (window.sendToFlutter) {
-          window.sendToFlutter('SET_LANDSCAPE');
+          window.sendToFlutter('SET_FREE');
         }
       });
     }

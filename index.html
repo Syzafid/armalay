@@ -23,14 +23,23 @@
 
 <body>
 
-  <div id="landscape-prompt" role="alert">
-    <span style="color:var(--color-gold); font-size:12px; font-weight:700;">Gunakan Posisi HP Landscape (Mendatar)</span>
+  <div id="landscape-prompt" role="alert" style="display: none;">
+    <span style="color:var(--color-gold); font-size:12px; font-weight:700;">Gunakan Posisi HP Mendatar untuk Tampilan Optimal</span>
   </div>
 
   <div id="splash">
+    <div class="landing-bg-motif motif-awan" aria-hidden="true"></div>
     <div class="landing-left">
       <header class="landing-nav animate-stagger-1">
-        <a href="index.html" class="landing-brand" aria-label="Beranda Museum AR Melayu">MUS<span>.melayu</span></a>
+        <a href="index.html" class="landing-brand" aria-label="Beranda Museum AR Melayu">
+          <svg class="brand-crest" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+            <path d="M20 4 L34 20 L20 36 L6 20 Z" />
+            <path d="M20 10 L28 20 L20 30 L12 20 Z" />
+            <path d="M8 6 C14 10 16 14 20 4 C24 14 26 10 32 6" />
+            <circle cx="20" cy="20" r="2" fill="currentColor" />
+          </svg>
+          <span>KHAZANAH<span class="gold-text">.MELAYU</span></span>
+        </a>
         <nav class="landing-menu-links" aria-label="Navigasi Utama">
           <a href="index.html" class="landing-menu-link active" aria-current="page">Beranda</a>
           <button type="button" class="landing-menu-link" id="nav-marker-link">Galeri Marker</button>
@@ -79,8 +88,9 @@
     </div>
 
     <div class="landing-right">
+      <div class="motif-rebung" style="position:absolute;top:0;left:0;right:0;height:24px;opacity:0.4;pointer-events:none;z-index:2;" aria-hidden="true"></div>
+      <div class="landing-stage-rings" aria-hidden="true"></div>
       <div class="landing-pagination" id="landing-pagination-num" aria-live="polite">I / VII</div>
-      <div class="landing-pedestal-glow" aria-hidden="true"></div>
       <div id="landing-3d-container" role="region" aria-label="Pratinjau Model 3D Interaktif" title="Geser untuk memutar artefak 360 derajat"></div>
       <div class="landing-3d-hint" aria-hidden="true">Sentuh &amp; geser untuk memutar 360°</div>
     </div>
@@ -93,25 +103,47 @@
     </div>
 
     <div class="hud-controls">
-      <button type="button" class="btn-icon" id="btn-capture-ar" aria-label="Ambil Foto AR Bersih" title="Ambil Foto AR">
-        <span aria-hidden="true">[o]</span>
+      <button type="button" class="btn-icon" id="btn-capture-ar" aria-label="Ambil Foto Artefak AR" title="Ambil Foto AR">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+          <circle cx="12" cy="13" r="4"></circle>
+        </svg>
       </button>
       <button type="button" class="btn-icon" id="btn-fullscreen-toggle" aria-label="Beralih Mode Layar Penuh" title="Beralih Mode Layar Penuh">
-        <span aria-hidden="true">[ ]</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <polyline points="9 21 3 21 3 15"></polyline>
+          <line x1="21" y1="3" x2="14" y2="10"></line>
+          <line x1="3" y1="21" x2="10" y2="14"></line>
+        </svg>
       </button>
-      <button type="button" class="btn-hamburger" id="btn-hamburger" aria-label="Buka Menu Game AR">
-        Menu Game
+      <button type="button" class="btn-hamburger" id="btn-hamburger" aria-label="Buka Pusat Khazanah Melayu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <span>Khazanah</span>
       </button>
     </div>
   </header>
 
   <div id="ar-reticle" aria-hidden="true">
-    <div class="reticle-corner reticle-tl"></div>
-    <div class="reticle-corner reticle-tr"></div>
-    <div class="reticle-corner reticle-bl"></div>
-    <div class="reticle-corner reticle-br"></div>
-    <div class="reticle-scan-line"></div>
-    <div class="reticle-label">Arahkan Kamera ke Kartu Marker</div>
+    <svg class="reticle-bracket reticle-tl" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path d="M2 40 V2 H40" /><path d="M10 22 L22 10" stroke-width="1" /><path d="M2 2 L14 14" stroke-width="1" />
+    </svg>
+    <svg class="reticle-bracket reticle-tr" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path d="M2 40 V2 H40" /><path d="M10 22 L22 10" stroke-width="1" /><path d="M2 2 L14 14" stroke-width="1" />
+    </svg>
+    <svg class="reticle-bracket reticle-bl" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path d="M2 40 V2 H40" /><path d="M10 22 L22 10" stroke-width="1" /><path d="M2 2 L14 14" stroke-width="1" />
+    </svg>
+    <svg class="reticle-bracket reticle-br" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path d="M2 40 V2 H40" /><path d="M10 22 L22 10" stroke-width="1" /><path d="M2 2 L14 14" stroke-width="1" />
+    </svg>
+    <span class="reticle-focus-breathe" aria-hidden="true"></span>
+    <span class="reticle-center-dot" aria-hidden="true"></span>
+    <div class="reticle-label">Arahkan Kamera ke Kartu Marker Melayu</div>
   </div>
 
   <div id="gesture-hint-tooltip" role="status" aria-live="polite" style="display: none;">
@@ -123,63 +155,197 @@
   <div id="model-controller-pad" role="region" aria-label="Kontrol Model 3D" style="display: none;">
     <div class="dpad-container" role="group" aria-label="Rotasi Model">
       <div class="dpad-grid">
-        <button type="button" class="btn-dpad dpad-up" id="btn-rot-up" aria-label="Putar Ke Atas" title="Putar Ke Atas">▲</button>
-        <button type="button" class="btn-dpad dpad-left" id="btn-rot-left" aria-label="Putar Ke Kiri" title="Putar Ke Kiri">◄</button>
-        <button type="button" class="btn-dpad dpad-center" id="btn-rot-reset" aria-label="Reset Rotasi" title="Reset Rotasi">R</button>
-        <button type="button" class="btn-dpad dpad-right" id="btn-rot-right" aria-label="Putar Ke Kanan" title="Putar Ke Kanan">►</button>
-        <button type="button" class="btn-dpad dpad-down" id="btn-rot-down" aria-label="Putar Ke Bawah" title="Putar Ke Bawah">▼</button>
+        <button type="button" class="btn-dpad dpad-up" id="btn-rot-up" aria-label="Putar Ke Atas" title="Putar Ke Atas">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+        </button>
+        <button type="button" class="btn-dpad dpad-left" id="btn-rot-left" aria-label="Putar Ke Kiri" title="Putar Ke Kiri">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button type="button" class="btn-dpad dpad-center" id="btn-rot-reset" aria-label="Reset Posisi Artefak" title="Reset Rotasi">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+        </button>
+        <button type="button" class="btn-dpad dpad-right" id="btn-rot-right" aria-label="Putar Ke Kanan" title="Putar Ke Kanan">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+        <button type="button" class="btn-dpad dpad-down" id="btn-rot-down" aria-label="Putar Ke Bawah" title="Putar Ke Bawah">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
       </div>
     </div>
     <div class="zoom-controls" role="group" aria-label="Pengaturan Zoom">
-      <span class="control-label">ZOOM</span>
-      <button type="button" class="btn-zoom" id="btn-zoom-in" aria-label="Perbesar Zoom" title="Perbesar (Zoom In)">+</button>
-      <button type="button" class="btn-zoom" id="btn-zoom-out" aria-label="Perkecil Zoom" title="Perkecil (Zoom Out)">-</button>
+      <span class="control-label">Skala</span>
+      <button type="button" class="btn-zoom" id="btn-zoom-in" aria-label="Perbesar Ukuran Model" title="Perbesar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          <line x1="11" y1="8" x2="11" y2="14"></line>
+          <line x1="8" y1="11" x2="14" y2="11"></line>
+        </svg>
+      </button>
+      <button type="button" class="btn-zoom" id="btn-zoom-out" aria-label="Perkecil Ukuran Model" title="Perkecil">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          <line x1="8" y1="11" x2="14" y2="11"></line>
+        </svg>
+      </button>
     </div>
     <div class="light-controls" role="group" aria-label="Pengaturan Cahaya">
-      <span class="control-label">CAHAYA</span>
-      <button type="button" class="btn-light" id="btn-light-up" aria-label="Tambah Cahaya Model" title="Tambah Cahaya Model">L+</button>
-      <button type="button" class="btn-light" id="btn-light-down" aria-label="Kurangi Cahaya Model" title="Kurangi Cahaya Model">L-</button>
+      <span class="control-label">Cahaya</span>
+      <button type="button" class="btn-light" id="btn-light-up" aria-label="Terangkan Cahaya Model" title="Tambah Cahaya">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+        </svg>
+      </button>
+      <button type="button" class="btn-light" id="btn-light-down" aria-label="Redupkan Cahaya Model" title="Kurangi Cahaya">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
     </div>
   </div>
 
-  <aside id="drawer-menu" role="dialog" aria-modal="true" aria-label="Menu Game AR Melayu">
+  <aside id="drawer-menu" role="dialog" aria-modal="true" aria-label="Pusat Khazanah Melayu">
+    <div class="modal-crown-ribbon motif-rebung" aria-hidden="true"></div>
     <div class="drawer-header">
-      <span class="drawer-title">MENU GAME AR MELAYU</span>
-      <button type="button" class="btn-close-drawer" id="btn-close-drawer" aria-label="Tutup Menu">X</button>
-    </div>
-    <div class="drawer-content">
-      <button type="button" class="drawer-btn" id="btn-collection-book">
-        Buku Koleksi Artefak (<span id="collection-count">0/7</span>)
-      </button>
-      <button type="button" class="drawer-btn" id="btn-history">
-        Sejarah &amp; Detail Artefak
-      </button>
-      <button type="button" class="drawer-btn" id="btn-quiz">
-        Kuis &amp; Tantangan XP
-      </button>
-      <button type="button" class="drawer-btn" id="btn-marker-gallery">
-        Galeri Marker &amp; Unduh PNG
-      </button>
-      <button type="button" class="drawer-btn" id="btn-docs">
-        Dokumentasi &amp; Arsitektur Sistem
-      </button>
-      <button type="button" class="drawer-btn" id="btn-drawer-fullscreen">
-        Toggle Layar Penuh (Fullscreen)
-      </button>
-      <button type="button" class="drawer-btn btn-reset-ar" id="btn-reset-ar">
-        Tutup &amp; Scan Marker Lain
-      </button>
-      <button type="button" class="drawer-btn" id="btn-return-landing" style="border-color: rgba(212, 175, 55, 0.4);">
-        Kembali ke Beranda
+      <div class="drawer-brand-header">
+        <svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="var(--color-gold)" stroke-width="1.2" aria-hidden="true">
+          <path d="M20 4 L34 20 L20 36 L6 20 Z" /><path d="M20 10 L28 20 L20 30 L12 20 Z" /><path d="M8 6 C14 10 16 14 20 4 C24 14 26 10 32 6" /><circle cx="20" cy="20" r="2" fill="var(--color-gold)" />
+        </svg>
+        <span class="drawer-title">KHAZANAH MELAYU</span>
+      </div>
+      <button type="button" class="btn-close-drawer" id="btn-close-drawer" aria-label="Tutup Menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
       </button>
     </div>
+    <nav class="drawer-content">
+      <button type="button" class="drawer-card" id="btn-collection-book">
+        <div class="drawer-card-top">
+          <span class="drawer-card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z" /><path d="M4 19V5" />
+            </svg>
+          </span>
+          <span class="drawer-card-text">Koleksi Khazanah (<span id="collection-count">0/7</span>)</span>
+          <span class="drawer-card-chevron">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+        <div class="drawer-progress-track"><div class="drawer-progress-fill" id="drawer-progress-fill" style="width:0%"></div></div>
+      </button>
+      <button type="button" class="drawer-card" id="btn-history">
+        <div class="drawer-card-top">
+          <span class="drawer-card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 4h11v13a3 3 0 01-3 3H6a2 2 0 01-2-2v-2h11" /><path d="M7 4a2 2 0 00-2 2v10" />
+            </svg>
+          </span>
+          <span class="drawer-card-text">Sejarah &amp; Khazanah Artefak</span>
+          <span class="drawer-card-chevron">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </button>
+      <button type="button" class="drawer-card" id="btn-quiz">
+        <div class="drawer-card-top">
+          <span class="drawer-card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" /><path d="M9.5 9.5a2.5 2.5 0 114 2c-1 .7-1.5 1.2-1.5 2.5M12 17h.01" />
+            </svg>
+          </span>
+          <span class="drawer-card-text">Uji Kearifan Adat (Kuis)</span>
+          <span class="drawer-card-chevron">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </button>
+      <button type="button" class="drawer-card" id="btn-marker-gallery">
+        <div class="drawer-card-top">
+          <span class="drawer-card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="4" y="4" width="7" height="7" /><rect x="13" y="4" width="7" height="7" /><rect x="4" y="13" width="7" height="7" /><rect x="13" y="13" width="7" height="7" />
+            </svg>
+          </span>
+          <span class="drawer-card-text">Galeri Marker &amp; Unduh PNG</span>
+          <span class="drawer-card-chevron">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </button>
+      <button type="button" class="drawer-card" id="btn-docs">
+        <div class="drawer-card-top">
+          <span class="drawer-card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3l9 5-9 5-9-5z" /><path d="M3 13l9 5 9-5" />
+            </svg>
+          </span>
+          <span class="drawer-card-text">Dokumentasi Arsitektur Sistem</span>
+          <span class="drawer-card-chevron">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </button>
+      <button type="button" class="drawer-card" id="btn-drawer-fullscreen">
+        <div class="drawer-card-top">
+          <span class="drawer-card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line>
+            </svg>
+          </span>
+          <span class="drawer-card-text">Mode Layar Penuh</span>
+          <span class="drawer-card-chevron">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </button>
+      <button type="button" class="drawer-btn btn-reset-ar" id="btn-reset-ar">Pindai Artefak Lain</button>
+      <button type="button" class="drawer-btn" id="btn-return-landing">Kembali ke Beranda</button>
+    </nav>
   </aside>
 
   <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-box">
+      <div class="modal-crown-ribbon motif-rebung" aria-hidden="true"></div>
       <div class="modal-header">
         <h3 id="modal-title">Sejarah Artefak</h3>
-        <button type="button" class="btn-close-drawer" id="btn-close-modal" aria-label="Tutup Jendela Dialog">X</button>
+        <button type="button" class="btn-close-drawer" id="btn-close-modal" aria-label="Tutup Jendela Dialog">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
       </div>
       <div class="modal-body" id="modal-body">
       </div>
@@ -188,9 +354,15 @@
 
   <div class="modal-overlay" id="marker-presentation-modal" role="dialog" aria-modal="true" aria-labelledby="marker-presentation-title">
     <div class="modal-box marker-presentation-box">
+      <div class="modal-crown-ribbon motif-rebung" aria-hidden="true"></div>
       <div class="modal-header">
         <h3 id="marker-presentation-title">Marker Layar Penuh</h3>
-        <button type="button" class="btn-close-drawer" id="btn-close-marker-presentation" aria-label="Tutup Tampilan Marker">X</button>
+        <button type="button" class="btn-close-drawer" id="btn-close-marker-presentation" aria-label="Tutup Tampilan Marker">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
       </div>
       <div class="modal-body marker-presentation-body">
         <div class="marker-presentation-img-wrap">

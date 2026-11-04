@@ -63,7 +63,7 @@ const Gamification = {
       this.score += 30;
       this.saveState();
       this.updateCollectionCountUI();
-      UIManager.setStatusBadge(`Artefak Baru Ditemukan! (+30 XP)`, true);
+      UIManager.setStatusBadge(`Artefak Baru Ditemukan! (+30 Poin)`, true);
     }
   },
 
@@ -72,31 +72,43 @@ const Gamification = {
     if (el) {
       el.textContent = `${this.unlockedArtifacts.length}/7`;
     }
+    const fill = document.getElementById('drawer-progress-fill');
+    if (fill) {
+      fill.style.width = `${(this.unlockedArtifacts.length / 7) * 100}%`;
+    }
   },
 
   getLevelName() {
-    if (this.score < 100) return 'Penjelajah Pemula';
-    if (this.score < 250) return 'Kolektor Warisan Melayu';
-    return 'Pakar Adat Mahkota Melayu';
+    if (this.score < 100) return 'Penjelajah Awam Adat';
+    if (this.score < 250) return 'Pendekar Warisan Melayu';
+    return 'Penghulu Khazanah Melayu';
   },
 
   openCollectionBook() {
     const allArtifacts = [
-      { id: 'owl-marker', title: 'Burung Hantu Ukiran', category: 'Ornamen Kayu' },
-      { id: 'rumah-adat-marker', title: 'Rumah Adat Selembayung', category: 'Arsitektur Adat' },
-      { id: 'cerana-marker', title: 'Cerana Tepak Sirih', category: 'Wadah Logam' },
-      { id: 'perasapan-marker', title: 'Perasapan Setanggi', category: 'Peralatan Ritual' },
-      { id: 'kampil-marker', title: 'Kampil Sirih Kain', category: 'Wadah Tekstil' },
-      { id: 'perhapuran-marker', title: 'Perhapuran Kuningan', category: 'Wadah Logam' },
-      { id: 'ketur-marker', title: 'Ketur Adat Upacara', category: 'Perunggu Upacara' }
+      { id: 'owl-marker', roman: 'I', title: 'Burung Hantu Ukiran', category: 'Ornamen Kayu' },
+      { id: 'rumah-adat-marker', roman: 'II', title: 'Rumah Adat Selembayung', category: 'Arsitektur Adat' },
+      { id: 'cerana-marker', roman: 'III', title: 'Cerana Tepak Sirih', category: 'Wadah Logam' },
+      { id: 'perasapan-marker', roman: 'IV', title: 'Perasapan Setanggi', category: 'Peralatan Ritual' },
+      { id: 'kampil-marker', roman: 'V', title: 'Kampil Sirih Kain', category: 'Wadah Tekstil' },
+      { id: 'perhapuran-marker', roman: 'VI', title: 'Perhapuran Kuningan', category: 'Wadah Logam' },
+      { id: 'ketur-marker', roman: 'VII', title: 'Ketur Adat Upacara', category: 'Perunggu Upacara' }
     ];
 
     let cardsHtml = '';
     allArtifacts.forEach((item) => {
       const isUnlocked = this.unlockedArtifacts.includes(item.id);
+      const iconSvg = isUnlocked
+        ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>'
+        : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>';
+
       cardsHtml += `
         <div class="collection-card ${isUnlocked ? 'unlocked' : ''}">
-          <div class="collection-card-icon">${isUnlocked ? '[OK]' : '[?]'}</div>
+          <div class="collection-card-top">
+            <span class="collection-card-roman">${item.roman}</span>
+            <span class="collection-card-icon">${iconSvg}</span>
+          </div>
+          <div class="collection-card-cat">${item.category}</div>
           <div class="collection-card-title">${item.title}</div>
           <div class="collection-card-status">${isUnlocked ? 'Terbuka' : 'Terkunci'}</div>
         </div>
@@ -108,19 +120,19 @@ const Gamification = {
         <span style="font-size:12px; font-weight:800; color:var(--color-gold); letter-spacing:1px; text-transform:uppercase;">
           ${this.getLevelName()}
         </span>
-        <p style="font-size:13px; color:#F0ECE1; margin-top:4px;">
-          Total Poin: <strong>${this.score} XP</strong> | Koleksi: <strong>${this.unlockedArtifacts.length}/7 Ditemukan</strong>
+        <p style="font-size:13px; color:#F5F2EB; margin-top:4px;">
+          Poin Kearifan: <strong>${this.score} Poin</strong> | Khazanah: <strong>${this.unlockedArtifacts.length}/7 Ditemukan</strong>
         </p>
       </div>
       <div class="collection-grid">
         ${cardsHtml}
       </div>
-      <p style="font-size:11px; color:#A39B8B; margin-top:16px; text-align:center; line-height:1.4;">
-        Pindai marker artefak di kamera AR untuk melengkapi seluruh buku koleksi warisan Melayu.
+      <p style="font-size:11px; color:#D4AF37; margin-top:16px; text-align:center; line-height:1.4;">
+        Pindai kartu marker artefak pada kamera AR untuk melengkapi seluruh buku koleksi khazanah Melayu.
       </p>
     `;
 
-    UIManager.openModal('Buku Koleksi Warisan Melayu', bodyHtml);
+    UIManager.openModal('Koleksi Khazanah Warisan Melayu', bodyHtml);
   },
 
   startQuiz() {
@@ -155,7 +167,7 @@ const Gamification = {
       if (selectedIndex === correctIndex) {
         this.score += 50;
         this.saveState();
-        UIManager.openModal('Jawaban Benar!', `<p style="text-align:center; font-size:14px; line-height:1.6;">Selamat! Jawaban Anda tepat.<br/>Anda mendapatkan <strong>+50 XP</strong> Kebudayaan Melayu.<br/><br/><span style="font-size:20px; color:var(--color-gold); font-weight:800;">Total Poin: ${this.score} XP</span><br/><span style="font-size:12px; color:#A39B8B;">Gelar: ${this.getLevelName()}</span></p>`);
+        UIManager.openModal('Jawaban Benar!', `<p style="text-align:center; font-size:14px; line-height:1.6;">Selamat! Pemahaman adat Anda tepat.<br/>Anda mendapatkan <strong>+50 Poin</strong> Kearifan Melayu.<br/><br/><span style="font-size:20px; color:var(--color-gold); font-weight:800;">Total Poin: ${this.score}</span><br/><span style="font-size:12px; color:#F5F2EB;">Gelar: ${this.getLevelName()}</span></p>`);
       } else {
         UIManager.openModal('Jawaban Belum Tepat', `<p style="text-align:center; font-size:13px; line-height:1.6;">Tetap semangat! Anda dapat mempelajari filosofi artefak ini pada menu <strong>Sejarah &amp; Detail Artefak</strong> dan mencoba kembali.</p>`);
       }

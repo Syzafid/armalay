@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   };
 
-  window.sendToFlutter('SET_PORTRAIT');
+  window.sendToFlutter('SET_FREE');
 
   const splash = document.getElementById('splash');
   const startBtn = document.getElementById('btn-start-ar');
@@ -58,11 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (startBtn && splash) {
     startBtn.addEventListener('click', () => {
-      window.sendToFlutter('SET_LANDSCAPE');
-
-      if (screen.orientation && screen.orientation.lock) {
-        screen.orientation.lock('landscape').catch(() => {});
-      }
+      window.sendToFlutter('SET_FREE');
 
       const videos = document.querySelectorAll('video');
       videos.forEach(v => {
@@ -83,7 +79,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (returnLandingBtn && splash) {
     returnLandingBtn.addEventListener('click', () => {
-      window.sendToFlutter('SET_PORTRAIT');
+      window.sendToFlutter('SET_FREE');
       if (screen.orientation && screen.orientation.unlock) {
         screen.orientation.unlock();
       }

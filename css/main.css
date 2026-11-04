@@ -1,13 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  --color-gold: #E5A93C;
+  --color-gold: #D4AF37;
+  --color-gold-light: #F3CA65;
   --color-gold-dark: #8C5E0D;
-  --color-gold-glow: rgba(229, 169, 60, 0.25);
-  --color-ebony: #121216;
+  --color-gold-glow: rgba(212, 175, 55, 0.28);
+  --color-ebony: #141312;
   --color-text-dark: #1A1A1E;
   --color-text-muted: #57575E;
-  --color-bg-light: #FBF9F4;
+  --color-bg-light: #F7F4EC;
+  --color-sirih: #1B3B2B;
+  --color-sirih-dark: #12281D;
+  --color-marwah: #6B1D24;
+  --color-marwah-dark: #4A1217;
   --color-grid-line: rgba(0, 0, 0, 0.08);
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -115,61 +120,125 @@ canvas.a-canvas {
   width: 100%;
 }
 
+.motif-rebung {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 48 24'%3E%3Cpath d='M0 24 L12 4 L24 24 M24 24 L36 4 L48 24' fill='none' stroke='%23D4AF37' stroke-width='0.8'/%3E%3Cpath d='M8 24 L12 14 L16 24 M32 24 L36 14 L40 24' fill='none' stroke='%23D4AF37' stroke-width='0.6'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 48px 24px;
+}
+
+.motif-awan {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cpath d='M20 80 C20 40 60 40 60 70 C60 90 40 90 40 75 C40 65 52 65 52 72 M100 80 C100 120 140 120 140 90 C140 70 120 70 120 85 C120 95 132 95 132 88 M60 70 C80 60 90 100 100 80' fill='none' stroke='%23D4AF37' stroke-width='0.7'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+.landing-bg-motif {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  z-index: 1;
+}
+
 .landing-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-serif);
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 900;
-  letter-spacing: -0.5px;
+  letter-spacing: 0.5px;
   color: var(--color-ebony);
   text-decoration: none;
 }
 
+.brand-crest {
+  width: 28px;
+  height: 28px;
+  color: var(--color-gold);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.landing-brand:hover .brand-crest {
+  transform: rotate(45deg);
+}
+
 .landing-brand span {
+  color: var(--color-ebony);
+}
+
+.gold-text,
+.landing-brand span .gold-text {
   color: var(--color-gold);
 }
 
 .landing-menu-links {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 28px;
 }
 
 .landing-menu-link {
+  position: relative;
   font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.8px;
   text-transform: uppercase;
   color: var(--color-text-muted);
   text-decoration: none;
   background: transparent;
   border: none;
-  padding: 8px 4px;
-  transition: color 0.2s;
+  padding: 8px 2px;
+  transition: color 0.25s ease;
+}
+
+.landing-menu-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--color-gold);
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .landing-menu-link:hover, .landing-menu-link.active {
   color: var(--color-ebony);
 }
 
+.landing-menu-link:hover::after, .landing-menu-link.active::after {
+  width: 100%;
+}
+
 .btn-sound-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.8px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--color-gold-dark);
-  background: rgba(229, 169, 60, 0.12);
-  border: 1px solid var(--color-gold);
-  border-radius: var(--radius-sm);
-  padding: 6px 12px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  border-radius: var(--radius-full);
+  padding: 7px 16px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s, color 0.2s, transform 0.15s, border-color 0.2s;
 }
 
 .btn-sound-toggle:hover {
   background: var(--color-gold);
+  border-color: var(--color-gold);
   color: #111111;
+  transform: translateY(-1px);
+}
+
+.btn-sound-toggle:active {
+  transform: scale(0.96);
 }
 
 .landing-3d-hint {
@@ -362,6 +431,7 @@ canvas.a-canvas {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 #landing-3d-container {
@@ -369,6 +439,28 @@ canvas.a-canvas {
   height: 100%;
   position: absolute;
   inset: 0;
+  z-index: 1;
+}
+
+.landing-stage-rings {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(220px, 68vmin, 440px);
+  height: clamp(220px, 68vmin, 440px);
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.landing-stage-rings::before {
+  content: '';
+  position: absolute;
+  inset: 11%;
+  border-radius: 50%;
+  border: 1px dashed rgba(212, 175, 55, 0.22);
 }
 
 .landing-pagination {
@@ -383,20 +475,6 @@ canvas.a-canvas {
   color: var(--color-ebony);
   z-index: 5;
   white-space: nowrap;
-}
-
-.landing-pedestal-glow {
-  position: absolute;
-  bottom: 12%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 220px;
-  height: 50px;
-  background: radial-gradient(ellipse at center, rgba(229, 169, 60, 0.28) 0%, rgba(229, 169, 60, 0.08) 50%, transparent 75%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 1;
-  filter: blur(10px);
 }
 
 .animate-stagger-1 { animation: entrance-slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both; }
@@ -429,27 +507,217 @@ canvas.a-canvas {
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 900px) and (orientation: portrait) {
   #splash {
-    flex-direction: column-reverse;
+    flex-direction: column;
     overflow-y: auto;
+    overflow-x: hidden;
   }
+
   .landing-left {
-    width: 100%;
-    height: auto;
-    padding: 24px 20px;
+    display: contents;
   }
+
+  .landing-nav {
+    order: 1;
+    padding: 16px 18px 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-bottom: 1px solid var(--color-grid-line);
+    background: var(--color-bg-light);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .landing-brand {
+    font-size: 18px;
+    gap: 8px;
+  }
+
+  .brand-crest {
+    width: 22px;
+    height: 22px;
+  }
+
+  .landing-menu-links {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .landing-menu-link {
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    padding: 6px 2px;
+  }
+
+  .btn-sound-toggle {
+    font-size: 10px;
+    padding: 5px 12px;
+  }
+
   .landing-right {
+    order: 2;
     width: 100%;
-    height: 320px;
+    height: clamp(240px, 38dvh, 330px);
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--color-grid-line);
   }
-  .landing-title {
-    font-size: 32px;
-  }
+
   .landing-pagination {
     left: 16px;
-    top: 16px;
+    top: 14px;
     transform: none;
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+
+  .landing-3d-hint {
+    bottom: 12px;
+    font-size: 10px;
+    padding: 4px 12px;
+    white-space: nowrap;
+  }
+
+  .landing-hero-content {
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 18px 32px;
+    margin: 0;
+    background: var(--color-bg-light);
+    position: relative;
+    z-index: 2;
+  }
+
+  .landing-tag {
+    font-size: 10px;
+    margin-bottom: 8px;
+  }
+
+  .landing-title {
+    font-size: clamp(26px, 7vw, 34px);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  .landing-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+    max-width: 100%;
+  }
+
+  .landing-meta-grid {
+    gap: 24px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+
+  .landing-actions {
+    width: 100%;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .btn-start-museum {
+    flex: 1;
+    padding: 14px 16px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 920px) and (orientation: landscape) {
+  .landing-left {
+    padding: 16px 24px;
+    overflow-y: auto;
+  }
+
+  .landing-nav {
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .landing-brand {
+    font-size: 16px;
+    gap: 6px;
+  }
+
+  .brand-crest {
+    width: 20px;
+    height: 20px;
+  }
+
+  .landing-menu-links {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .landing-menu-link {
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    padding: 4px 2px;
+  }
+
+  .btn-sound-toggle {
+    font-size: 9.5px;
+    padding: 4px 10px;
+  }
+
+  .landing-tag {
+    font-size: 9.5px;
+    margin-bottom: 4px;
+  }
+
+  .landing-title {
+    font-size: clamp(20px, 3.4vw, 28px);
+    margin-bottom: 8px;
+  }
+
+  .landing-desc {
+    font-size: 11.5px;
+    line-height: 1.45;
+    margin-bottom: 12px;
+  }
+
+  .landing-meta-grid {
+    gap: 18px;
+    margin-bottom: 14px;
+  }
+
+  .landing-meta-label {
+    font-size: 9.5px;
+  }
+
+  .landing-meta-val {
+    font-size: 11.5px;
+  }
+
+  .landing-actions {
+    gap: 14px;
+  }
+
+  .btn-start-museum {
+    padding: 11px 18px;
+    font-size: 10.5px;
+  }
+
+  .landing-pagination {
+    left: 12px;
+    top: 12px;
+    transform: none;
+    font-size: 13px;
+  }
+
+  .landing-3d-hint {
+    bottom: 10px;
+    font-size: 10px;
+    padding: 4px 12px;
   }
 }
 
