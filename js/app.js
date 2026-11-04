@@ -55,6 +55,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     screen.orientation.lock('portrait').catch(() => {});
   }
 
+  const guardBodyViewport = () => {
+    const b = document.body;
+    if (!b) return;
+    if (b.style.marginLeft || b.style.marginTop || (b.style.width && b.style.width !== '100vw')) {
+      b.style.marginLeft = '0px';
+      b.style.marginTop = '0px';
+      b.style.width = '100vw';
+      b.style.height = '100dvh';
+      if (typeof Landing3D !== 'undefined' && typeof Landing3D.onWindowResize === 'function') {
+        Landing3D.onWindowResize();
+      }
+    }
+  };
+
+  if (typeof MutationObserver !== 'undefined' && document.body) {
+    const bodyObserver = new MutationObserver(() => {
+      guardBodyViewport();
+    });
+    bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['style'] });
+  }
+  window.addEventListener('resize', guardBodyViewport);
+
   const splash = document.getElementById('splash');
   const startBtn = document.getElementById('btn-start-ar');
   const returnLandingBtn = document.getElementById('btn-return-landing');
