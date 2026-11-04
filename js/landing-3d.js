@@ -3,6 +3,8 @@ const Landing3D = {
   camera: null,
   renderer: null,
   currentModel: null,
+  currentBaseBox: null,
+  currentItemConfig: null,
   modelGroup: null,
   targetRotationX: 0,
   targetRotationY: 0,
@@ -26,8 +28,8 @@ const Landing3D = {
       era: "Abad Ke-15 Masehi",
       desc: "Motif hias kuno melambangkan keheningan malam, pengawasan tajam, dan kebijaksanaan para tetua adat dalam meramu hukum serta adat istiadat Melayu.",
       path: "assets/models/owl.glb",
-      scale: 2.2,
-      posY: -0.8
+      sizeMultiplier: 1.18,
+      verticalOffset: 0.0
     },
     {
       name: "Rumah Adat Arsitektur Melayu",
@@ -35,8 +37,8 @@ const Landing3D = {
       era: "Abad Ke-16 Masehi",
       desc: "Mahakarya arsitektur tradisional panggung dengan hiasan atap Selembayung yang menjulang tinggi, melambangkan kehormatan menyuguhkan tamu.",
       path: "assets/models/rumah_adat.glb",
-      scale: 0.55,
-      posY: -1.2
+      sizeMultiplier: 1.12,
+      verticalOffset: 0.0
     },
     {
       name: "Artefak Cerana Tepak Sirih",
@@ -44,8 +46,8 @@ const Landing3D = {
       era: "Kerajaan Melayu Kuno",
       desc: "Bejana berukir perak dan kuningan sebagai simbol tertinggi penghormatan, pembuka kata musyawarah, dan penyambutan tamu kehormatan.",
       path: "assets/models/cerana.glb",
-      scale: 1.3,
-      posY: -0.9
+      sizeMultiplier: 1.00,
+      verticalOffset: 0.0
     },
     {
       name: "Artefak Perasapan Setanggi",
@@ -53,8 +55,8 @@ const Landing3D = {
       era: "Kesultanan Melayu",
       desc: "Tempat pembakaran kemukus dan kayu gaharu berukir ventilasi harum untuk upacara adat istana dan pembersihan spiritual majlis.",
       path: "assets/models/perasapan.glb",
-      scale: 1.3,
-      posY: -0.8
+      sizeMultiplier: 0.95,
+      verticalOffset: 0.0
     },
     {
       name: "Artefak Kampil Sirih Melayu",
@@ -62,8 +64,8 @@ const Landing3D = {
       era: "Kesultanan Melayu",
       desc: "Wadah tradisional kain anyaman songket berukir halus untuk menyimpan sirih dan barang berharga adat majlis Melayu.",
       path: "assets/models/kampil.glb",
-      scale: 1.2,
-      posY: -0.8
+      sizeMultiplier: 0.95,
+      verticalOffset: 0.0
     },
     {
       name: "Artefak Perhapuran Melayu",
@@ -71,8 +73,8 @@ const Landing3D = {
       era: "Kerajaan Melayu Kuno",
       desc: "Bejana kuningan kecil penyimpan kapur sirih berhias motif ukiran Awan Larat sebagai lambang kerapian adat.",
       path: "assets/models/perhapuran.glb",
-      scale: 1.2,
-      posY: -0.8
+      sizeMultiplier: 0.86,
+      verticalOffset: 0.0
     },
     {
       name: "Artefak Ketur Adat Melayu",
@@ -80,8 +82,8 @@ const Landing3D = {
       era: "Kesultanan Melayu Kuno",
       desc: "Bejana logam tempat pembuangan ampas sirih dengan leher dan kaki cawan kokoh dalam upacara istana Melayu.",
       path: "assets/models/ketur.glb",
-      scale: 1.2,
-      posY: -0.8
+      sizeMultiplier: 0.92,
+      verticalOffset: 0.0
     }
   ],
 
@@ -262,18 +264,22 @@ const Landing3D = {
         this.hideError();
         const model = gltf.scene;
         this.enhanceModelMaterials(model);
-        model.scale.set(item.scale * 0.75, item.scale * 0.75, item.scale * 0.75);
-        model.position.set(0, item.posY, 0);
+
+        const baseStats = this.measureBaseGeometry(model);
+        this.currentModel = model;
+        this.currentBaseBox = baseStats;
+        this.currentItemConfig = item;
 
         this.modelGroup.add(model);
-        this.currentModel = model;
 
-        let currentProgress = 0.75;
+        let currentProgress = 0.78;
+        this.applyAutoFitTransform(model, baseStats, item, currentProgress);
+
         const animateScale = () => {
+          if (this.currentModel !== model) return;
           if (currentProgress < 1.0) {
-            currentProgress += 0.025;
-            const currentScale = item.scale * currentProgress;
-            model.scale.set(currentScale, currentScale, currentScale);
+            currentProgress = Math.min(1.0, currentProgress + 0.025);
+            this.applyAutoFitTransform(model, baseStats, item, currentProgress);
             requestAnimationFrame(animateScale);
           }
         };
@@ -289,6 +295,75 @@ const Landing3D = {
         console.error('Error loading 3D model for landing:', error);
         this.showError(item.name, () => this.loadArtifact(index));
       }
+    );
+  },
+
+  measureBaseGeometry(model) {
+    model.scale.set(1, 1, 1);
+    model.position.set(0, 0, 0);
+    model.rotation.set(0, 0, 0);
+    model.updateMatrixWorld(true);
+
+    const box = new THREE.Box3().setFromObject(model);
+    const size = new THREE.Vector3();
+    const center = new THREE.Vector3();
+    box.getSize(size);
+    box.getCenter(center);
+
+    const w = Math.max(size.x, 0.001);
+    const h = Math.max(size.y, 0.001);
+    const d = Math.max(size.z, 0.001);
+
+    const maxDim = Math.max(w, h, d);
+    const rmsDim = Math.sqrt((w * w + h * h + d * d) / 3);
+    const effectiveDim = 0.65 * maxDim + 0.35 * rmsDim;
+
+    return {
+      size: { x: w, y: h, z: d },
+      center: { x: center.x, y: center.y, z: center.z },
+      maxDim: maxDim,
+      effectiveDim: Math.max(effectiveDim, 0.001)
+    };
+  },
+
+  computeAutoFitScale(baseStats, itemConfig) {
+    if (!this.camera || !baseStats) return 1.0;
+
+    const fovRad = (this.camera.fov * Math.PI) / 180;
+    const cameraDist = Math.abs(this.camera.position.z) || 5.0;
+    const visibleHeight = 2 * Math.tan(fovRad / 2) * cameraDist;
+    const visibleWidth = visibleHeight * (this.camera.aspect || 1.0);
+
+    const stageSpan = Math.min(visibleWidth, visibleHeight) * 0.56;
+    const multiplier = (itemConfig && itemConfig.sizeMultiplier) ? itemConfig.sizeMultiplier : 1.0;
+
+    let targetScale = (stageSpan / baseStats.effectiveDim) * multiplier;
+
+    const maxAllowedWidth = visibleWidth * 0.78;
+    const maxAllowedHeight = visibleHeight * 0.74;
+
+    if (baseStats.size.x * targetScale > maxAllowedWidth) {
+      targetScale = maxAllowedWidth / baseStats.size.x;
+    }
+    if (baseStats.size.y * targetScale > maxAllowedHeight) {
+      targetScale = maxAllowedHeight / baseStats.size.y;
+    }
+
+    return targetScale;
+  },
+
+  applyAutoFitTransform(model, baseStats, itemConfig, progressRatio = 1.0) {
+    if (!model || !baseStats) return;
+
+    const targetScale = this.computeAutoFitScale(baseStats, itemConfig);
+    const activeScale = targetScale * progressRatio;
+    const verticalOffset = (itemConfig && itemConfig.verticalOffset) ? itemConfig.verticalOffset : 0.0;
+
+    model.scale.set(activeScale, activeScale, activeScale);
+    model.position.set(
+      -baseStats.center.x * activeScale,
+      -baseStats.center.y * activeScale + verticalOffset,
+      -baseStats.center.z * activeScale
     );
   },
 
@@ -316,10 +391,15 @@ const Landing3D = {
 
     const width = container.clientWidth;
     const height = container.clientHeight;
+    if (width === 0 || height === 0) return;
 
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
+
+    if (this.currentModel && this.currentBaseBox && this.currentItemConfig) {
+      this.applyAutoFitTransform(this.currentModel, this.currentBaseBox, this.currentItemConfig, 1.0);
+    }
   },
 
   attachDragListeners() {

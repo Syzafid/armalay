@@ -6,8 +6,11 @@ const ARController = {
 
   rotX: 0,
   rotY: 30,
-  scaleFactor: 0.6,
+  baseAutoScale: 0.5,
+  zoomMultiplier: 1.0,
+  scaleFactor: 0.5,
   lightIntensity: 0.9,
+  measuredModelStats: null,
 
   touchState: {
     isDragging: false,
@@ -15,7 +18,8 @@ const ARController = {
     startY: 0,
     startRotX: 0,
     startRotY: 0,
-    startScale: 0.6,
+    startScale: 0.5,
+    startZoomMultiplier: 1.0,
     initialPinchDistance: 0
   },
 
@@ -25,16 +29,153 @@ const ARController = {
     if (this.activeModelEl) {
       this.activeModelEl.addEventListener('model-loaded', (e) => {
         this.enhanceModelMaterials(e.detail.model);
+        this.calibrateLoadedModel(e.detail.model);
       });
     }
     this.attachMarkerListeners();
     this.attachDPadListeners();
     this.attachTouchListeners();
 
+    window.addEventListener('resize', () => {
+      if (this.isScannedLocked) {
+        this.recalculateResponsiveScale();
+        this.updateSmartPlacement();
+      }
+    });
+
     const btnCapture = document.getElementById('btn-capture-ar');
     if (btnCapture) {
       btnCapture.addEventListener('click', () => this.takeSnapshot());
     }
+  },
+
+  calibrateLoadedModel(threeModel) {
+    if (!threeModel) return;
+
+    threeModel.position.set(0, 0, 0);
+    threeModel.rotation.set(0, 0, 0);
+    threeModel.scale.set(1, 1, 1);
+    threeModel.updateMatrixWorld(true);
+
+    const invParent = new THREE.Matrix4();
+    if (threeModel.parent) {
+      threeModel.parent.updateMatrixWorld(true);
+      invParent.copy(threeModel.parent.matrixWorld).invert();
+    }
+
+    const box = new THREE.Box3();
+    let hasMesh = false;
+    threeModel.traverse((node) => {
+      if (node.isMesh && node.geometry) {
+        if (!node.geometry.boundingBox) {
+          node.geometry.computeBoundingBox();
+        }
+        if (node.geometry.boundingBox) {
+          const meshBox = node.geometry.boundingBox.clone();
+          const relMatrix = new THREE.Matrix4().multiplyMatrices(invParent, node.matrixWorld);
+          meshBox.applyMatrix4(relMatrix);
+          box.union(meshBox);
+          hasMesh = true;
+        }
+      }
+    });
+
+    if (!hasMesh || box.isEmpty()) {
+      box.setFromObject(threeModel);
+    }
+
+    const size = new THREE.Vector3();
+    const center = new THREE.Vector3();
+    box.getSize(size);
+    box.getCenter(center);
+
+    threeModel.position.set(-center.x, -center.y, -center.z);
+
+    const w = Math.max(size.x, 0.001);
+    const h = Math.max(size.y, 0.001);
+    const d = Math.max(size.z, 0.001);
+    const maxDim = Math.max(w, h, d);
+    const rmsDim = Math.sqrt((w * w + h * h + d * d) / 3);
+    const effectiveDim = Math.max(0.65 * maxDim + 0.35 * rmsDim, 0.001);
+
+    this.measuredModelStats = {
+      size: { x: w, y: h, z: d },
+      center: { x: center.x, y: center.y, z: center.z },
+      maxDim: maxDim,
+      effectiveDim: effectiveDim
+    };
+
+    this.recalculateResponsiveScale();
+    this.updateSmartPlacement();
+  },
+
+  recalculateResponsiveScale() {
+    if (!this.measuredModelStats) return;
+
+    const stats = this.measuredModelStats;
+    const vw = window.innerWidth || 390;
+    const vh = window.innerHeight || 844;
+    const aspect = vw / vh;
+
+    const baseTargetSpan = aspect < 1.0
+      ? Math.max(0.66, Math.min(0.86, aspect * 1.18))
+      : 0.88;
+
+    const itemMultiplier = (this.activeArtifact && this.activeArtifact.sizeMultiplier)
+      ? parseFloat(this.activeArtifact.sizeMultiplier)
+      : 1.0;
+
+    let computedScale = (baseTargetSpan / stats.effectiveDim) * itemMultiplier;
+
+    const maxAllowedWidth = aspect < 1.0 ? Math.max(0.72, aspect * 1.35) : 1.35;
+    const maxAllowedHeight = 1.05;
+
+    if (stats.size.x * computedScale > maxAllowedWidth) {
+      computedScale = maxAllowedWidth / stats.size.x;
+    }
+    if (stats.size.y * computedScale > maxAllowedHeight) {
+      computedScale = maxAllowedHeight / stats.size.y;
+    }
+
+    this.baseAutoScale = computedScale;
+    this.scaleFactor = this.baseAutoScale * this.zoomMultiplier;
+    this.applyCurrentScale();
+  },
+
+  applyCurrentScale() {
+    if (!this.activeModelEl) return;
+    const s = this.scaleFactor.toFixed(4);
+    this.activeModelEl.setAttribute('scale', `${s} ${s} ${s}`);
+  },
+
+  updateSmartPlacement() {
+    if (!this.activeModelEl || !this.isScannedLocked) return;
+
+    const vw = window.innerWidth || 390;
+    const vh = window.innerHeight || 844;
+    const isMobilePortrait = vw <= 768 && vh >= vw;
+    const isModalOpen = typeof UIManager !== 'undefined' && typeof UIManager.isModalActive === 'function' && UIManager.isModalActive();
+
+    const extraY = (this.activeArtifact && this.activeArtifact.verticalOffset)
+      ? parseFloat(this.activeArtifact.verticalOffset)
+      : 0.0;
+
+    let posX = 0.0;
+    let posY = isMobilePortrait ? 0.06 : 0.02;
+    let posZ = vw < 380 ? -1.95 : -1.85;
+
+    if (isModalOpen) {
+      if (vw <= 768) {
+        posX = 0.0;
+        posY = 0.32;
+      } else {
+        posX = -0.44;
+        posY = 0.02;
+      }
+    }
+
+    posY += extraY;
+    this.activeModelEl.setAttribute('position', `${posX.toFixed(3)} ${posY.toFixed(3)} ${posZ.toFixed(3)}`);
   },
 
   enhanceModelMaterials(model) {
@@ -138,6 +279,7 @@ const ARController = {
       const dy = e.touches[0].clientY - e.touches[1].clientY;
       this.touchState.initialPinchDistance = Math.hypot(dx, dy);
       this.touchState.startScale = this.scaleFactor;
+      this.touchState.startZoomMultiplier = this.zoomMultiplier;
     }
   },
 
@@ -162,13 +304,9 @@ const ARController = {
       const currentDistance = Math.hypot(dx, dy);
 
       const ratio = currentDistance / this.touchState.initialPinchDistance;
-      const newScale = Math.min(Math.max(0.2, this.touchState.startScale * ratio), 1.8);
-
-      this.scaleFactor = newScale;
-      const s = this.scaleFactor.toFixed(2);
-      if (this.activeModelEl) {
-        this.activeModelEl.setAttribute('scale', `${s} ${s} ${s}`);
-      }
+      this.zoomMultiplier = Math.min(Math.max(0.45, this.touchState.startZoomMultiplier * ratio), 2.25);
+      this.scaleFactor = this.baseAutoScale * this.zoomMultiplier;
+      this.applyCurrentScale();
     }
   },
 
@@ -217,17 +355,20 @@ const ARController = {
   lockArtifact(artifactData) {
     this.isScannedLocked = true;
     this.activeArtifact = artifactData;
+    this.measuredModelStats = null;
 
     console.log('Locking Artifact:', artifactData.title);
 
-    let defaultScale = 0.6;
+    let fallbackScale = 0.5;
     if (artifactData.scale) {
-      defaultScale = parseFloat(artifactData.scale.split(' ')[0]) || 0.6;
+      fallbackScale = parseFloat(artifactData.scale.split(' ')[0]) || 0.5;
     }
 
     this.rotX = 0;
     this.rotY = 30;
-    this.scaleFactor = defaultScale;
+    this.baseAutoScale = fallbackScale;
+    this.zoomMultiplier = 1.0;
+    this.scaleFactor = fallbackScale;
     this.lightIntensity = 0.9;
     this.adjustLighting(0);
 
@@ -243,16 +384,22 @@ const ARController = {
       window.sendToFlutter('HAPTIC_FEEDBACK');
     }
 
-    if (window.Gamification && typeof window.Gamification.unlockArtifact === 'function') {
-      window.Gamification.unlockArtifact(artifactData.id);
+    if (typeof Gamification !== 'undefined' && typeof Gamification.unlockArtifact === 'function') {
+      Gamification.unlockArtifact(artifactData.id);
     }
 
     if (this.activeModelEl) {
       this.activeModelEl.setAttribute('gltf-model', artifactData.modelPath);
-      this.activeModelEl.setAttribute('scale', `${this.scaleFactor} ${this.scaleFactor} ${this.scaleFactor}`);
-      this.activeModelEl.setAttribute('position', artifactData.position || '-0.55 -0.05 -1.8');
+      this.applyCurrentScale();
+      this.updateSmartPlacement();
       this.activeModelEl.setAttribute('rotation', `${this.rotX} ${this.rotY} 0`);
       this.activeModelEl.setAttribute('visible', 'true');
+
+      const existingMesh = this.activeModelEl.getObject3D('mesh');
+      if (existingMesh) {
+        this.enhanceModelMaterials(existingMesh);
+        this.calibrateLoadedModel(existingMesh);
+      }
     }
 
     this.showControllerPad();
@@ -270,9 +417,10 @@ const ARController = {
   zoomModel(deltaScale) {
     if (!this.activeModelEl || !this.isScannedLocked) return;
 
-    this.scaleFactor = Math.min(Math.max(0.2, this.scaleFactor + deltaScale), 1.8);
-    const s = this.scaleFactor.toFixed(2);
-    this.activeModelEl.setAttribute('scale', `${s} ${s} ${s}`);
+    const step = deltaScale * 1.4;
+    this.zoomMultiplier = Math.min(Math.max(0.45, this.zoomMultiplier + step), 2.25);
+    this.scaleFactor = this.baseAutoScale * this.zoomMultiplier;
+    this.applyCurrentScale();
   },
 
   adjustLighting(delta) {
@@ -293,18 +441,15 @@ const ARController = {
   resetTransform() {
     if (!this.activeModelEl || !this.isScannedLocked) return;
 
-    let defaultScale = 0.6;
-    if (this.activeArtifact && this.activeArtifact.scale) {
-      defaultScale = parseFloat(this.activeArtifact.scale.split(' ')[0]) || 0.6;
-    }
-
     this.rotX = 0;
     this.rotY = 30;
-    this.scaleFactor = defaultScale;
+    this.zoomMultiplier = 1.0;
+    this.scaleFactor = this.baseAutoScale * this.zoomMultiplier;
     this.lightIntensity = 0.9;
     this.adjustLighting(0);
     this.activeModelEl.setAttribute('rotation', `${this.rotX} ${this.rotY} 0`);
-    this.activeModelEl.setAttribute('scale', `${this.scaleFactor} ${this.scaleFactor} ${this.scaleFactor}`);
+    this.applyCurrentScale();
+    this.updateSmartPlacement();
   },
 
   showControllerPad() {
@@ -324,9 +469,12 @@ const ARController = {
     console.log('Resetting AR Scan State...');
     this.isScannedLocked = false;
     this.activeArtifact = null;
+    this.measuredModelStats = null;
     this.rotX = 0;
     this.rotY = 30;
-    this.scaleFactor = 0.6;
+    this.baseAutoScale = 0.5;
+    this.zoomMultiplier = 1.0;
+    this.scaleFactor = 0.5;
     this.lightIntensity = 0.9;
     this.touchState.isDragging = false;
     this.touchState.initialPinchDistance = 0;

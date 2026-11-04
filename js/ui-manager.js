@@ -268,12 +268,18 @@ const UIManager = {
     if (this.elements.modalBody) this.elements.modalBody.innerHTML = htmlBody;
     if (this.elements.modalOverlay) this.elements.modalOverlay.classList.add('active');
     ARController.hideControllerPad();
+    if (typeof ARController !== 'undefined' && typeof ARController.updateSmartPlacement === 'function') {
+      ARController.updateSmartPlacement();
+    }
   },
 
   closeModal() {
     if (this.elements.modalOverlay) this.elements.modalOverlay.classList.remove('active');
     if (!this.isDrawerOpen() && !this.isMarkerPresentationActive() && ARController.isScannedLocked) {
       ARController.showControllerPad();
+    }
+    if (typeof ARController !== 'undefined' && typeof ARController.updateSmartPlacement === 'function') {
+      ARController.updateSmartPlacement();
     }
   },
 
