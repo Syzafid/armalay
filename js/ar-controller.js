@@ -153,24 +153,26 @@ const ARController = {
 
     const vw = window.innerWidth || 390;
     const vh = window.innerHeight || 844;
-    const isMobilePortrait = vw <= 768 && vh >= vw;
+    const isLandscape = vw >= vh;
     const isModalOpen = typeof UIManager !== 'undefined' && typeof UIManager.isModalActive === 'function' && UIManager.isModalActive();
+    const isDrawerOpen = typeof UIManager !== 'undefined' && typeof UIManager.isDrawerOpen === 'function' && UIManager.isDrawerOpen();
+    const isPanelOpen = isModalOpen || isDrawerOpen;
 
     const extraY = (this.activeArtifact && this.activeArtifact.verticalOffset)
       ? parseFloat(this.activeArtifact.verticalOffset)
       : 0.0;
 
     let posX = 0.0;
-    let posY = isMobilePortrait ? 0.06 : 0.02;
+    let posY = isLandscape ? 0.02 : 0.06;
     let posZ = vw < 380 ? -1.95 : -1.85;
 
-    if (isModalOpen) {
-      if (vw <= 768) {
-        posX = 0.0;
-        posY = 0.32;
-      } else {
+    if (isPanelOpen) {
+      if (isLandscape || isDrawerOpen || vw > 768) {
         posX = -0.44;
         posY = 0.02;
+      } else {
+        posX = 0.0;
+        posY = 0.32;
       }
     }
 

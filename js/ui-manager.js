@@ -102,7 +102,7 @@ const UIManager = {
         this.closeDrawer();
         ARController.resetScanState();
         if (window.sendToFlutter) {
-          window.sendToFlutter('SET_FREE');
+          window.sendToFlutter('SET_LANDSCAPE');
         }
       });
     }
@@ -254,12 +254,18 @@ const UIManager = {
   openDrawer() {
     if (this.elements.drawerMenu) this.elements.drawerMenu.classList.add('open');
     ARController.hideControllerPad();
+    if (typeof ARController !== 'undefined' && typeof ARController.updateSmartPlacement === 'function') {
+      ARController.updateSmartPlacement();
+    }
   },
 
   closeDrawer() {
     if (this.elements.drawerMenu) this.elements.drawerMenu.classList.remove('open');
     if (!this.isModalActive() && !this.isMarkerPresentationActive() && ARController.isScannedLocked) {
       ARController.showControllerPad();
+    }
+    if (typeof ARController !== 'undefined' && typeof ARController.updateSmartPlacement === 'function') {
+      ARController.updateSmartPlacement();
     }
   },
 

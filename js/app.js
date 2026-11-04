@@ -50,7 +50,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   };
 
-  window.sendToFlutter('SET_FREE');
+  window.sendToFlutter('SET_PORTRAIT');
+  if (screen.orientation && typeof screen.orientation.lock === 'function') {
+    screen.orientation.lock('portrait').catch(() => {});
+  }
 
   const splash = document.getElementById('splash');
   const startBtn = document.getElementById('btn-start-ar');
@@ -58,7 +61,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (startBtn && splash) {
     startBtn.addEventListener('click', () => {
-      window.sendToFlutter('SET_FREE');
+      document.body.classList.add('ar-mode-active');
+      window.sendToFlutter('SET_LANDSCAPE');
 
       const videos = document.querySelectorAll('video');
       videos.forEach(v => {
@@ -68,19 +72,32 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
 
       UIManager.toggleFullscreen();
+      if (screen.orientation && typeof screen.orientation.lock === 'function') {
+        screen.orientation.lock('landscape').catch(() => {});
+      }
 
       splash.classList.add('hide');
       setTimeout(() => {
         splash.style.display = 'none';
         UIManager.setStatusBadge('Mencari Marker Melayu...', false);
+        if (typeof ARController !== 'undefined' && typeof ARController.updateSmartPlacement === 'function') {
+          ARController.updateSmartPlacement();
+        }
       }, 600);
     });
   }
 
   if (returnLandingBtn && splash) {
     returnLandingBtn.addEventListener('click', () => {
-      window.sendToFlutter('SET_FREE');
-      if (screen.orientation && screen.orientation.unlock) {
+      document.body.classList.remove('ar-mode-active');
+      window.sendToFlutter('SET_PORTRAIT');
+      if (screen.orientation && typeof screen.orientation.lock === 'function') {
+        screen.orientation.lock('portrait').catch(() => {
+          if (screen.orientation && typeof screen.orientation.unlock === 'function') {
+            screen.orientation.unlock();
+          }
+        });
+      } else if (screen.orientation && typeof screen.orientation.unlock === 'function') {
         screen.orientation.unlock();
       }
       ARController.resetScanState();
@@ -88,6 +105,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       UIManager.closeModal();
       splash.style.display = 'flex';
       splash.classList.remove('hide');
+      setTimeout(() => {
+        if (typeof Landing3D !== 'undefined' && typeof Landing3D.onWindowResize === 'function') {
+          Landing3D.onWindowResize();
+        }
+      }, 250);
     });
   }
 });
