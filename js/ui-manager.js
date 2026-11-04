@@ -4,6 +4,7 @@ const UIManager = {
   init() {
     this.elements = {
       headerBadge: document.getElementById('artifact-header-badge'),
+      museumBadgeEl: document.getElementById('artifact-museum-badge'),
       titleEl: document.getElementById('artifact-title'),
       subtitleEl: document.getElementById('artifact-subtitle'),
       statusBadge: document.getElementById('marker-status-badge'),
@@ -78,7 +79,16 @@ const UIManager = {
         this.closeDrawer();
         const activeData = ARController.activeArtifact;
         if (activeData) {
-          this.openModal(`Sejarah ${activeData.title}`, `<p>${activeData.historyText}</p>`);
+          const code = activeData.artifactCode || 'MNM-01';
+          const museum = activeData.museumFullName || activeData.museumName || 'Museum Negeri Medan';
+          const historyHtml = `
+            <div class="modal-museum-meta">
+              <span class="modal-code-pill">${code}</span>
+              <span class="modal-museum-label">${museum}</span>
+            </div>
+            <p>${activeData.historyText}</p>
+          `;
+          this.openModal(`Sejarah ${activeData.title}`, historyHtml);
         } else {
           this.openModal('Sejarah Artefak', '<p>Belum ada artefak yang ter-scan. Silakan pindai marker terlebih dahulu.</p>');
         }
@@ -120,42 +130,54 @@ const UIManager = {
     });
   },
 
-  openMarkerGallery() {
+  openMarkerGallery(museumFilter = 'all') {
     this.closeDrawer();
-    const artifacts = ArtifactLoader.data;
-    if (!artifacts || Object.keys(artifacts).length === 0) {
+    const allItems = ArtifactLoader.getCollectionArtifacts('all');
+    if (!allItems || allItems.length === 0) {
       this.openModal('Galeri Marker AR Melayu', '<p>Data marker belum siap.</p>');
       return;
     }
 
-    let cardsHtml = '';
-    const keys = ['owl-marker', 'rumah-adat-marker', 'cerana-marker', 'perasapan-marker', 'kampil-marker', 'perhapuran-marker', 'ketur-marker'];
+    const museums = ArtifactLoader.getMuseumsList();
+    const filteredItems = ArtifactLoader.getCollectionArtifacts(museumFilter);
 
-    keys.forEach(key => {
-      const item = artifacts[key];
-      if (item) {
-        cardsHtml += `
-          <div class="marker-card">
-            <div class="marker-card-img-wrapper">
-              <img src="${item.markerImg}" alt="${item.title}" />
-            </div>
-            <div class="marker-card-title">${item.title}</div>
-            <div class="marker-card-sub">${item.category}</div>
-            <button type="button" class="btn-inspect-marker" onclick="UIManager.presentMarkerFullscreen('${item.markerImg}', '${item.title}')">
-              Tampilkan di Layar
-            </button>
-            <a href="${item.markerImg}" download="${key}.png" class="btn-download-marker">
-              Unduh Marker PNG
-            </a>
+    let filterTabsHtml = `<div class="museum-filter-bar" role="tablist" aria-label="Filter Berdasarkan Museum">`;
+    filterTabsHtml += `<button type="button" class="museum-filter-btn ${museumFilter === 'all' ? 'active' : ''}" onclick="UIManager.openMarkerGallery('all')">Semua Koleksi (${allItems.length})</button>`;
+    museums.forEach(m => {
+      filterTabsHtml += `<button type="button" class="museum-filter-btn ${museumFilter === m.id ? 'active' : ''}" onclick="UIManager.openMarkerGallery('${m.id}')">${m.name} (${m.count})</button>`;
+    });
+    filterTabsHtml += `</div>`;
+
+    let cardsHtml = '';
+    filteredItems.forEach(item => {
+      const code = item.artifactCode || 'MNM';
+      const museum = item.museumName || 'Museum Negeri Medan';
+      cardsHtml += `
+        <div class="marker-card">
+          <div class="marker-card-top-meta">
+            <span class="marker-code-badge">${code}</span>
+            <span class="marker-museum-tag">${museum}</span>
           </div>
-        `;
-      }
+          <div class="marker-card-img-wrapper">
+            <img src="${item.markerImg}" alt="${item.title}" />
+          </div>
+          <div class="marker-card-title">${item.title}</div>
+          <div class="marker-card-sub">${item.category}</div>
+          <button type="button" class="btn-inspect-marker" onclick="UIManager.presentMarkerFullscreen('${item.markerImg}', '${code} - ${item.title}')">
+            Tampilkan di Layar
+          </button>
+          <a href="${item.markerImg}" download="${item.id}.png" class="btn-download-marker">
+            Unduh Marker PNG
+          </a>
+        </div>
+      `;
     });
 
     const bodyHtml = `
-      <p style="margin-bottom: 14px; font-size: 12px; color: #E2DDD2; line-height: 1.5;">
-        Arahkan kamera ke salah satu gambar marker di bawah ini. Anda dapat mengklik tombol <strong>Tampilkan di Layar</strong> untuk menampilkan gambar besar di monitor laptop/PC lalu memindainya langsung dari HP Anda.
+      <p style="margin-bottom: 10px; font-size: 12px; color: #E2DDD2; line-height: 1.5;">
+        Arahkan kamera ke salah satu gambar marker di bawah ini. Klik <strong>Tampilkan di Layar</strong> untuk memindai langsung dari perangkat lain.
       </p>
+      ${filterTabsHtml}
       <div class="marker-grid">
         ${cardsHtml}
       </div>
@@ -191,7 +213,7 @@ const UIManager = {
     const bodyHtml = `
       <div style="font-size:13px; line-height:1.6; color:#F0ECE1;">
         <p style="margin-bottom:12px;">
-          Pelajari seluk-beluk arsitektur sistem, teknologi <strong>One-Time Scan &amp; Persistent Lock</strong>, integrasi <strong>Android Hybrid Container Shell</strong>, serta katalog lengkap 7 artefak budaya Melayu dan pengujian sistem.
+          Pelajari seluk-beluk arsitektur sistem, teknologi <strong>One-Time Scan &amp; Persistent Lock</strong>, integrasi <strong>Android Hybrid Container Shell</strong>, serta katalog lengkap artefak budaya Melayu lintas museum Sumatera Utara dan pengujian sistem.
         </p>
         <div style="display:flex; flex-direction:column; gap:10px; margin-top:16px;">
           <a href="https://armalay-docs.vercel.app" target="_blank" rel="noopener noreferrer" class="btn-download-marker" style="display:block; text-align:center; text-decoration:none; padding:10px; font-weight:700;">
@@ -231,7 +253,12 @@ const UIManager = {
     }
   },
 
-  setHeaderInfo(title, subtitle) {
+  setHeaderInfo(title, subtitle, artifactCode, museumName) {
+    if (this.elements.museumBadgeEl) {
+      const code = artifactCode || 'MNM-01';
+      const museum = museumName || 'Museum Negeri Medan';
+      this.elements.museumBadgeEl.textContent = `${code} • ${museum}`;
+    }
     if (this.elements.titleEl) this.elements.titleEl.textContent = title;
     if (this.elements.subtitleEl) this.elements.subtitleEl.textContent = subtitle;
     if (this.elements.headerBadge) this.elements.headerBadge.style.display = 'flex';

@@ -68,13 +68,16 @@ const Gamification = {
   },
 
   updateCollectionCountUI() {
+    const totalCount = (typeof ArtifactLoader !== 'undefined' && typeof ArtifactLoader.getCollectionArtifacts === 'function')
+      ? (ArtifactLoader.getCollectionArtifacts('all').length || 14)
+      : 14;
     const el = document.getElementById('collection-count');
     if (el) {
-      el.textContent = `${this.unlockedArtifacts.length}/7`;
+      el.textContent = `${this.unlockedArtifacts.length}/${totalCount}`;
     }
     const fill = document.getElementById('drawer-progress-fill');
     if (fill) {
-      fill.style.width = `${(this.unlockedArtifacts.length / 7) * 100}%`;
+      fill.style.width = `${(this.unlockedArtifacts.length / totalCount) * 100}%`;
     }
   },
 
@@ -84,20 +87,63 @@ const Gamification = {
     return 'Penghulu Khazanah Melayu';
   },
 
-  openCollectionBook() {
-    const allArtifacts = [
-      { id: 'owl-marker', roman: 'I', title: 'Burung Hantu Ukiran', category: 'Ornamen Kayu' },
-      { id: 'rumah-adat-marker', roman: 'II', title: 'Rumah Adat Selembayung', category: 'Arsitektur Adat' },
-      { id: 'cerana-marker', roman: 'III', title: 'Cerana Tepak Sirih', category: 'Wadah Logam' },
-      { id: 'perasapan-marker', roman: 'IV', title: 'Perasapan Setanggi', category: 'Peralatan Ritual' },
-      { id: 'kampil-marker', roman: 'V', title: 'Kampil Sirih Kain', category: 'Wadah Tekstil' },
-      { id: 'perhapuran-marker', roman: 'VI', title: 'Perhapuran Kuningan', category: 'Wadah Logam' },
-      { id: 'ketur-marker', roman: 'VII', title: 'Ketur Adat Upacara', category: 'Perunggu Upacara' }
+  openCollectionBook(museumFilter = 'all') {
+    const fallbackArtifacts = [
+      { id: 'owl-marker', artifactCode: 'MNM-01', museumId: 'museum-negeri-medan', museumName: 'Museum Negeri Medan', title: 'Burung Hantu Ukiran', category: 'Ornamen Kayu' },
+      { id: 'rumah-adat-marker', artifactCode: 'MNM-02', museumId: 'museum-negeri-medan', museumName: 'Museum Negeri Medan', title: 'Rumah Adat Selembayung', category: 'Arsitektur Adat' },
+      { id: 'cerana-marker', artifactCode: 'MNM-03', museumId: 'museum-negeri-medan', museumName: 'Museum Negeri Medan', title: 'Cerana Tepak Sirih', category: 'Wadah Logam' },
+      { id: 'perasapan-marker', artifactCode: 'MNM-04', museumId: 'museum-negeri-medan', museumName: 'Museum Negeri Medan', title: 'Perasapan Setanggi', category: 'Peralatan Ritual' },
+      { id: 'kampil-marker', artifactCode: 'MNM-05', museumId: 'museum-negeri-medan', museumName: 'Museum Negeri Medan', title: 'Kampil Sirih Kain', category: 'Wadah Tekstil' },
+      { id: 'perhapuran-marker', artifactCode: 'MNM-06', museumId: 'museum-negeri-medan', museumName: 'Museum Negeri Medan', title: 'Perhapuran Kuningan', category: 'Wadah Logam' },
+      { id: 'ketur-marker', artifactCode: 'MNM-07', museumId: 'museum-negeri-medan', museumName: 'Museum Negeri Medan', title: 'Ketur Adat Upacara', category: 'Perunggu Upacara' },
+      { id: 'tempat-gelas-marker', artifactCode: 'MNM-08', museumId: 'museum-negeri-medan', museumName: 'Museum Negeri Medan', title: 'Tempat Gelas Adat Melayu', category: 'Wadah Jamuan' },
+      { id: 'gulden-marker', artifactCode: 'MTT-01', museumId: 'museum-tebing-tinggi', museumName: 'Museum Kota Tebing Tinggi', title: 'Uang Logam Gulden Hindia Belanda', category: 'Koleksi Numismatika' },
+      { id: 'mangkuk-sup-marker', artifactCode: 'MDS-01', museumId: 'museum-deli-serdang', museumName: 'Museum Deli Serdang', title: 'Mangkuk Sup Keramik Kesultanan', category: 'Keramik & Jamuan Istana' },
+      { id: 'pasu-adonan-marker', artifactCode: 'MDS-02', museumId: 'museum-deli-serdang', museumName: 'Museum Deli Serdang', title: 'Artefak Pasu Adonan Tepung', category: 'Peralatan Kuliner & Gerabah' },
+      { id: 'pinggan-serdang-marker', artifactCode: 'MDS-03', museumId: 'museum-deli-serdang', museumName: 'Museum Deli Serdang', title: 'Artefak Pinggan Bendera Serdang', category: 'Pusaka Keramik Kesultanan' },
+      { id: 'pedang-bawar-marker', artifactCode: 'MDS-04', museumId: 'museum-deli-serdang', museumName: 'Museum Deli Serdang', title: 'Replika Pedang Bawar Serdang', category: 'Senjata Tradisional & Pusaka' },
+      { id: 'topi-dutch-marker', artifactCode: 'MDS-05', museumId: 'museum-deli-serdang', museumName: 'Museum Deli Serdang', title: 'Replika Topi Dutch Style', category: 'Koleksi Sejarah Kolonial' }
     ];
 
+    const loadedList = (typeof ArtifactLoader !== 'undefined' && typeof ArtifactLoader.getCollectionArtifacts === 'function')
+      ? ArtifactLoader.getCollectionArtifacts(museumFilter)
+      : [];
+    const allArtifacts = loadedList.length > 0
+      ? loadedList
+      : (museumFilter === 'all' ? fallbackArtifacts : fallbackArtifacts.filter(a => a.museumId === museumFilter));
+
+    const museums = (typeof ArtifactLoader !== 'undefined' && typeof ArtifactLoader.getMuseumsList === 'function')
+      ? ArtifactLoader.getMuseumsList()
+      : [
+          { id: 'museum-negeri-medan', name: 'Museum Negeri Medan', count: 8 },
+          { id: 'museum-tebing-tinggi', name: 'Museum Kota Tebing Tinggi', count: 1 },
+          { id: 'museum-deli-serdang', name: 'Museum Deli Serdang', count: 5 }
+        ];
+
+    const totalAllCount = (typeof ArtifactLoader !== 'undefined' && typeof ArtifactLoader.getCollectionArtifacts === 'function')
+      ? (ArtifactLoader.getCollectionArtifacts('all').length || 14)
+      : 14;
+
+    let filterHtml = `
+      <div class="museum-filter-bar">
+        <button type="button" class="museum-filter-btn ${museumFilter === 'all' ? 'active' : ''}" onclick="Gamification.openCollectionBook('all')">
+          Semua Museum (${totalAllCount})
+        </button>
+    `;
+    museums.forEach((m) => {
+      filterHtml += `
+        <button type="button" class="museum-filter-btn ${museumFilter === m.id ? 'active' : ''}" onclick="Gamification.openCollectionBook('${m.id}')">
+          ${m.name} (${m.count})
+        </button>
+      `;
+    });
+    filterHtml += `</div>`;
+
+    const romans = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX'];
     let cardsHtml = '';
-    allArtifacts.forEach((item) => {
+    allArtifacts.forEach((item, index) => {
       const isUnlocked = this.unlockedArtifacts.includes(item.id);
+      const roman = romans[index] || String(index + 1);
       const iconSvg = isUnlocked
         ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>'
         : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>';
@@ -105,10 +151,14 @@ const Gamification = {
       cardsHtml += `
         <div class="collection-card ${isUnlocked ? 'unlocked' : ''}">
           <div class="collection-card-top">
-            <span class="collection-card-roman">${item.roman}</span>
+            <span class="collection-card-roman">${roman}</span>
             <span class="collection-card-icon">${iconSvg}</span>
           </div>
-          <div class="collection-card-cat">${item.category}</div>
+          <div class="collection-card-museum">
+            <span class="collection-code-badge">${item.artifactCode || 'MNM'}</span>
+            <span class="collection-museum-name">${item.museumName || 'Museum Negeri Medan'}</span>
+          </div>
+          <div class="collection-card-cat">${item.category || 'Koleksi Adat'}</div>
           <div class="collection-card-title">${item.title}</div>
           <div class="collection-card-status">${isUnlocked ? 'Terbuka' : 'Terkunci'}</div>
         </div>
@@ -116,14 +166,15 @@ const Gamification = {
     });
 
     const bodyHtml = `
-      <div style="margin-bottom:14px; text-align:center;">
+      <div style="margin-bottom:12px; text-align:center;">
         <span style="font-size:12px; font-weight:800; color:var(--color-gold); letter-spacing:1px; text-transform:uppercase;">
           ${this.getLevelName()}
         </span>
         <p style="font-size:13px; color:#F5F2EB; margin-top:4px;">
-          Poin Kearifan: <strong>${this.score} Poin</strong> | Khazanah: <strong>${this.unlockedArtifacts.length}/7 Ditemukan</strong>
+          Poin Kearifan: <strong>${this.score} Poin</strong> | Khazanah: <strong>${this.unlockedArtifacts.length}/${totalAllCount} Ditemukan</strong>
         </p>
       </div>
+      ${filterHtml}
       <div class="collection-grid">
         ${cardsHtml}
       </div>

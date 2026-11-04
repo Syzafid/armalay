@@ -23,6 +23,9 @@ const Landing3D = {
 
   artifacts: [
     {
+      artifactCode: "MNM-01",
+      museumId: "museum-negeri-medan",
+      museumName: "Museum Negeri Medan",
       name: "Burung Hantu Ukiran Melayu",
       category: "Ornamen & Ukiran Woodcraft",
       era: "Abad Ke-15 Masehi",
@@ -32,6 +35,9 @@ const Landing3D = {
       verticalOffset: 0.0
     },
     {
+      artifactCode: "MNM-02",
+      museumId: "museum-negeri-medan",
+      museumName: "Museum Negeri Medan",
       name: "Rumah Adat Arsitektur Melayu",
       category: "Arsitektur & Hunian Adat",
       era: "Abad Ke-16 Masehi",
@@ -41,6 +47,9 @@ const Landing3D = {
       verticalOffset: 0.0
     },
     {
+      artifactCode: "MNM-03",
+      museumId: "museum-negeri-medan",
+      museumName: "Museum Negeri Medan",
       name: "Artefak Cerana Tepak Sirih",
       category: "Wadah Tradisional & Perunggu",
       era: "Kerajaan Melayu Kuno",
@@ -50,6 +59,9 @@ const Landing3D = {
       verticalOffset: 0.0
     },
     {
+      artifactCode: "MNM-04",
+      museumId: "museum-negeri-medan",
+      museumName: "Museum Negeri Medan",
       name: "Artefak Perasapan Setanggi",
       category: "Peralatan Ritual & Perunggu",
       era: "Kesultanan Melayu",
@@ -59,6 +71,9 @@ const Landing3D = {
       verticalOffset: 0.0
     },
     {
+      artifactCode: "MNM-05",
+      museumId: "museum-negeri-medan",
+      museumName: "Museum Negeri Medan",
       name: "Artefak Kampil Sirih Melayu",
       category: "Wadah Tradisional & Tekstil",
       era: "Kesultanan Melayu",
@@ -68,6 +83,9 @@ const Landing3D = {
       verticalOffset: 0.0
     },
     {
+      artifactCode: "MNM-06",
+      museumId: "museum-negeri-medan",
+      museumName: "Museum Negeri Medan",
       name: "Artefak Perhapuran Melayu",
       category: "Wadah Tradisional & Logam",
       era: "Kerajaan Melayu Kuno",
@@ -77,11 +95,98 @@ const Landing3D = {
       verticalOffset: 0.0
     },
     {
+      artifactCode: "MNM-07",
+      museumId: "museum-negeri-medan",
+      museumName: "Museum Negeri Medan",
       name: "Artefak Ketur Adat Melayu",
       category: "Peralatan Upacara & Perunggu",
       era: "Kesultanan Melayu Kuno",
       desc: "Bejana logam tempat pembuangan ampas sirih dengan leher dan kaki cawan kokoh dalam upacara istana Melayu.",
       path: "assets/models/ketur.glb",
+      sizeMultiplier: 0.92,
+      verticalOffset: 0.0
+    },
+    {
+      artifactCode: "MNM-08",
+      museumId: "museum-negeri-medan",
+      museumName: "Museum Negeri Medan",
+      name: "Artefak Tempat Gelas Adat Melayu",
+      category: "Perangkat Jamuan & Logam",
+      era: "Kesultanan Melayu",
+      desc: "Perangkat penyangga cawan jamuan logam berukir untuk menyajikan minuman kehormatan kepada tetua adat dan tamu agung dalam perhelatan majlis Melayu.",
+      path: "assets/models/Tempat_Gelas.glb",
+      sizeMultiplier: 0.94,
+      verticalOffset: 0.0
+    },
+    {
+      artifactCode: "MTT-01",
+      museumId: "museum-tebing-tinggi",
+      museumName: "Museum Kota Tebing Tinggi",
+      name: "Artefak Uang Logam Gulden Hindia Belanda",
+      category: "Koleksi Numismatika",
+      era: "Abad ke-19 – ke-20",
+      desc: "Uang logam Gulden yang beredar luas dalam jaringan perdagangan dan perkebunan di kawasan Tebing Tinggi serta pesisir Sumatera Timur sebagai saksi sejarah ekonomi masyarakat Melayu.",
+      path: "assets/models/logamguldenhindiabelanda.glb",
+      sizeMultiplier: 0.90,
+      verticalOffset: 0.0
+    },
+    {
+      artifactCode: "MDS-01",
+      museumId: "museum-deli-serdang",
+      museumName: "Museum Deli Serdang",
+      name: "Mangkuk Sup Keramik Kesultanan",
+      category: "Keramik & Jamuan Istana",
+      era: "Kesultanan Serdang",
+      desc: "Mangkuk sup keramik bertutup dari perangkat jamuan makan kehormatan di lingkungan Kesultanan Serdang yang mencerminkan kemegahan tata krama jamuan Melayu pesisir.",
+      path: "assets/models/MangkukSup.glb",
+      sizeMultiplier: 0.94,
+      verticalOffset: 0.0
+    },
+    {
+      artifactCode: "MDS-02",
+      museumId: "museum-deli-serdang",
+      museumName: "Museum Deli Serdang",
+      name: "Artefak Pasu Adonan Tepung",
+      category: "Peralatan Kuliner & Gerabah",
+      era: "Tradisi Melayu Serdang",
+      desc: "Bejana cekung tradisional tempat menguleni adonan tepung saat mempersiapkan kue-muih adat dan hidangan kenduri besar masyarakat Melayu Deli Serdang.",
+      path: "assets/models/ArtefakPasuAdonanTepung.glb",
+      sizeMultiplier: 0.92,
+      verticalOffset: 0.0
+    },
+    {
+      artifactCode: "MDS-03",
+      museumId: "museum-deli-serdang",
+      museumName: "Museum Deli Serdang",
+      name: "Artefak Pinggan Bendera Serdang",
+      category: "Pusaka Keramik Kesultanan",
+      era: "Kesultanan Serdang",
+      desc: "Piring porselen kehormatan berlambang panji kebesaran Kesultanan Serdang yang dipesan khusus untuk perjamuan resmi istana dan simbol kedaulatan negeri.",
+      path: "assets/models/ArtefakPingganBenderaSerdang.glb",
+      sizeMultiplier: 0.94,
+      verticalOffset: 0.0
+    },
+    {
+      artifactCode: "MDS-04",
+      museumId: "museum-deli-serdang",
+      museumName: "Museum Deli Serdang",
+      name: "Replika Pedang Bawar Serdang",
+      category: "Senjata Tradisional & Pusaka",
+      era: "Kesultanan Serdang",
+      desc: "Senjata tajam kebesaran panglima Melayu dengan bilah lurus memanjang dan pelindung hulu khas sebagai simbol keberanian menjaga marwah Kesultanan Serdang.",
+      path: "assets/models/ReplikaPedangBawar.glb",
+      sizeMultiplier: 1.04,
+      verticalOffset: 0.0
+    },
+    {
+      artifactCode: "MDS-05",
+      museumId: "museum-deli-serdang",
+      museumName: "Museum Deli Serdang",
+      name: "Replika Topi Dutch Style",
+      category: "Koleksi Sejarah Kolonial",
+      era: "Abad ke-19 – ke-20",
+      desc: "Replika topi bergaya kolonial Belanda yang merekam jejak sejarah administrasi serta perkembangan pesat perkebunan di wilayah Deli Serdang.",
+      path: "assets/models/ReplikaTopiDutchStyle.glb",
       sizeMultiplier: 0.92,
       verticalOffset: 0.0
     }
@@ -219,36 +324,38 @@ const Landing3D = {
     const item = this.artifacts[index];
 
     const titleEl = document.getElementById('landing-artifact-title');
+    const codeEl = document.getElementById('landing-artifact-code');
+    const museumEl = document.getElementById('landing-artifact-museum');
     const catEl = document.getElementById('landing-artifact-category');
     const eraEl = document.getElementById('landing-artifact-era');
     const descEl = document.getElementById('landing-artifact-desc');
     const pageEl = document.getElementById('landing-pagination-num');
     const heroBox = document.querySelector('.landing-hero-content');
+    const romanNumbers = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX"];
+    const totalRoman = romanNumbers[this.artifacts.length - 1] || this.artifacts.length;
+
+    const updateDomText = () => {
+      if (titleEl) titleEl.textContent = item.name;
+      if (codeEl) codeEl.textContent = item.artifactCode || 'MNM-01';
+      if (museumEl) museumEl.textContent = item.museumName || 'Museum Negeri Medan';
+      if (catEl) catEl.textContent = item.category;
+      if (eraEl) eraEl.textContent = item.era;
+      if (descEl) descEl.textContent = item.desc;
+      if (pageEl) {
+        pageEl.textContent = `${romanNumbers[index] || (index + 1)} / ${totalRoman}`;
+      }
+    };
 
     if (heroBox) {
       heroBox.classList.add('text-fade-out');
       setTimeout(() => {
-        if (titleEl) titleEl.textContent = item.name;
-        if (catEl) catEl.textContent = item.category;
-        if (eraEl) eraEl.textContent = item.era;
-        if (descEl) descEl.textContent = item.desc;
-        if (pageEl) {
-          const romanNumbers = ["I", "II", "III", "IV", "V", "VI", "VII"];
-          pageEl.textContent = `${romanNumbers[index]} / VII`;
-        }
+        updateDomText();
         heroBox.classList.remove('text-fade-out');
         heroBox.classList.add('text-fade-in');
         setTimeout(() => heroBox.classList.remove('text-fade-in'), 350);
       }, 180);
     } else {
-      if (titleEl) titleEl.textContent = item.name;
-      if (catEl) catEl.textContent = item.category;
-      if (eraEl) eraEl.textContent = item.era;
-      if (descEl) descEl.textContent = item.desc;
-      if (pageEl) {
-        const romanNumbers = ["I", "II", "III", "IV", "V", "VI", "VII"];
-        pageEl.textContent = `${romanNumbers[index]} / VII`;
-      }
+      updateDomText();
     }
 
     while (this.modelGroup.children.length > 0) {

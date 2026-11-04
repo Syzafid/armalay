@@ -49,13 +49,20 @@
       </header>
 
       <main class="landing-hero-content animate-stagger-2" id="main-content">
-        <span class="landing-tag">Koleksi Pameran Warisan Melayu</span>
+        <div class="landing-tag-row">
+          <span class="landing-code-badge" id="landing-artifact-code">MNM-01</span>
+          <span class="landing-tag">Koleksi Pameran Warisan Melayu</span>
+        </div>
         <h1 class="landing-title animate-stagger-3" id="landing-artifact-title">Burung Hantu Ukiran Melayu</h1>
         <p class="landing-desc animate-stagger-4" id="landing-artifact-desc">
           Motif hias kuno melambangkan keheningan malam, pengawasan tajam, dan kebijaksanaan para tetua adat dalam meramu hukum serta adat istiadat Melayu.
         </p>
 
         <div class="landing-meta-grid animate-stagger-5">
+          <div class="landing-meta-item">
+            <span class="landing-meta-label">Lokasi Koleksi</span>
+            <span class="landing-meta-val" id="landing-artifact-museum">Museum Negeri Medan</span>
+          </div>
           <div class="landing-meta-item">
             <span class="landing-meta-label">Kategori</span>
             <span class="landing-meta-val" id="landing-artifact-category">Ornamen &amp; Ukiran Woodcraft</span>
@@ -90,7 +97,7 @@
     <div class="landing-right">
       <div class="motif-rebung" style="position:absolute;top:0;left:0;right:0;height:24px;opacity:0.4;pointer-events:none;z-index:2;" aria-hidden="true"></div>
       <div class="landing-stage-rings" aria-hidden="true"></div>
-      <div class="landing-pagination" id="landing-pagination-num" aria-live="polite">I / VII</div>
+      <div class="landing-pagination" id="landing-pagination-num" aria-live="polite">I / XIV</div>
       <div id="landing-3d-container" role="region" aria-label="Pratinjau Model 3D Interaktif" title="Geser untuk memutar artefak 360 derajat"></div>
       <div class="landing-3d-hint" aria-hidden="true">Sentuh &amp; geser untuk memutar 360°</div>
     </div>
@@ -98,6 +105,7 @@
 
   <header id="hud-header" aria-label="Panel Status Artefak">
     <div class="artifact-title-badge" id="artifact-header-badge" style="display: none;">
+      <span class="museum-badge" id="artifact-museum-badge">MNM-01 • Museum Negeri Medan</span>
       <span class="title" id="artifact-title">BURUNG HANTU UKIRAN MELAYU</span>
       <span class="subtitle" id="artifact-subtitle">Artefak Simbolik Kebijaksanaan Kuno Melayu</span>
     </div>
@@ -246,7 +254,7 @@
               <path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z" /><path d="M4 19V5" />
             </svg>
           </span>
-          <span class="drawer-card-text">Koleksi Khazanah (<span id="collection-count">0/7</span>)</span>
+          <span class="drawer-card-text">Koleksi Khazanah (<span id="collection-count">0/14</span>)</span>
           <span class="drawer-card-chevron">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M9 5l7 7-7 7" />
@@ -391,6 +399,13 @@
       <a-asset-item id="kampil-model" src="assets/models/kampil.glb"></a-asset-item>
       <a-asset-item id="perhapuran-model" src="assets/models/perhapuran.glb"></a-asset-item>
       <a-asset-item id="ketur-model" src="assets/models/ketur.glb"></a-asset-item>
+      <a-asset-item id="tempat-gelas-model" src="assets/models/Tempat_Gelas.glb"></a-asset-item>
+      <a-asset-item id="gulden-model" src="assets/models/logamguldenhindiabelanda.glb"></a-asset-item>
+      <a-asset-item id="mangkuk-sup-model" src="assets/models/MangkukSup.glb"></a-asset-item>
+      <a-asset-item id="pasu-adonan-model" src="assets/models/ArtefakPasuAdonanTepung.glb"></a-asset-item>
+      <a-asset-item id="pinggan-serdang-model" src="assets/models/ArtefakPingganBenderaSerdang.glb"></a-asset-item>
+      <a-asset-item id="pedang-bawar-model" src="assets/models/ReplikaPedangBawar.glb"></a-asset-item>
+      <a-asset-item id="topi-dutch-model" src="assets/models/ReplikaTopiDutchStyle.glb"></a-asset-item>
     </a-assets>
 
     <a-entity id="ar-ambient-light" light="type: ambient; color: #ffffff; intensity: 0.9"></a-entity>
@@ -415,6 +430,27 @@
     </a-marker>
 
     <a-marker id="ketur-marker" type="pattern" url="assets/markers/marker_ketur.patt" emitevents="true" smooth="true" smoothCount="5">
+    </a-marker>
+
+    <a-marker id="tempat-gelas-marker" type="pattern" url="assets/markers/marker_tempat_gelas.patt" emitevents="true" smooth="true" smoothCount="5">
+    </a-marker>
+
+    <a-marker id="gulden-marker" type="pattern" url="assets/markers/marker_gulden.patt" emitevents="true" smooth="true" smoothCount="5">
+    </a-marker>
+
+    <a-marker id="mangkuk-sup-marker" type="pattern" url="assets/markers/marker_mangkuk_sup.patt" emitevents="true" smooth="true" smoothCount="5">
+    </a-marker>
+
+    <a-marker id="pasu-adonan-marker" type="pattern" url="assets/markers/marker_pasu_adonan.patt" emitevents="true" smooth="true" smoothCount="5">
+    </a-marker>
+
+    <a-marker id="pinggan-serdang-marker" type="pattern" url="assets/markers/marker_pinggan_serdang.patt" emitevents="true" smooth="true" smoothCount="5">
+    </a-marker>
+
+    <a-marker id="pedang-bawar-marker" type="pattern" url="assets/markers/marker_pedang_bawar.patt" emitevents="true" smooth="true" smoothCount="5">
+    </a-marker>
+
+    <a-marker id="topi-dutch-marker" type="pattern" url="assets/markers/marker_topi_dutch.patt" emitevents="true" smooth="true" smoothCount="5">
     </a-marker>
 
     <a-marker id="hiro-marker" preset="hiro" emitevents="true">

@@ -1,6 +1,10 @@
 {
   "owl-marker": {
     "id": "owl-marker",
+    "artifactCode": "MNM-01",
+    "museumId": "museum-negeri-medan",
+    "museumName": "Museum Negeri Medan",
+    "museumFullName": "Museum Negeri Provinsi Sumatera Utara (Medan)",
     "title": "BURUNG HANTU UKIRAN MELAYU",
     "subtitle": "Artefak Simbolik Kebijaksanaan Kuno Melayu",
     "category": "Ornamen & Ukiran Woodcraft",
@@ -27,6 +31,10 @@
   },
   "rumah-adat-marker": {
     "id": "rumah-adat-marker",
+    "artifactCode": "MNM-02",
+    "museumId": "museum-negeri-medan",
+    "museumName": "Museum Negeri Medan",
+    "museumFullName": "Museum Negeri Provinsi Sumatera Utara (Medan)",
     "title": "RUMAH ADAT ARSITEKTUR MELAYU",
     "subtitle": "Mahakarya Arsitektur Tradisional Selembayung Melayu",
     "category": "Arsitektur & Hunian Adat",
@@ -63,6 +71,10 @@
   },
   "cerana-marker": {
     "id": "cerana-marker",
+    "artifactCode": "MNM-03",
+    "museumId": "museum-negeri-medan",
+    "museumName": "Museum Negeri Medan",
+    "museumFullName": "Museum Negeri Provinsi Sumatera Utara (Medan)",
     "title": "ARTEFAK CERANA MELAYU (TEPAK SIRIH)",
     "subtitle": "Wadah Kuningan Ritual & Kehormatan Menyambut Tamu Adat",
     "category": "Wadah Tradisional & Perunggu",
@@ -99,6 +111,10 @@
   },
   "perasapan-marker": {
     "id": "perasapan-marker",
+    "artifactCode": "MNM-04",
+    "museumId": "museum-negeri-medan",
+    "museumName": "Museum Negeri Medan",
+    "museumFullName": "Museum Negeri Provinsi Sumatera Utara (Medan)",
     "title": "ARTEFAK PERASAPAN SETANGGI MELAYU",
     "subtitle": "Tempat Pembakaran Kemukus & Dupa Ritual Istana Melayu",
     "category": "Peralatan Ritual & Perunggu",
@@ -135,6 +151,10 @@
   },
   "kampil-marker": {
     "id": "kampil-marker",
+    "artifactCode": "MNM-05",
+    "museumId": "museum-negeri-medan",
+    "museumName": "Museum Negeri Medan",
+    "museumFullName": "Museum Negeri Provinsi Sumatera Utara (Medan)",
     "title": "ARTEFAK KAMPIL SIRIH MELAYU",
     "subtitle": "Wadah Tradisional Kain Anyaman & Beg Sirih Adat Melayu",
     "category": "Wadah Tradisional & Tekstil",
@@ -161,6 +181,10 @@
   },
   "perhapuran-marker": {
     "id": "perhapuran-marker",
+    "artifactCode": "MNM-06",
+    "museumId": "museum-negeri-medan",
+    "museumName": "Museum Negeri Medan",
+    "museumFullName": "Museum Negeri Provinsi Sumatera Utara (Medan)",
     "title": "ARTEFAK PERHAPURAN MELAYU",
     "subtitle": "Wadah Kapur Sirih Logam Kuningan Berukir Adat Melayu",
     "category": "Wadah Tradisional & Logam",
@@ -187,6 +211,10 @@
   },
   "ketur-marker": {
     "id": "ketur-marker",
+    "artifactCode": "MNM-07",
+    "museumId": "museum-negeri-medan",
+    "museumName": "Museum Negeri Medan",
+    "museumFullName": "Museum Negeri Provinsi Sumatera Utara (Medan)",
     "title": "ARTEFAK KETUR ADAT MELAYU",
     "subtitle": "Bejana Logam Kuningan Upacara & Majlis Adat Melayu",
     "category": "Peralatan Upacara & Perunggu",
@@ -211,8 +239,222 @@
       }
     ]
   },
+  "tempat-gelas-marker": {
+    "id": "tempat-gelas-marker",
+    "artifactCode": "MNM-08",
+    "museumId": "museum-negeri-medan",
+    "museumName": "Museum Negeri Medan",
+    "museumFullName": "Museum Negeri Provinsi Sumatera Utara (Medan)",
+    "title": "ARTEFAK TEMPAT GELAS ADAT MELAYU",
+    "subtitle": "Wadah Penyangga Cawan & Jamuan Kehormatan Majlis Melayu",
+    "category": "Perangkat Jamuan & Logam",
+    "modelPath": "assets/models/Tempat_Gelas.glb",
+    "markerImg": "assets/markers/marker_tempat_gelas.png",
+    "sizeMultiplier": 0.94,
+    "verticalOffset": 0.0,
+    "scale": "0.40 0.40 0.40",
+    "position": "0 0.04 -1.85",
+    "rotation": "0 30 0",
+    "historyText": "Tempat Gelas Adat Melayu merupakan perangkat jamuan logam berukir yang digunakan untuk menyajikan minuman kehormatan kepada para tetua adat, bangsawan, dan tamu agung dalam perhelatan majlis Melayu. Koleksi ini tersimpan di Museum Negeri Provinsi Sumatera Utara (Medan) sebagai bukti tingginya tata krama memuliakan tamu.",
+    "quizData": [
+      {
+        "question": "Apa fungsi utama Tempat Gelas berukir dalam tradisi jamuan adat Melayu?",
+        "options": [
+          "Alat musik tabuh",
+          "Wadah penyangga cawan sajian minuman kehormatan bagi tamu majlis",
+          "Tempat menyimpan senjata",
+          "Takaran beras panen"
+        ],
+        "correctIndex": 1
+      }
+    ]
+  },
+  "gulden-marker": {
+    "id": "gulden-marker",
+    "artifactCode": "MTT-01",
+    "museumId": "museum-tebing-tinggi",
+    "museumName": "Museum Kota Tebing Tinggi",
+    "museumFullName": "Museum Kota Tebing Tinggi (Sumatera Utara)",
+    "title": "UANG LOGAM GULDEN HINDIA BELANDA",
+    "subtitle": "Koleksi Numismatika Perdagangan & Perkebunan Sumatera Timur",
+    "category": "Koleksi Numismatika",
+    "modelPath": "assets/models/logamguldenhindiabelanda.glb",
+    "markerImg": "assets/markers/marker_gulden.png",
+    "sizeMultiplier": 0.90,
+    "verticalOffset": 0.0,
+    "scale": "0.40 0.40 0.40",
+    "position": "0 0.04 -1.85",
+    "rotation": "0 30 0",
+    "historyText": "Uang Logam Gulden merupakan alat tukar resmi yang beredar luas dalam jaringan perdagangan dan perkebunan di kawasan Tebing Tinggi serta pesisir Sumatera Timur pada masa kolonial hingga abad ke-20. Koleksi numismatika ini tersimpan di Museum Kota Tebing Tinggi sebagai bukti sejarah dinamika ekonomi masyarakat Melayu dan aktivitas niaga lintas bangsa di wilayah Padang Bedagai dan Tebing Tinggi.",
+    "quizData": [
+      {
+        "question": "Dimanakah koleksi artefak Uang Logam Gulden bersejarah ini disimpan?",
+        "options": [
+          "Museum Kota Tebing Tinggi",
+          "Museum Bahari Jakarta",
+          "Museum Kereta Api Ambarawa",
+          "Museum Geologi Bandung"
+        ],
+        "correctIndex": 0
+      }
+    ]
+  },
+  "mangkuk-sup-marker": {
+    "id": "mangkuk-sup-marker",
+    "artifactCode": "MDS-01",
+    "museumId": "museum-deli-serdang",
+    "museumName": "Museum Deli Serdang",
+    "museumFullName": "Museum Daerah Kabupaten Deli Serdang",
+    "title": "MANGKUK SUP KERAMIK KESULTANAN",
+    "subtitle": "Perangkat Jamuan Keramik Bangsawan Kesultanan Serdang",
+    "category": "Keramik & Jamuan Istana",
+    "modelPath": "assets/models/MangkukSup.glb",
+    "markerImg": "assets/markers/marker_mangkuk_sup.png",
+    "sizeMultiplier": 0.94,
+    "verticalOffset": 0.0,
+    "scale": "0.40 0.40 0.40",
+    "position": "0 0.04 -1.85",
+    "rotation": "0 30 0",
+    "historyText": "Mangkuk Sup Keramik ini merupakan bagian dari perangkat jamuan makan kebesaran di lingkungan Kesultanan Serdang yang kini dirawat di Museum Daerah Kabupaten Deli Serdang. Wadah bertutup dengan telinga pegangan ini mencerminkan perpaduan budaya jamuan Melayu pesisir dengan keramik perdagangan masa silam.",
+    "quizData": [
+      {
+        "question": "Mangkuk Sup Keramik koleksi Museum Deli Serdang digunakan dalam tradisi apa?",
+        "options": [
+          "Perangkat jamuan makan kehormatan di lingkungan Kesultanan Serdang",
+          "Alat pertanian sawah",
+          "Wadah peleburan besi",
+          "Alat ukur kedalaman sungai"
+        ],
+        "correctIndex": 0
+      }
+    ]
+  },
+  "pasu-adonan-marker": {
+    "id": "pasu-adonan-marker",
+    "artifactCode": "MDS-02",
+    "museumId": "museum-deli-serdang",
+    "museumName": "Museum Deli Serdang",
+    "museumFullName": "Museum Daerah Kabupaten Deli Serdang",
+    "title": "ARTEFAK PASU ADONAN TEPUNG",
+    "subtitle": "Wadah Kuliner Tradisional & Kenduri Adat Melayu Serdang",
+    "category": "Peralatan Kuliner & Gerabah",
+    "modelPath": "assets/models/ArtefakPasuAdonanTepung.glb",
+    "markerImg": "assets/markers/marker_pasu_adonan.png",
+    "sizeMultiplier": 0.92,
+    "verticalOffset": 0.0,
+    "scale": "0.40 0.40 0.40",
+    "position": "0 0.04 -1.85",
+    "rotation": "0 30 0",
+    "historyText": "Pasu Adonan Tepung adalah bejana cekung berukuran lebar yang digunakan masyarakat Melayu Deli Serdang untuk menguleni adonan tepung saat menyiapkan kue-muih adat dan hidangan kenduri besar. Koleksi Museum Daerah Kabupaten Deli Serdang ini menjadi bukti kekayaan tradisi kuliner dan gotong royong masyarakat Melayu.",
+    "quizData": [
+      {
+        "question": "Apakah kegunaan utama dari Artefak Pasu Adonan Tepung dalam tradisi masyarakat Melayu?",
+        "options": [
+          "Tempat menguleni adonan tepung untuk penganan dan kenduri adat",
+          "Tempat menyimpan pusaka keris",
+          "Alat musik pukul",
+          "Pelita penerang malam"
+        ],
+        "correctIndex": 0
+      }
+    ]
+  },
+  "pinggan-serdang-marker": {
+    "id": "pinggan-serdang-marker",
+    "artifactCode": "MDS-03",
+    "museumId": "museum-deli-serdang",
+    "museumName": "Museum Deli Serdang",
+    "museumFullName": "Museum Daerah Kabupaten Deli Serdang",
+    "title": "ARTEFAK PINGGAN BENDERA SERDANG",
+    "subtitle": "Piring Kehormatan Berlambang Panji Kesultanan Serdang",
+    "category": "Pusaka Keramik Kesultanan",
+    "modelPath": "assets/models/ArtefakPingganBenderaSerdang.glb",
+    "markerImg": "assets/markers/marker_pinggan_serdang.png",
+    "sizeMultiplier": 0.94,
+    "verticalOffset": 0.0,
+    "scale": "0.40 0.40 0.40",
+    "position": "0 0.04 -1.85",
+    "rotation": "0 30 0",
+    "historyText": "Pinggan Bendera Serdang merupakan piring porselen bersejarah yang menampilkan lambang dan panji kebesaran Kesultanan Serdang. Artefak unggulan Museum Daerah Kabupaten Deli Serdang ini dahulu dipesan khusus untuk perjamuan resmi istana dan simbol kedaulatan diplomatik Kesultanan Serdang.",
+    "quizData": [
+      {
+        "question": "Ornamen khas apa yang menghiasi bagian tengah Pinggan bersejarah dari Museum Deli Serdang ini?",
+        "options": [
+          "Panji atau Bendera Kebesaran Kesultanan Serdang",
+          "Peta benua Eropa",
+          "Lukisan kapal uap",
+          "Kaligrafi aksara Jawa"
+        ],
+        "correctIndex": 0
+      }
+    ]
+  },
+  "pedang-bawar-marker": {
+    "id": "pedang-bawar-marker",
+    "artifactCode": "MDS-04",
+    "museumId": "museum-deli-serdang",
+    "museumName": "Museum Deli Serdang",
+    "museumFullName": "Museum Daerah Kabupaten Deli Serdang",
+    "title": "REPLIKA PEDANG BAWAR SERDANG",
+    "subtitle": "Senjata Kebesaran & Simbol Keberanian Panglima Melayu",
+    "category": "Senjata Tradisional & Pusaka",
+    "modelPath": "assets/models/ReplikaPedangBawar.glb",
+    "markerImg": "assets/markers/marker_pedang_bawar.png",
+    "sizeMultiplier": 1.04,
+    "verticalOffset": 0.0,
+    "scale": "0.40 0.40 0.40",
+    "position": "0 0.04 -1.85",
+    "rotation": "0 30 0",
+    "historyText": "Pedang Bawar merupakan salah satu senjata tajam kebesaran dalam tradisi kepahlawanan Melayu di wilayah Kesultanan Serdang dan Sumatera Timur. Koleksi yang dipamerkan di Museum Daerah Kabupaten Deli Serdang ini memiliki bilah lurus memanjang dengan hulu berpelindung khas yang melambangkan keteguhan hati serta kehormatan panglima dalam menjaga marwah negeri.",
+    "quizData": [
+      {
+        "question": "Apa makna simbolis dari Pedang Bawar dalam khazanah sejarah Kesultanan Serdang?",
+        "options": [
+          "Simbol keberanian, kedaulatan, dan kehormatan panglima dalam menjaga marwah negeri",
+          "Alat pemotong padi di sawah",
+          "Perkakas ukir kayu rumah",
+          "Tongkat penunjuk arah"
+        ],
+        "correctIndex": 0
+      }
+    ]
+  },
+  "topi-dutch-marker": {
+    "id": "topi-dutch-marker",
+    "artifactCode": "MDS-05",
+    "museumId": "museum-deli-serdang",
+    "museumName": "Museum Deli Serdang",
+    "museumFullName": "Museum Daerah Kabupaten Deli Serdang",
+    "title": "REPLIKA TOPI DUTCH STYLE",
+    "subtitle": "Jejak Sejarah Administrasi & Perkebunan Era Kolonial di Deli Serdang",
+    "category": "Koleksi Sejarah Kolonial",
+    "modelPath": "assets/models/ReplikaTopiDutchStyle.glb",
+    "markerImg": "assets/markers/marker_topi_dutch.png",
+    "sizeMultiplier": 0.92,
+    "verticalOffset": 0.0,
+    "scale": "0.40 0.40 0.40",
+    "position": "0 0.04 -1.85",
+    "rotation": "0 30 0",
+    "historyText": "Replika Topi bergaya Belanda (Dutch Style Tropenhelm) di Museum Daerah Kabupaten Deli Serdang merekam jejak sejarah interaksi masa kolonial dan perkembangan pesat kawasan perkebunan di tanah Deli Serdang pada abad ke-19 hingga awal abad ke-20.",
+    "quizData": [
+      {
+        "question": "Koleksi Replika Topi Dutch Style di Museum Deli Serdang menjadi saksi sejarah periode apa?",
+        "options": [
+          "Perkembangan administrasi dan perkebunan era kolonial di kawasan Deli Serdang",
+          "Zaman prasejarah batu besar",
+          "Pelayaran laksamana Cheng Ho",
+          "Perang Padri di Sumatera Barat"
+        ],
+        "correctIndex": 0
+      }
+    ]
+  },
   "hiro-marker": {
     "id": "hiro-marker",
+    "artifactCode": "MNM-01",
+    "museumId": "museum-negeri-medan",
+    "museumName": "Museum Negeri Medan",
+    "museumFullName": "Museum Negeri Provinsi Sumatera Utara (Medan)",
     "title": "BURUNG HANTU UKIRAN MELAYU (HIRO TEST)",
     "subtitle": "Testing Prototype via Hiro Preset Marker",
     "category": "Ornamen & Ukiran",
@@ -223,7 +465,7 @@
     "scale": "0.55 0.55 0.55",
     "position": "0 0.04 -1.85",
     "rotation": "0 30 0",
-    "historyText": "Pengujian berhasil! Model 3D Burung Hantu Melayu berhasil di-load menggunakan Hiro Marker dan ditampilkan secara utuh dan jelas di sisi kiri layar.",
+    "historyText": "Pengujian berhasil! Model 3D Burung Hantu Melayu (Koleksi Museum Negeri Medan) berhasil dimuat menggunakan Hiro Marker.",
     "quizData": [
       {
         "question": "Apakah pengujian Hiro Marker berhasil?",

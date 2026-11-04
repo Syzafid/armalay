@@ -374,8 +374,8 @@ const ARController = {
     this.lightIntensity = 0.9;
     this.adjustLighting(0);
 
-    UIManager.setHeaderInfo(artifactData.title, artifactData.subtitle);
-    UIManager.setStatusBadge(`Terkunci: ${artifactData.title}`, true);
+    UIManager.setHeaderInfo(artifactData.title, artifactData.subtitle, artifactData.artifactCode, artifactData.museumName);
+    UIManager.setStatusBadge(`Terkunci: ${artifactData.artifactCode || 'MNM'} • ${artifactData.title}`, true);
 
     const reticle = document.getElementById('ar-reticle');
     if (reticle) reticle.classList.add('locked');
